@@ -2,11 +2,12 @@
 #  Permissions are hereby granted under the terms of the Apache 2.0 License:
 #  https://opensource.org/license/apache-2-0.
 
-from cuiman.cli import get_cli
+from cuiman.cli import new_cli
 
-from wraptile import __version__ as version
+from sen4cap_client import __version__ as version
 
-cli = get_cli(
+
+cli = new_cli(
     "sen4cap-client",
     summary="Interact with the ESA Sen4CAP processing service.",
     version=version,
