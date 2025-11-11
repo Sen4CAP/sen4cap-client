@@ -1,0 +1,89 @@
+#  Copyright (c) 2025 by ESA Sen4CAP team and contributors
+#  Permissions are hereby granted under the terms of the Apache 2.0 License:
+#  https://opensource.org/license/apache-2-0.
+
+site_name: ESA Sen4CAP-Client
+repo_url: https://github.com/Sen4CAP/sen4cap-client
+repo_name: sen4cap-client
+
+copyright: Copyright &copy; 2025 ESA Sen4CAP Team
+
+nav:
+  - Overview: index.md
+  - Client CLI: client-cli.md
+  - Client API: client-api.md
+  - Client Usage:
+        - notebooks/client-gui.ipynb
+        - notebooks/client-api.ipynb
+        - notebooks/client-api-airflow.ipynb
+        - notebooks/client-cli.ipynb
+  - Contributing: contributing.md
+
+theme:
+  name: material
+  logo: assets/logo.png
+  favicon: assets/favicon.ico
+  palette:
+    # Palette toggle for light mode
+    - scheme: default
+      primary: blue grey
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Palette toggle for dark mode
+    - scheme: slate
+      primary: blue grey
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.top
+  custom_dir: docs\overrides
+
+markdown_extensions:
+  - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      # make exceptions to highlighting of code:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
+  # - pymdownx.highlight
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra:
+  mermaid: true
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Sen4CAP/sen4cap-client
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/sen4cap-client/
+
+plugins:
+  - search
+  - autorefs
+  - mermaid2
+  - mkdocs-jupyter
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_root_toc_entry: true
+            show_root_heading: true
+            show_source: true
+            heading_level: 2
+            annotations_path: brief
+            members_order: source
+
+extra_css:
+    - overrides/css/custom.css
+
+hooks:
+    - docs\hooks\notebooks_json_output.py
