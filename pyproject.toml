@@ -51,8 +51,8 @@ dependencies = [
   "uri-template",
   "httpx",
   # Eozilla dependencies
-  # "cuiman",
-  # "gavicore",
+  # "cuiman >=0.0.8",
+  # "gavicore >=0.0.8",
 ]
 
 [project.urls]
