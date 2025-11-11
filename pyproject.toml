@@ -64,6 +64,30 @@ Issues = "https://github.com/Sen4CAP/sen4cap-client/issues"
 [project.scripts]
 sen4cap-client = "sen4cap_client.cli:cli"
 
+[build-system]
+requires = ["hatch"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+sources = ["src"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/sen4cap_client/**/*",
+  "pyproject.toml",
+  "README.md",
+  "LICENSE",
+]
+
+[tool.hatch.build.targets.wheel]
+include = [
+  "src/sen4cap_client/**/*"
+]
+
+# ---------------------------------------------------------------------
+# Pixi project setup
+# ---------------------------------------------------------------------
+
 [tool.pixi.workspace]
 channels = ["conda-forge"]
 platforms = ["linux-64", "win-64", "osx-64"]
@@ -116,28 +140,49 @@ nbformat = "*"
 pymdown-extensions = "*"
 
 [tool.pixi.pypi-dependencies]
+sen4cap_client = { path = ".", editable = true }
 # TODO: once stable, move into project (conda-forge) dependencies
 cuiman = { path = "../eozilla/cuiman", editable = true }
 gavicore = { path = "../eozilla/gavicore", editable = true }
 # For testing only
 wraptile = { path = "../eozilla/wraptile", editable = true }
 
-[build-system]
-requires = ["hatch"]
-build-backend = "hatchling.build"
 
-[tool.hatch.build]
-sources = ["src"]
+# ---------------------------------------------------------------------
+# Pixi tasks
+# ---------------------------------------------------------------------
 
-[tool.hatch.build.targets.sdist]
-include = [
-  "src/sen4cap_client/**/*",
-  "pyproject.toml",
-  "README.md",
-  "LICENSE",
+[tool.pixi.tasks.test]
+cmd = "pytest tests"
+
+[tool.pixi.tasks.check]
+depends-on = [
+  "check-with-ruff",
+  "check-with-mypy",
 ]
 
-[tool.hatch.build.targets.wheel]
-include = [
-  "src/sen4cap_client/**/*"
-]
+[tool.pixi.tasks.check-with-ruff]
+cmd = "ruff check src"
+
+[tool.pixi.tasks.check-with-mypy]
+cmd = "mypy src"
+
+
+# ?????????????????????????????????????????
+
+# pixi run coverage / coverage-ci
+
+[tool.pixi.tasks.coverage]
+depends-on = ["cov-base", "cov-report-html"]
+
+[tool.pixi.tasks.coverage-ci]
+depends-on = ["cov-base", "cov-report-xml"]
+
+[tool.pixi.tasks.cov-report-html]
+cmd = "coverage html -d .cov-report && coverage report"
+
+[tool.pixi.tasks.cov-report-xml]
+cmd = "coverage xml -o coverage.xml && coverage report"
+
+[tool.pixi.tasks.cov-base]
+cmd = "pytest --cov src/sen4cap_client --cov-report= --cov-append tests"

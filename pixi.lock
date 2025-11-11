@@ -373,6 +373,7 @@ environments:
       - pypi: ../eozilla/cuiman
       - pypi: ../eozilla/gavicore
       - pypi: ../eozilla/wraptile
+      - pypi: ./
       osx-64:
       - conda: https://conda.anaconda.org/conda-forge/noarch/_python_abi3_support-1.0-hd8ed1ab_2.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/annotated-doc-0.0.3-pyhcf101f3_1.conda
@@ -727,6 +728,7 @@ environments:
       - pypi: ../eozilla/cuiman
       - pypi: ../eozilla/gavicore
       - pypi: ../eozilla/wraptile
+      - pypi: ./
       win-64:
       - conda: https://conda.anaconda.org/conda-forge/win-64/_openmp_mutex-4.5-2_gnu.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/_python_abi3_support-1.0-hd8ed1ab_2.conda
@@ -1072,6 +1074,7 @@ environments:
       - pypi: ../eozilla/cuiman
       - pypi: ../eozilla/gavicore
       - pypi: ../eozilla/wraptile
+      - pypi: ./
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2
   sha256: fe51de6107f9edc7aa4f786a70f4a883943bc9d39b3bb7307c04c41410990726
@@ -2578,8 +2581,8 @@ packages:
   timestamp: 1760605188769
 - pypi: ../eozilla/cuiman
   name: cuiman
-  version: 0.0.8.dev0
-  sha256: c2d45f9ba8268315d501434e507801678cc9038cebf78496e83a08a9faeca910
+  version: 0.0.8
+  sha256: 871aaa2a3816d3e4ff13bdf7b7a8e1350334cc4c9c31b24e4d1e9df2831e80f4
   requires_dist:
   - click
   - panel
@@ -2989,8 +2992,8 @@ packages:
   timestamp: 1761840236679
 - pypi: ../eozilla/gavicore
   name: gavicore
-  version: 0.0.8.dev0
-  sha256: 2f554fb6cb2530441f8a6ef8aa0c639ad7b4f8141ee99e9bec3eb3eb8a417dec
+  version: 0.0.8
+  sha256: 488145ac6c86f4b19f5169523deab4ab235b1edb34422b14242df95c6e9e91e6
   requires_dist:
   - click
   - pydantic
@@ -8886,6 +8889,19 @@ packages:
   - pkg:pypi/secretstorage?source=hash-mapping
   size: 32835
   timestamp: 1757606804014
+- pypi: ./
+  name: sen4cap-client
+  version: 0.1.0.dev0
+  sha256: 5f7800f059eafe1935826dca5146cc008d07ef5393d371adc8c277bd1e1177b4
+  requires_dist:
+  - click
+  - pydantic
+  - pyyaml
+  - typer
+  - uri-template
+  - httpx
+  requires_python: '>=3.10'
+  editable: true
 - conda: https://conda.anaconda.org/conda-forge/noarch/send2trash-1.8.3-pyh0d859eb_1.conda
   sha256: 00926652bbb8924e265caefdb1db100f86a479e8f1066efe395d5552dde54d02
   md5: 938c8de6b9de091997145b3bf25cdbf9
@@ -9900,8 +9916,8 @@ packages:
   timestamp: 1756851987645
 - pypi: ../eozilla/wraptile
   name: wraptile
-  version: 0.0.8.dev0
-  sha256: 18aebc189b21453308d28597524a9585b3d999ab3fa52d90fe8a6e3665ced6bc
+  version: 0.0.8
+  sha256: 436c794e970c9aebbbbe51a9454f8c7c395a8df52cebed220663569b8b682bf7
   requires_dist:
   - fastapi
   - pydantic
