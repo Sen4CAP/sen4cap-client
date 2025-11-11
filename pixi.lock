@@ -369,10 +369,8 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zlib-ng-2.2.5-hde8ca8f_0.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstandard-0.25.0-py313h54dd161_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.7-hb8e6e7a_2.conda
-      - pypi: https://files.pythonhosted.org/packages/3b/28/0f5d053506ec7db22729125b18286c0633ab8b006b83b0f3b746f9ba0526/procodile-0.0.8-py3-none-any.whl
-      - pypi: ../eozilla/cuiman
-      - pypi: ../eozilla/gavicore
-      - pypi: ../eozilla/wraptile
+      - pypi: https://files.pythonhosted.org/packages/6f/19/13b754880dd687d145e86fadec39cec7ba75d87af083621403b5dc75a013/cuiman-0.0.8-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/38/39/4fdfa4d8caa594f100755c496e42579192d00a87008fcae3040692df25fb/gavicore-0.0.8-py3-none-any.whl
       - pypi: ./
       osx-64:
       - conda: https://conda.anaconda.org/conda-forge/noarch/_python_abi3_support-1.0-hd8ed1ab_2.conda
@@ -724,10 +722,8 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zlib-ng-2.2.5-h55e386d_0.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zstandard-0.25.0-py313hcb05632_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zstd-1.5.7-h8210216_2.conda
-      - pypi: https://files.pythonhosted.org/packages/3b/28/0f5d053506ec7db22729125b18286c0633ab8b006b83b0f3b746f9ba0526/procodile-0.0.8-py3-none-any.whl
-      - pypi: ../eozilla/cuiman
-      - pypi: ../eozilla/gavicore
-      - pypi: ../eozilla/wraptile
+      - pypi: https://files.pythonhosted.org/packages/6f/19/13b754880dd687d145e86fadec39cec7ba75d87af083621403b5dc75a013/cuiman-0.0.8-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/38/39/4fdfa4d8caa594f100755c496e42579192d00a87008fcae3040692df25fb/gavicore-0.0.8-py3-none-any.whl
       - pypi: ./
       win-64:
       - conda: https://conda.anaconda.org/conda-forge/win-64/_openmp_mutex-4.5-2_gnu.conda
@@ -1070,10 +1066,8 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/win-64/zlib-ng-2.2.5-h32d8bfd_0.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/zstandard-0.25.0-py313h5fd188c_1.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/zstd-1.5.7-hbeecb71_2.conda
-      - pypi: https://files.pythonhosted.org/packages/3b/28/0f5d053506ec7db22729125b18286c0633ab8b006b83b0f3b746f9ba0526/procodile-0.0.8-py3-none-any.whl
-      - pypi: ../eozilla/cuiman
-      - pypi: ../eozilla/gavicore
-      - pypi: ../eozilla/wraptile
+      - pypi: https://files.pythonhosted.org/packages/6f/19/13b754880dd687d145e86fadec39cec7ba75d87af083621403b5dc75a013/cuiman-0.0.8-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/38/39/4fdfa4d8caa594f100755c496e42579192d00a87008fcae3040692df25fb/gavicore-0.0.8-py3-none-any.whl
       - pypi: ./
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2
@@ -2579,21 +2573,20 @@ packages:
   - pkg:pypi/cryptography?source=hash-mapping
   size: 1718808
   timestamp: 1760605188769
-- pypi: ../eozilla/cuiman
+- pypi: https://files.pythonhosted.org/packages/6f/19/13b754880dd687d145e86fadec39cec7ba75d87af083621403b5dc75a013/cuiman-0.0.8-py3-none-any.whl
   name: cuiman
   version: 0.0.8
-  sha256: 871aaa2a3816d3e4ff13bdf7b7a8e1350334cc4c9c31b24e4d1e9df2831e80f4
+  sha256: 1bd3a4ac18f7dffede203d886a2ad8c8866f6614452c5692b4941a6f514beeb5
   requires_dist:
   - click
+  - gavicore>=0.0.7
+  - httpx
   - panel
   - pydantic
   - pyyaml
   - typer
   - uri-template
-  - httpx
-  - gavicore>=0.0.7
   requires_python: '>=3.10'
-  editable: true
 - conda: https://conda.anaconda.org/conda-forge/linux-64/cytoolz-1.1.0-py313h07c4f96_1.conda
   sha256: a8ffc7cf31a698a57a46bf7977185ed1e644c5e35d4e166d8f260dca93af6ffb
   md5: bcca9afd203fe05d9582249ac12762da
@@ -2990,16 +2983,15 @@ packages:
   - pkg:pypi/fsspec?source=hash-mapping
   size: 146592
   timestamp: 1761840236679
-- pypi: ../eozilla/gavicore
+- pypi: https://files.pythonhosted.org/packages/38/39/4fdfa4d8caa594f100755c496e42579192d00a87008fcae3040692df25fb/gavicore-0.0.8-py3-none-any.whl
   name: gavicore
   version: 0.0.8
-  sha256: 488145ac6c86f4b19f5169523deab4ab235b1edb34422b14242df95c6e9e91e6
+  sha256: 08e3095f18661d30e492bf97d5e771cb976bfb61bc62ed4e637063863e1a25d2
   requires_dist:
   - click
   - pydantic
   - typer
   requires_python: '>=3.10'
-  editable: true
 - conda: https://conda.anaconda.org/conda-forge/linux-64/gflags-2.2.2-h5888daf_1005.conda
   sha256: 6c33bf0c4d8f418546ba9c250db4e4221040936aef8956353bc764d4877bc39a
   md5: d411fc29e338efb48c5fd4576d71d881
@@ -7795,16 +7787,6 @@ packages:
   - pkg:pypi/pluggy?source=hash-mapping
   size: 24246
   timestamp: 1747339794916
-- pypi: https://files.pythonhosted.org/packages/3b/28/0f5d053506ec7db22729125b18286c0633ab8b006b83b0f3b746f9ba0526/procodile-0.0.8-py3-none-any.whl
-  name: procodile
-  version: 0.0.8
-  sha256: e59f5590a86efc008b3d698e385a3884d18cfc5ad0c127e8482ff36ba536ce10
-  requires_dist:
-  - gavicore>=0.0.7
-  - pydantic
-  - pyyaml
-  - typer
-  requires_python: '>=3.10'
 - conda: https://conda.anaconda.org/conda-forge/linux-64/prometheus-cpp-1.3.0-ha5d0236_0.conda
   sha256: 013669433eb447548f21c3c6b16b2ed64356f726b5f77c1b39d5ba17a8a4b8bc
   md5: a83f6a2fdc079e643237887a37460668
@@ -8892,7 +8874,7 @@ packages:
 - pypi: ./
   name: sen4cap-client
   version: 0.1.0.dev0
-  sha256: 5f7800f059eafe1935826dca5146cc008d07ef5393d371adc8c277bd1e1177b4
+  sha256: 55433ad3c5824a04d8b848fca23d9a3aff5e09ac36fc26ad7d3bc83cc6917e3d
   requires_dist:
   - click
   - pydantic
@@ -8900,6 +8882,8 @@ packages:
   - typer
   - uri-template
   - httpx
+  - cuiman>=0.0.8
+  - gavicore>=0.0.8
   requires_python: '>=3.10'
   editable: true
 - conda: https://conda.anaconda.org/conda-forge/noarch/send2trash-1.8.3-pyh0d859eb_1.conda
@@ -9914,20 +9898,6 @@ packages:
   - pkg:pypi/wrapt?source=hash-mapping
   size: 63385
   timestamp: 1756851987645
-- pypi: ../eozilla/wraptile
-  name: wraptile
-  version: 0.0.8
-  sha256: 436c794e970c9aebbbbe51a9454f8c7c395a8df52cebed220663569b8b682bf7
-  requires_dist:
-  - fastapi
-  - pydantic
-  - pyyaml
-  - typer
-  - uvicorn
-  - gavicore>=0.0.7
-  - procodile>=0.0.7
-  requires_python: '>=3.10'
-  editable: true
 - conda: https://conda.anaconda.org/conda-forge/noarch/xarray-2025.10.1-pyhcf101f3_1.conda
   sha256: 57bfac2a070d2c63d34c1d75a409cb92e788ac42e658e9d9349cd19b12888ce7
   md5: 515d0ed77a942ad39fa94cf636dcde44

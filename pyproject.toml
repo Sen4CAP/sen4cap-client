@@ -51,8 +51,8 @@ dependencies = [
   "uri-template",
   "httpx",
   # Eozilla dependencies
-  # "cuiman >=0.0.8",
-  # "gavicore >=0.0.8",
+  "cuiman >=0.0.8",
+  "gavicore >=0.0.8",
 ]
 
 [project.urls]
@@ -141,21 +141,22 @@ pymdown-extensions = "*"
 
 [tool.pixi.pypi-dependencies]
 sen4cap_client = { path = ".", editable = true }
-# TODO: once stable, move into project (conda-forge) dependencies
-cuiman = { path = "../eozilla/cuiman", editable = true }
-gavicore = { path = "../eozilla/gavicore", editable = true }
-# For testing only
-wraptile = { path = "../eozilla/wraptile", editable = true }
+#
+# Uncomment the following to allow using eozilla from sources
+# Note, using the wraptile server is for testing only
+#
+#cuiman = { path = "../eozilla/cuiman", editable = true }
+#gavicore = { path = "../eozilla/gavicore", editable = true }
+#wraptile = { path = "../eozilla/wraptile", editable = true }
 
 
 # ---------------------------------------------------------------------
 # Pixi tasks
 # ---------------------------------------------------------------------
 
-[tool.pixi.tasks.test]
-cmd = "pytest tests"
+# pixi run checks
 
-[tool.pixi.tasks.check]
+[tool.pixi.tasks.checks]
 depends-on = [
   "check-with-ruff",
   "check-with-mypy",
@@ -167,8 +168,10 @@ cmd = "ruff check src"
 [tool.pixi.tasks.check-with-mypy]
 cmd = "mypy src"
 
+# pixi run tests
 
-# ?????????????????????????????????????????
+[tool.pixi.tasks.tests]
+cmd = "pytest tests"
 
 # pixi run coverage / coverage-ci
 

@@ -11,6 +11,6 @@ Methods of the `sen4cap_client.Client` and `sen4cap_client.AsyncClient`
 may raise a `sen4cap_client.ClientError` if a server call fails. 
 
 The `sen4cap_client` Python API is a thin wrapper around the 
-[Eozilla](https://eo-tools.github.io) Client API 
+[Eozilla](https://eo-tools.github.io/eozilla/) Client API 
 called [Cuiman](https://eo-tools.github.io/eozilla/client-api/).
  

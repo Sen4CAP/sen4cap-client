@@ -74,3 +74,65 @@ List the available processes of the Sen4CAP processing service:
 sen4cap-client list-processes
 ```
 
+## Development
+
+Install the `sen4cap-client` as described in [Installation / Using GitHub](#using-github) 
+above.
+
+### Linting and Testing
+
+To run all checks, execute
+
+```commandline
+pixi run checks
+```
+
+To run all tests, execute
+
+```commandline
+pixi run tests
+```
+
+To generate a coverage report, execute
+
+```commandline
+pixi run coverage
+```
+
+### Implementing Enhancements
+
+The `sen4cap-client` code relies heavily on the 
+[Eozilla](https://eo-tools.github.io/eozilla/) packages 
+
+* [cuiman](https://github.com/eo-tools/eozilla/tree/main/cuiman),
+  which provides the client implementation, and 
+* [gavicore](https://github.com/eo-tools/eozilla/tree/main/gavicore)
+  which provides common OGC model classes and basic utilities.  
+
+Should `sen4cap-client` require non-Sen4CAP-specific enhancements it 
+would likely be best to implement the required changes in the respective 
+Eozilla packages. For this, check out the Eozilla sources directly next 
+to this project's sources to achieve this folder structure:
+
+```commandline
+    <projects>/
+    ├── sen4cap-client/
+    └── eozilla/
+        ├── cuiman/
+        ├── gavicore/
+        └── ...
+```
+
+Then, during development, change `sen4cap-client/pyproject.toml` as follows
+
+1. Comment out the dependencies `cuiman` and `gavicore` in the 
+   `[project.dependencies]` table.
+
+2. Uncomment the editable PyPI dependencies for `cuiman` and `gavicore` in 
+   the `[tool.pixi.pypi-dependencies]` table.
+
+Then run once more
+
+```commandline
+pixi install
+```
