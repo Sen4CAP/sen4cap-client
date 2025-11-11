@@ -2,12 +2,6 @@
 
 ![logo.png](assets/logo.png){ .centered-logo width="300"}
 
-<br>
-<br>
-The Python control layer for the ESA Sen4CAP processing system.
-**Note, this project and its documentation is still in an early development stage.**
-<br>
-<br>
+A Python control layer for the [ESA Sen4CAP project's](https://www.esa-sen4cap.org/) processing service.
 
-[Getting Started](start){ .md-button .md-button--primary }
-[Sen4CAP](https://www.esa-sen4cap.org/){ .md-button .md-button--primary }
+[Get Started](start){ .md-button .md-button--primary }

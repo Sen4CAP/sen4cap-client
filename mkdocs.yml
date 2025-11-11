@@ -10,13 +10,13 @@ copyright: Copyright &copy; 2025 ESA Sen4CAP Team
 
 nav:
   - Overview: index.md
-  - Client CLI: client-cli.md
-  - Client API: client-api.md
-  - Client Usage:
+  - Installation: installation.md
+  - User Guides:
         - notebooks/client-gui.ipynb
         - notebooks/client-api.ipynb
-        - notebooks/client-api-airflow.ipynb
         - notebooks/client-cli.ipynb
+  - CLI Reference: cli.md
+  - API Reference: api.md
   - Contributing: contributing.md
 
 theme:
@@ -40,25 +40,17 @@ theme:
         name: Switch to light mode
   features:
     - navigation.top
-  custom_dir: docs\overrides
+  custom_dir: docs/overrides
 
 markdown_extensions:
   - attr_list
   - admonition
   - pymdownx.details
-  - pymdownx.superfences:
-      # make exceptions to highlighting of code:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:mermaid2.fence_mermaid_custom
-  # - pymdownx.highlight
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 extra:
-  mermaid: true
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/Sen4CAP/sen4cap-client
@@ -68,7 +60,6 @@ extra:
 plugins:
   - search
   - autorefs
-  - mermaid2
   - mkdocs-jupyter
   - mkdocstrings:
       handlers:
@@ -86,4 +77,4 @@ extra_css:
     - overrides/css/custom.css
 
 hooks:
-    - docs\hooks\notebooks_json_output.py
+    - docs/hooks/notebooks_json_output.py
