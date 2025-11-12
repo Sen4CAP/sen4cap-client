@@ -138,6 +138,8 @@ mkdocs-jupyter = "*"
 nbformat = "*"
 # For mermaid diagrams in docs
 pymdown-extensions = "*"
+# Eozilla packages for development
+wraptile = ">=0.0.8"
 
 [tool.pixi.pypi-dependencies]
 sen4cap_client = { path = ".", editable = true }
