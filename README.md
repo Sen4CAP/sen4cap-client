@@ -13,6 +13,8 @@ Python client for the processing service of the [ESA Sen4CAP project](https://ww
 
 ---
 
+_Note, this project and its documentation is still in an early development stage._
+
 ## Installation
 
 ### Using pip
@@ -32,8 +34,9 @@ installing it as a conda package using `pixi` is not yet available.
 
 ### Using GitHub
 
-To install and use the `sen4cap-client` package from its sources
-on GitHub you'll need to install both `git` and `pixi` first. Then:
+To install and use the `sen4cap-client` package from its sources on GitHub you'll 
+need to install both [git](https://git-scm.com/install/) and 
+[pixi](https://pixi.sh/latest/installation/) first. Then:
 
 ```bash
 git clone https://github.com/eo-tools/sen4cap-client.git
@@ -42,7 +45,7 @@ pixi install
 pixi shell
 ```
 
-The installed development environment includes also JuypterLab so the recommended
+The installed development environment includes also JupyterLab so the recommended
 way to get started is to take a look at the notebooks in the `notebooks` folder.
 
 ```bash
