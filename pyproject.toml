@@ -51,8 +51,8 @@ dependencies = [
   "uri-template",
   "httpx",
   # Eozilla dependencies
-  "cuiman >=0.0.8",
-  "gavicore >=0.0.8",
+#  "cuiman >=0.0.8",
+#  "gavicore >=0.0.8",
 ]
 
 [project.urls]
@@ -138,8 +138,9 @@ mkdocs-jupyter = "*"
 nbformat = "*"
 # For mermaid diagrams in docs
 pymdown-extensions = "*"
+pydantic-settings = ">=2.12.0,<3"
 # Eozilla packages for development
-wraptile = ">=0.0.8"
+# wraptile = ">=0.0.8"
 
 [tool.pixi.pypi-dependencies]
 sen4cap_client = { path = ".", editable = true }
@@ -147,9 +148,9 @@ sen4cap_client = { path = ".", editable = true }
 # Uncomment the following to allow using eozilla from sources
 # Note, using the wraptile server is for testing only
 #
-#cuiman = { path = "../eozilla/cuiman", editable = true }
-#gavicore = { path = "../eozilla/gavicore", editable = true }
-#wraptile = { path = "../eozilla/wraptile", editable = true }
+cuiman = { path = "../eozilla/cuiman", editable = true }
+gavicore = { path = "../eozilla/gavicore", editable = true }
+wraptile = { path = "../eozilla/wraptile", editable = true }
 
 
 # ---------------------------------------------------------------------

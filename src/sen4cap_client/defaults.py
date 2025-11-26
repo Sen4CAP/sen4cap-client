@@ -2,12 +2,7 @@
 #  Permissions are hereby granted under the terms of the Apache 2.0 License:
 #  https://opensource.org/license/apache-2-0.
 
-import os
 from typing import Final
 
-# TODO: adjust defaults
-DEFAULT_SERVER_URL: Final = (
-    os.environ.get("SEN4CAP_SERVICE_URL") or "http://localhost:8008"
-)
-DEFAULT_USER_NAME: Final = os.environ.get("SEN4CAP_USERNAME") or "testuser"
-DEFAULT_ACCESS_TOKEN: Final = os.environ.get("SEN4CAP_PASSWORD") or "1234"
+DEFAULT_API_URL: Final = "http://localhost:8080/process"
+DEFAULT_AUTH_URL: Final = "http://localhost:8080/auth/login"
