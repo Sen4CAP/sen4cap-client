@@ -7,10 +7,6 @@ from pathlib import Path
 from cuiman.api import AsyncClient, Client, ClientConfig, ClientError
 from pydantic_settings import SettingsConfigDict
 
-# TODO: remove this note before PR
-# IMPORTANT NOTE: changes here require Eozilla branch
-# https://github.com/eo-tools/eozilla/tree/forman-26-client_auth
-
 
 class Sen4CAPConfig(ClientConfig):
     model_config = SettingsConfigDict(
