@@ -5,11 +5,30 @@
 from pathlib import Path
 
 from cuiman.api import AsyncClient, Client, ClientConfig, ClientError
+from gavicore.util.model import extend_model
+from gavicore.models import InputDescription, ProcessDescription
 from pydantic_settings import SettingsConfigDict
 
 # TODO: remove this note before PR
 # IMPORTANT NOTE: changes here require Eozilla branch
-# https://github.com/eo-tools/eozilla/tree/forman-26-client_auth
+# https://github.com/eo-tools/eozilla/tree/forman-29-custom_vendor_fields
+
+
+UiLevel: TypeAlias = Literal["common", "advanced"]
+
+
+class InputDescriptionX(InputDescription):
+    level: Annotated[
+        Optional[TypeAlias],
+        Field(
+            alias="x-uiLevel",
+            title="UI level",
+            description="Describes the level of this input.",
+        ),
+    ] = None
+
+
+extend_model(InputDescription, InputDescriptionX)
 
 
 class Sen4CAPConfig(ClientConfig):
@@ -18,6 +37,17 @@ class Sen4CAPConfig(ClientConfig):
         env_file=".env",
         extra="allow",  # ClientConfig uses "forbid"
     )
+
+    @classmethod
+    def accept_input(
+        cls,
+        process_description: ProcessDescription,
+        input_name: str,
+        input_description: InputDescriptionX,
+        **params,
+    ):
+        level: UiLevel = params.pop("level", "common")
+        return input_description.level == level
 
 
 ClientConfig.default_path = Path("~").expanduser() / ".sen4cap-client"
