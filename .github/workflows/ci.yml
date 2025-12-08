@@ -33,6 +33,7 @@ jobs:
           cache: true
           auth-host: prefix.dev
           auth-token: ${{ secrets.PREFIXDEV_AUTH_TOKEN }}
+          working-directory: main
 
       - name: Run checks
         working-directory: main
