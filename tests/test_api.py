@@ -6,6 +6,10 @@ import sen4cap_client.api
 
 
 def test_api_ok():
-    assert {"AsyncClient", "Client", "ClientConfig", "ClientError"}.issubset(
-        dir(sen4cap_client.api)
-    )
+    assert {
+        "AsyncClient",
+        "Client",
+        "ClientConfig",
+        "ClientError",
+        "Sen4CAPConfig",
+    }.issubset(dir(sen4cap_client.api))

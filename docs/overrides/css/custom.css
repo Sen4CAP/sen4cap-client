@@ -1,5 +1,8 @@
-/* Adjust representation of xr.Datasets, solution by:
- https://github.com/danielfrg/mkdocs-jupyter/issues/164#issuecomment-1875664148 */
+/*
+ Adjust representation of xr.Datasets, solution by:
+ https://github.com/danielfrg/mkdocs-jupyter/issues/164#issuecomment-1875664148
+ */
+
 .md-typeset pre.xr-text-repr-fallback {
     display: none;
 }
@@ -48,7 +51,7 @@
     box-sizing: border-box;
 }
 
-/* Change font-size Jupyter output changed by hook (notebooks_json_output.py)*/
+/* Change font-size Jupyter output changed by hook (notebooks_json_output.py) */
 .jupyter-wrapper .text-json{
     font-size: .6rem;
 }
@@ -69,7 +72,7 @@
     color: #000 !important;
 }
 
-/* Enable centered images in docs*/
+/* Enable centered images in docs */
 .centered-logo {
     display: block;
     margin: 0 auto;
