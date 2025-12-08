@@ -3,23 +3,20 @@
 #  https://opensource.org/license/apache-2-0.
 
 from pathlib import Path
+from typing import Annotated, Any, Literal, Optional, TypeAlias
 
 from cuiman.api import AsyncClient, Client, ClientConfig, ClientError
-from gavicore.util.model import extend_model
 from gavicore.models import InputDescription, ProcessDescription
+from gavicore.util.model import extend_model
+from pydantic import Field
 from pydantic_settings import SettingsConfigDict
-
-# TODO: remove this note before PR
-# IMPORTANT NOTE: changes here require Eozilla branch
-# https://github.com/eo-tools/eozilla/tree/forman-29-custom_vendor_fields
-
 
 UiLevel: TypeAlias = Literal["common", "advanced"]
 
 
 class InputDescriptionX(InputDescription):
     level: Annotated[
-        Optional[TypeAlias],
+        Optional[UiLevel],
         Field(
             alias="x-uiLevel",
             title="UI level",
@@ -44,9 +41,9 @@ class Sen4CAPConfig(ClientConfig):
         process_description: ProcessDescription,
         input_name: str,
         input_description: InputDescriptionX,
-        **params,
+        **params: Any,
     ):
-        level: UiLevel = params.pop("level", "common")
+        level = params.pop("level", "common")
         return input_description.level == level
 
 

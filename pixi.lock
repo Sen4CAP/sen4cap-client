@@ -5,6 +5,8 @@ environments:
     - url: https://conda.anaconda.org/conda-forge/
     indexes:
     - https://pypi.org/simple
+    options:
+      pypi-prerelease-mode: if-necessary-or-explicit
     packages:
       linux-64:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2
@@ -2578,8 +2580,8 @@ packages:
   timestamp: 1764805305302
 - pypi: ../eozilla/cuiman
   name: cuiman
-  version: 0.0.8
-  sha256: 871aaa2a3816d3e4ff13bdf7b7a8e1350334cc4c9c31b24e4d1e9df2831e80f4
+  version: 0.0.9.dev0
+  sha256: 16ee814b5e350a9504761415afdafead83b900b5641b7bbe3fb83fe1588a62bb
   requires_dist:
   - click
   - panel
@@ -2983,8 +2985,8 @@ packages:
   timestamp: 1764784920938
 - pypi: ../eozilla/gavicore
   name: gavicore
-  version: 0.0.8
-  sha256: 488145ac6c86f4b19f5169523deab4ab235b1edb34422b14242df95c6e9e91e6
+  version: 0.0.9.dev0
+  sha256: 33b819fe8b7fce4c99bad8e3266e028b03cac32e23407811d949bd4500ec9ef3
   requires_dist:
   - click
   - pydantic
@@ -9001,7 +9003,7 @@ packages:
 - pypi: ./
   name: sen4cap-client
   version: 0.1.0.dev0
-  sha256: 54712c3d367f4ad9a319125c9a2137b741569c1846a1dc26285fecbb55732f03
+  sha256: 6f7966074c48e9c4c2b715f31ae41beee878e9b3344d0999384aef7032bcb6da
   requires_dist:
   - click
   - pydantic
@@ -10037,8 +10039,8 @@ packages:
   timestamp: 1756852490793
 - pypi: ../eozilla/wraptile
   name: wraptile
-  version: 0.0.8
-  sha256: 436c794e970c9aebbbbe51a9454f8c7c395a8df52cebed220663569b8b682bf7
+  version: 0.0.9.dev0
+  sha256: 51a85d04de266f412269a8e665749bd3af43cfd132b2fba7fe3fd049fbe07e2d
   requires_dist:
   - fastapi
   - pydantic
