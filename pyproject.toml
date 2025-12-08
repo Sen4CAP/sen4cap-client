@@ -148,9 +148,9 @@ sen4cap_client = { path = ".", editable = true }
 # Uncomment the following to allow using eozilla from sources
 # Note, using the wraptile server is for testing only
 #
-cuiman = { path = "../eozilla/cuiman", editable = true }
-gavicore = { path = "../eozilla/gavicore", editable = true }
-wraptile = { path = "../eozilla/wraptile", editable = true }
+cuiman = { path = "./eozilla/cuiman", editable = true }
+gavicore = { path = "./eozilla/gavicore", editable = true }
+wraptile = { path = "./eozilla/wraptile", editable = true }
 
 
 # ---------------------------------------------------------------------
