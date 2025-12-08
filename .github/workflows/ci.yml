@@ -13,6 +13,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          path: sen4cap-client
+
+      - name: Checkout dependency repo
+        uses: actions/checkout@v4
+        with:
+          repository: eo-tools/eozilla
+          path: eozilla
 
       - name: Setup pixi
         uses: prefix-dev/setup-pixi@v0.9.3
@@ -23,10 +31,14 @@ jobs:
           auth-token: ${{ secrets.PREFIXDEV_AUTH_TOKEN }}
 
       - name: Run checks
-        run: pixi run checks
+        run: |
+          cd sen4cap-client
+          pixi run checks
 
       - name: Run test & coverage
-        run: pixi run coverage-ci
+        run: | 
+          cd sen4cap-client
+          pixi run coverage-ci
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v5
