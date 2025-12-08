@@ -10,11 +10,15 @@ jobs:
   pixi-ci:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: main
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
-          path: sen4cap-client
+          path: main
 
       - name: Checkout dependency repo
         uses: actions/checkout@v4
@@ -31,14 +35,12 @@ jobs:
           auth-token: ${{ secrets.PREFIXDEV_AUTH_TOKEN }}
 
       - name: Run checks
-        run: |
-          cd sen4cap-client
-          pixi run checks
+        working-directory: main
+        run: pixi run checks
 
       - name: Run test & coverage
-        run: | 
-          cd sen4cap-client
-          pixi run coverage-ci
+        working-directory: main
+        run: pixi run coverage-ci
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v5
