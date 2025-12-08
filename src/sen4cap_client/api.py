@@ -22,7 +22,7 @@ class InputDescriptionX(InputDescription):
             title="UI level",
             description="Describes the level of this input.",
         ),
-    ] = None
+    ] = "common"
 
 
 extend_model(InputDescription, InputDescriptionX)
@@ -40,11 +40,12 @@ class Sen4CAPConfig(ClientConfig):
         cls,
         process_description: ProcessDescription,
         input_name: str,
-        input_description: InputDescriptionX,
+        input_description: InputDescription,
         **params: Any,
     ):
-        level = params.pop("level", "common")
-        return input_description.level == level
+        input_level = input_description.level or "common"  # type: ignore[attr-defined]
+        requested_level = params.pop("level") or "common"
+        return input_level == "common" or input_level == requested_level
 
 
 ClientConfig.default_path = Path("~").expanduser() / ".sen4cap-client"
