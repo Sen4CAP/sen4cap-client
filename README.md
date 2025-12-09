@@ -86,19 +86,19 @@ above.
 
 To run all checks, execute
 
-```commandline
+```bash
 pixi run checks
 ```
 
 To run all tests, execute
 
-```commandline
+```bash
 pixi run tests
 ```
 
 To generate a coverage report, execute
 
-```commandline
+```bash
 pixi run coverage
 ```
 
@@ -128,7 +128,7 @@ pixi run tests
 The resulting folder structure:
 
 ```commandline
-    <projects>/
+    ${projects}/
     └── sen4cap-client/
         ├── ...
         └── eozilla/
@@ -147,7 +147,7 @@ Then, during development, change `sen4cap-client/pyproject.toml` as follows
 
 Then run once more
 
-```commandline
+```bash
 pixi install
 ```
 
@@ -169,29 +169,23 @@ pytest -s scripts/integration_test.py
 
 ***JupyterLab***
 
-On the remote VM
+On the remote VM start JupyterLab without opening a browser and listening on all interfaces:
 
-Start JupyterLab without opening a browser and listening on all interfaces:
-
-
-```commandline
+```bash
+cd sen4cap-client
+pixi shell
 jupyter lab --no-browser --ip=0.0.0.0 --port=8888
 ```
 
-It will print something like:
+It will print something like `http://127.0.0.1:8888/lab?token=1e751cd...` - keep this running.
+On your local desktop machine (e.g., Windows or WSL2) SSH into the VM with port forwarding:
 
-```commandline
-http://127.0.0.1:8888/lab?token=1e751cd20cd15464f373358e85c940c076298d28a6af9ff6
-```
-
-Keep this running.
-
-On your local machine (Windows or WSL2)
-
-SSH into the VM with port forwarding:
-
-```commandline
+```bash
 ssh -L 8888:localhost:8888 user@remote-vm
 ```
 
-Now open your local browser: `http://localhost:8888`
+Now open your local browser:
+
+```
+http://127.0.0.1:8888/lab?token=1e751cd20cd...
+```
