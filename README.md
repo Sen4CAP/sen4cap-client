@@ -114,16 +114,27 @@ The `sen4cap-client` code relies heavily on the
 
 Should `sen4cap-client` require non-Sen4CAP-specific enhancements it 
 would likely be best to implement the required changes in the respective 
-Eozilla packages. For this, check out the Eozilla sources directly next 
-to this project's sources to achieve this folder structure:
+Eozilla packages. For this, check out the Eozilla sources directly into 
+the project root:
+
+```bash
+git clone https://github.com/Sen4CAP/sen4cap-client.git
+cd sen4cap-client
+git clone https://github.com/eo-tools/eozilla.git
+pixi install
+pixi run tests
+````
+
+The resulting folder structure:
 
 ```commandline
     <projects>/
-    ├── sen4cap-client/
-    └── eozilla/
-        ├── cuiman/
-        ├── gavicore/
-        └── ...
+    └── sen4cap-client/
+        ├── ...
+        └── eozilla/
+            ├── cuiman/
+            ├── gavicore/
+            └── ...
 ```
 
 Then, during development, change `sen4cap-client/pyproject.toml` as follows
