@@ -139,3 +139,34 @@ Then run once more
 ```commandline
 pixi install
 ```
+
+### Running the client in a remote VM (Windows 11)
+
+***JupyterLab***
+
+On the remote VM
+
+Start JupyterLab without opening a browser and listening on all interfaces:
+
+
+```commandline
+jupyter lab --no-browser --ip=0.0.0.0 --port=8888
+```
+
+It will print something like:
+
+```commandline
+http://127.0.0.1:8888/lab?token=1e751cd20cd15464f373358e85c940c076298d28a6af9ff6
+```
+
+Keep this running.
+
+On your local machine (Windows or WSL2)
+
+SSH into the VM with port forwarding:
+
+```commandline
+ssh -L 8888:localhost:8888 user@remote-vm
+```
+
+Now open your local browser: `http://localhost:8888`
