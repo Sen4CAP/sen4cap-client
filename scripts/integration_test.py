@@ -7,7 +7,7 @@ from sen4cap_client.api import Client
 
 def test_with_server():
     """
-    Server integration test.
+    Server integration test. To run it:
 
     ```bash
     git clone https://github.com/Sen4CAP/sen4cap-client.git
@@ -16,7 +16,7 @@ def test_with_server():
     pixi install
     pixi shell
     sen4cap-client configure
-    pytest scripts/integration_test.py
+    pytest -s scripts/integration_test.py
     ```
     """
     client = Client()

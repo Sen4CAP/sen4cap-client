@@ -140,6 +140,20 @@ Then run once more
 pixi install
 ```
 
+### Integration tests
+
+This is how to run a simple server integration test:
+
+```bash
+git clone https://github.com/Sen4CAP/sen4cap-client.git
+cd sen4cap-client
+git clone https://github.com/eo-tools/eozilla.git
+pixi install
+pixi shell
+sen4cap-client configure
+pytest -s scripts/integration_test.py
+```
+
 ### Running the client in a remote VM (Windows 11)
 
 ***JupyterLab***
