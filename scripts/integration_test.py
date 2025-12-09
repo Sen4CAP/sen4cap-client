@@ -62,7 +62,7 @@ def test_with_server():
     print("Job list ok")
 
     for job_info in jobs:
-        job_id = job_info.id
+        job_id = job_info.jobID
         job = client.get_job(job_id=job_id)
         assert job == job_info
     print("Jobs ok")
