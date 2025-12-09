@@ -1,3 +1,6 @@
+# Temporary source dependencies
+eozilla/
+
 # Documentation generation
 docs/notebooks/*.ipynb
 

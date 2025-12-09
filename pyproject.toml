@@ -99,7 +99,8 @@ platforms = ["linux-64", "win-64", "osx-64"]
 click = "*"
 fastapi = "*"
 httpx = "*"
-pydantic = "*"
+pydantic = ">=2,<3"
+pydantic-settings = ">=2,<3"
 pyyaml = "*"
 typer = "*"
 uri-template = "*"
@@ -138,7 +139,6 @@ mkdocs-jupyter = "*"
 nbformat = "*"
 # For mermaid diagrams in docs
 pymdown-extensions = "*"
-pydantic-settings = ">=2.12.0,<3"
 # Eozilla packages for development
 # wraptile = ">=0.0.8"
 
@@ -148,14 +148,28 @@ sen4cap_client = { path = ".", editable = true }
 # Uncomment the following to allow using eozilla from sources
 # Note, using the wraptile server is for testing only
 #
-cuiman = { path = "../eozilla/cuiman", editable = true }
-gavicore = { path = "../eozilla/gavicore", editable = true }
-wraptile = { path = "../eozilla/wraptile", editable = true }
+cuiman = { path = "./eozilla/cuiman", editable = true }
+gavicore = { path = "./eozilla/gavicore", editable = true }
+wraptile = { path = "./eozilla/wraptile", editable = true }
 
 
 # ---------------------------------------------------------------------
 # Pixi tasks
 # ---------------------------------------------------------------------
+
+# pixi run format
+
+[tool.pixi.tasks.format]
+depends-on = [
+  "format-with-isort",
+  "format-with-ruff",
+]
+
+[tool.pixi.tasks.format-with-isort]
+cmd = "isort src tests"
+
+[tool.pixi.tasks.format-with-ruff]
+cmd = "ruff format src tests"
 
 # pixi run checks
 

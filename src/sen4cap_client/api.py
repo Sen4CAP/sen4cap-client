@@ -3,9 +3,29 @@
 #  https://opensource.org/license/apache-2-0.
 
 from pathlib import Path
+from typing import Annotated, Any, Literal, Optional, TypeAlias
 
 from cuiman.api import AsyncClient, Client, ClientConfig, ClientError
+from gavicore.models import InputDescription, ProcessDescription
+from gavicore.util.model import extend_model
+from pydantic import Field
 from pydantic_settings import SettingsConfigDict
+
+UiLevel: TypeAlias = Literal["common", "advanced"]
+
+
+class InputDescriptionX(InputDescription):
+    level: Annotated[
+        Optional[UiLevel],
+        Field(
+            alias="x-uiLevel",
+            title="UI level",
+            description="Describes the level of this input.",
+        ),
+    ] = "common"
+
+
+extend_model(InputDescription, InputDescriptionX)
 
 
 class Sen4CAPConfig(ClientConfig):
@@ -14,6 +34,18 @@ class Sen4CAPConfig(ClientConfig):
         env_file=".env",
         extra="allow",  # ClientConfig uses "forbid"
     )
+
+    @classmethod
+    def accept_input(
+        cls,
+        process_description: ProcessDescription,
+        input_name: str,
+        input_description: InputDescription,
+        **params: Any,
+    ):
+        input_level = input_description.level or "common"  # type: ignore[attr-defined]
+        requested_level = params.pop("level") or "common"
+        return input_level == "common" or input_level == requested_level
 
 
 ClientConfig.default_path = Path("~").expanduser() / ".sen4cap-client"
