@@ -17,6 +17,26 @@ def test_api_exports_ok():
     }.issubset(dir(sen4cap_client.api))
 
 
+def test_process_description_has_level():
+    process_json = {
+        "id": "5",
+        "version": "1.0",
+        "inputs": {
+            "ipath": {
+                "schema": {"type": "string"},
+                "x-uiLevel": "advanced",
+            }
+        }        
+    }
+    process_obj = ProcessDescription.model_validate(process_json)
+    assert isinstance(process_obj, ProcessDescription)
+    assert isinstance(process_obj.inputs, dict)
+    input_obj = process_obj.inputs.get("ipath")
+    assert isinstance(input_obj, InputDescription)
+    assert hasattr(input_obj, "level")
+    assert input_obj.level == "advanced"
+
+
 def test_input_description_has_level():
     input_json = {
         "schema": {"type": "string"},
