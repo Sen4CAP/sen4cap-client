@@ -25,6 +25,10 @@ class InputDescriptionX(InputDescription):
     ] = "common"
 
 
+class ProcessDescriptionX(ProcessDescription):
+    inputs: Optional[dict[str, InputDescriptionX]] = None
+
+
 extend_model(InputDescription, InputDescriptionX)
 
 
@@ -57,6 +61,8 @@ ClientConfig.default_config = Sen4CAPConfig(
     token_header="X-Auth-Token",
     use_bearer=False,
 )
+ClientConfig.return_type_map[ProcessDescription] = ProcessDescriptionX
+ClientConfig.return_type_map[InputDescription] = InputDescriptionX
 
 __all__ = [
     "AsyncClient",
