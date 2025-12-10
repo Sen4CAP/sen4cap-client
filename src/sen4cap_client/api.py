@@ -47,10 +47,11 @@ class Sen4CAPConfig(ClientConfig):
         input_description: InputDescription,
         **params: Any,
     ):
-        assert hasattr(input_description, "level")
-        input_level = input_description.level or "common"  # type: ignore[attr-defined]
-        requested_level = params.pop("level") or "common"
-        return input_level == "common" or input_level == requested_level
+        requested_level = params.get("level") or "common"
+        input_level = getattr(input_description, "level", "common")
+        if input_level == "advanced":
+            return requested_level in ("common", "advanced")
+        return True
 
 
 ClientConfig.default_path = Path("~").expanduser() / ".sen4cap-client"
