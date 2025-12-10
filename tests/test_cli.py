@@ -5,5 +5,5 @@
 import sen4cap_client.cli
 
 
-def test_cli_ok():
+def test_cli_exports_ok():
     assert {"cli"}.issubset(dir(sen4cap_client.cli))

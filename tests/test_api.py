@@ -4,10 +4,10 @@
 
 from gavicore.models import InputDescription, ProcessDescription
 
+import sen4cap_client.api
 
-def test_api_ok():
-    import sen4cap_client.api
 
+def test_api_exports_ok():
     assert {
         "AsyncClient",
         "Client",
@@ -17,9 +17,42 @@ def test_api_ok():
     }.issubset(dir(sen4cap_client.api))
 
 
-def test_ui_input_filtering():
-    from sen4cap_client.api import Sen4CAPConfig
+def test_input_description_has_level():
+    input_json = {
+        "schema": {"type": "string"},
+        "x-uiLevel": "advanced",
+    }
+    input_obj = InputDescription.model_validate(input_json)
+    assert isinstance(input_obj, InputDescription)
+    assert hasattr(input_obj, "level")
+    assert input_obj.level == "advanced"
+    input_json_2 = input_obj.model_dump(
+        mode="json",
+        by_alias=True,
+        exclude_unset=True,
+        exclude_defaults=True,
+        exclude_none=True,
+    )
+    assert input_json_2 == input_json
 
+    input_json = {
+        "schema": {"type": "string"},
+    }
+    input_obj = InputDescription.model_validate(input_json)
+    assert isinstance(input_obj, InputDescription)
+    assert hasattr(input_obj, "level")
+    assert input_obj.level == "common"
+    input_json_2 = input_obj.model_dump(
+        mode="json",
+        by_alias=True,
+        exclude_unset=True,
+        exclude_defaults=True,
+        exclude_none=True,
+    )
+    assert input_json_2 == input_json
+
+
+def test_input_description_filtering():
     # level = "common" (the default)
     com_input = InputDescription(**{"schema": {"type": "number"}})
     # level = "advanced"
@@ -36,7 +69,7 @@ def test_ui_input_filtering():
         },
     )
 
-    config = Sen4CAPConfig()
+    config = sen4cap_client.api.Sen4CAPConfig()
     assert config.accept_input(process, "com_input", com_input, level="common") is True
     assert (
         config.accept_input(process, "com_input", com_input, level="advanced") is True

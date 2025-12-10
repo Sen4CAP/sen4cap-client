@@ -38,21 +38,30 @@ def test_with_server():
     for process_summary in processes:
         process_id = process_summary.id
         process = client.get_process(process_id=process_id)
+        w_prefix = f"Warning: prefix {process_id!r}"
         w = 0
         if not process.title:
-            print(f"Warning: {process_id!r}: missing title")
+            print(f"{w_prefix}: missing title")
             w += 1
         if not process.description:
-            print(f"Warning: {process_id!r}: missing description")
+            print(f"{w_prefix}: missing description")
             w += 1
         if not process.inputs:
-            print(f"Warning: {process_id!r}: missing inputs")
+            print(f"{w_prefix}: missing inputs")
             w += 1
+        else:
+            for input_name, input_desc in process.inputs.items():
+                if not input_name.isidentifier():
+                    print(f"{w_prefix}: input {input_name!r}: inappropriate name")
+                #if not hasattr(input_desc, "level"):
+                #    print(f"{w_prefix}: input {input_name!r}: missing level")
+                if not input_desc.title:
+                    print(f"{w_prefix}: input {input_name!r}: missing title")
         if not process.outputs:
-            print(f"Warning: {process_id!r}: missing outputs")
+            print(f"{w_prefix}: missing outputs")
             w += 1
         if w == 0:
-            print(f"Process {process_id!r} ok")
+            print(f"Process process {process_id!r} ok")
         warnings += 1
     if not warnings:
         print("Process list ok")

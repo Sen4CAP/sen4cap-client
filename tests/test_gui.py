@@ -5,5 +5,5 @@
 import sen4cap_client.gui
 
 
-def test_gui_ok():
+def test_gui_exports_ok():
     assert {"Client"}.issubset(dir(sen4cap_client.gui))
