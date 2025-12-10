@@ -1,0 +1,18 @@
+
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.pixi/envs/default/bin/python",
+  "python.terminal.activateEnvironment": false,
+
+  "terminal.integrated.defaultProfile.linux": "pixi",
+  "terminal.integrated.profiles.linux": {
+    "pixi": {
+      "path": "/usr/bin/bash",
+      "args": ["-c", "pixi shell"]
+    }
+  },
+  
+  "python-envs.defaultEnvManager": "renan-r-santos.pixi-code:pixi",
+  "python-envs.defaultPackageManager": "renan-r-santos.pixi-code:pixi",
+  "python-envs.pythonProjects": []
+}
+
