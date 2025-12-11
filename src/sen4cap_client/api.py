@@ -26,9 +26,12 @@ class InputDescriptionX(InputDescription):
 
 
 class ProcessDescriptionX(ProcessDescription):
-    inputs: Optional[dict[str, InputDescriptionX]] = None
+    inputs: Optional[dict[str, InputDescriptionX]] = None  # type: ignore[assignment]
 
 
+# TODO: we can now remove this line (and the function) as the solution using
+#  ClientConfig.return_type_map with InputDescriptionX and ProcessDescriptionX
+#  is more robust.
 extend_model(InputDescription, InputDescriptionX)
 
 
@@ -49,9 +52,9 @@ class Sen4CAPConfig(ClientConfig):
     ):
         requested_level = params.get("level") or "common"
         input_level = getattr(input_description, "level", "common")
-        if input_level == "advanced":
-            return requested_level in ("common", "advanced")
-        return True
+        if requested_level == "advanced":
+            return True
+        return input_level == "common"
 
 
 ClientConfig.default_path = Path("~").expanduser() / ".sen4cap-client"

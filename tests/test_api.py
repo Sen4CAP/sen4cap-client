@@ -5,6 +5,7 @@
 from gavicore.models import InputDescription, ProcessDescription
 
 import sen4cap_client.api
+from sen4cap_client.api import InputDescriptionX, ProcessDescriptionX
 
 
 def test_api_exports_ok():
@@ -18,8 +19,6 @@ def test_api_exports_ok():
 
 
 def test_process_description_has_level():
-    from sen4cap_client.api import InputDescriptionX, ProcessDescriptionX
-
     process_json = {
         "id": "5",
         "version": "1.0",
@@ -76,13 +75,16 @@ def test_input_description_has_level():
 
 def test_input_description_filtering():
     # level = "common" (the default)
-    com_input = InputDescription(**{"schema": {"type": "number"}})
+    com_input = InputDescriptionX(**{"schema": {"type": "number"}})
     # level = "advanced"
-    adv_input = InputDescription(
+    adv_input = InputDescriptionX(
         **{"schema": {"type": "number"}, "x-uiLevel": "advanced"}
     )
 
-    process = ProcessDescription(
+    assert com_input.level == "common"
+    assert adv_input.level == "advanced"
+
+    process = ProcessDescriptionX(
         id="p",
         version="0",
         inputs={

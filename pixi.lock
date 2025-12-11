@@ -5,6 +5,8 @@ environments:
     - url: https://conda.anaconda.org/conda-forge/
     indexes:
     - https://pypi.org/simple
+    options:
+      pypi-prerelease-mode: if-necessary-or-explicit
     packages:
       linux-64:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2
@@ -373,6 +375,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstandard-0.25.0-py313h54dd161_1.conda
       - conda: https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.7-hb78ec9c_6.conda
       - pypi: https://files.pythonhosted.org/packages/3b/28/0f5d053506ec7db22729125b18286c0633ab8b006b83b0f3b746f9ba0526/procodile-0.0.8-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6d/0d/6e0417c22085407b06c0187fe0d1c44878183db99e06302880e08c5764dd/pydevd_pycharm-253.28294.336.tar.gz
       - pypi: ./
       - pypi: ./eozilla/cuiman
       - pypi: ./eozilla/gavicore
@@ -735,6 +738,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zstandard-0.25.0-py312h01f6755_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zstd-1.5.7-h3eecb57_6.conda
       - pypi: https://files.pythonhosted.org/packages/3b/28/0f5d053506ec7db22729125b18286c0633ab8b006b83b0f3b746f9ba0526/procodile-0.0.8-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6d/0d/6e0417c22085407b06c0187fe0d1c44878183db99e06302880e08c5764dd/pydevd_pycharm-253.28294.336.tar.gz
       - pypi: ./
       - pypi: ./eozilla/cuiman
       - pypi: ./eozilla/gavicore
@@ -1085,6 +1089,7 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/win-64/zstandard-0.25.0-py312he5662c2_1.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/zstd-1.5.7-h534d264_6.conda
       - pypi: https://files.pythonhosted.org/packages/3b/28/0f5d053506ec7db22729125b18286c0633ab8b006b83b0f3b746f9ba0526/procodile-0.0.8-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/6d/0d/6e0417c22085407b06c0187fe0d1c44878183db99e06302880e08c5764dd/pydevd_pycharm-253.28294.336.tar.gz
       - pypi: ./
       - pypi: ./eozilla/cuiman
       - pypi: ./eozilla/gavicore
@@ -8195,6 +8200,10 @@ packages:
   - pkg:pypi/pydantic-settings?source=hash-mapping
   size: 43752
   timestamp: 1762786342653
+- pypi: https://files.pythonhosted.org/packages/6d/0d/6e0417c22085407b06c0187fe0d1c44878183db99e06302880e08c5764dd/pydevd_pycharm-253.28294.336.tar.gz
+  name: pydevd-pycharm
+  version: 253.28294.336
+  sha256: 0326faf1cd6c9470840ba5a289776f1bb0bb265c8d6dfe8d1cddccea63fbce9b
 - conda: https://conda.anaconda.org/conda-forge/noarch/pygments-2.19.2-pyhd8ed1ab_0.conda
   sha256: 5577623b9f6685ece2697c6eb7511b4c9ac5fb607c9babc2646c811b428fd46a
   md5: 6b6ece66ebcae2d5f326c77ef2c5a066
@@ -9001,7 +9010,7 @@ packages:
 - pypi: ./
   name: sen4cap-client
   version: 0.1.0.dev0
-  sha256: efaf96b788920564eaaec39573a430ca9c780cc5fb90437a33901d61a2fffba9
+  sha256: d47221b91cec0745a03b7594c230e6ae136dbbdd94085969ec754c87e1da5321
   requires_dist:
   - click
   - pydantic
@@ -9009,6 +9018,7 @@ packages:
   - typer
   - uri-template
   - httpx
+  - pydevd-pycharm>=253.28294.336,<254
   requires_python: '>=3.10'
   editable: true
 - conda: https://conda.anaconda.org/conda-forge/noarch/send2trash-1.8.3-pyh0d859eb_1.conda

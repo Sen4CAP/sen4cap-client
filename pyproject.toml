@@ -49,7 +49,7 @@ dependencies = [
   "pyyaml",
   "typer",
   "uri-template",
-  "httpx",
+  "httpx", "pydevd-pycharm>=253.28294.336,<254",
   # Eozilla dependencies
 #  "cuiman >=0.0.8",
 #  "gavicore >=0.0.8",
