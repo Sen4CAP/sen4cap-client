@@ -1016,7 +1016,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="client-api-usage">Client API Usage<a class="anchor-link" href="#client-api-usage">¶</a></h1><p>The Python API client allows for</p>
+<h1 id="client-api-usage">Client API Usage<a class="anchor-link" href="#client-api-usage">¶</a></h1><p>The following is a step-by-step guide that demonstrates how to use the Sen4CAP Python API in a Jupyter notebook.</p>
+<p>The Python Sen4CAP client provides the following API methods:</p>
 <ul>
 <li><code>client.get_processes()</code>: listing existing processes,</li>
 <li><code>client.get_process()</code>: get the details about a process,</li>
@@ -1026,13 +1027,8 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <li><code>client.get_job_result()</code>: getting a job's result, and finally</li>
 <li><code>client.dismiss_job()</code>: cancelling a job.</li>
 </ul>
-<p>In the following, we visit all the features by example.</p>
-<p>The client expects a running server that conforms to the
-<a href="https://ogcapi.ogc.org/processes/">OGC API - Processes: Part 1, Version 1.0</a>.
-If you don't have one available, you can also run the project's server
-with a test configuration:</p>
-<div class="highlight"><pre><span></span>wraptile<span class="w"> </span>run<span class="w"> </span>--<span class="w"> </span>wraptile.services.local.testing:service
-</pre></div>
+<p><strong>Important:</strong> Make sure you have already configured the client to run with the TAO Process API server. In a command shell run <code>sen4cap-client configure</code> and enter your credentials given that they differ from the provided default values.</p>
+<hr/>
 </div>
 </div>
 </div>
@@ -1055,11 +1051,9 @@ with a test configuration:</p>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sen4cap_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">gavicore.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessRequest</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sen4cap_client.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">Client</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-1">from sen4cap_client import Client
-from gavicore.models import ProcessRequest</div>
+<div class="clipboard-copy-txt" id="cell-1">from sen4cap_client.api import Client</div>
 </div>
 </div>
 </div>
@@ -1101,9 +1095,16 @@ client</div>
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[2]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <pre><code class="text-json">{
-  "access_token": "ip245",
-  "server_url": "http://127.0.0.1:8008",
-  "user_name": "bibo"
+  "api_key": null,
+  "api_key_header": "X-API-Key",
+  "api_url": "http://localhost:8080/process/",
+  "auth_type": "token",
+  "auth_url": "http://localhost:8080/auth/login",
+  "password": null,
+  "token": "13cd8418-0b76-4346-b89b-2f5d7f5a5959",
+  "token_header": "X-Auth-Token",
+  "use_bearer": false,
+  "username": null
 }</code></pre>
 </div>
 </div>
@@ -1144,108 +1145,34 @@ client</div>
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <pre><code class="text-json">{
-  "description": "Local test server implementing the OGC API - Processes 1.0 Standard",
+  "description": "REST API compliant with OGC Process API - Core for workflows invocation",
   "links": [
     {
-      "href": "http://127.0.0.1:8008/",
-      "hreflang": "en",
+      "href": "/process/",
       "rel": "self",
-      "title": "get_capabilities",
+      "title": "This document",
       "type": "application/json"
     },
     {
-      "href": "http://127.0.0.1:8008/openapi.json",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "openapi",
+      "href": "/process/conformance",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/conformance",
+      "title": "OGC API - Processes conformance classes implemented by this service",
       "type": "application/json"
     },
     {
-      "href": "http://127.0.0.1:8008/docs",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "swagger_ui_html",
-      "type": "text/html"
-    },
-    {
-      "href": "http://127.0.0.1:8008/docs/oauth2-redirect",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "swagger_ui_redirect",
-      "type": "text/html"
-    },
-    {
-      "href": "http://127.0.0.1:8008/redoc",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "redoc_html",
-      "type": "text/html"
-    },
-    {
-      "href": "http://127.0.0.1:8008/",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "get_capabilities",
+      "href": "/process/processes",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/processes",
+      "title": "Metadata about the processes (workflows)",
       "type": "application/json"
     },
     {
-      "href": "http://127.0.0.1:8008/conformance",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "get_conformance",
-      "type": "application/json"
-    },
-    {
-      "href": "http://127.0.0.1:8008/processes",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "get_processes",
-      "type": "application/json"
-    },
-    {
-      "href": "http://127.0.0.1:8008/processes/{processID}",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "get_process",
-      "type": "application/json"
-    },
-    {
-      "href": "http://127.0.0.1:8008/processes/{processID}/execution",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "execute_process",
-      "type": "application/json"
-    },
-    {
-      "href": "http://127.0.0.1:8008/jobs",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "get_jobs",
-      "type": "application/json"
-    },
-    {
-      "href": "http://127.0.0.1:8008/jobs/{jobId}",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "get_job",
-      "type": "application/json"
-    },
-    {
-      "href": "http://127.0.0.1:8008/jobs/{jobId}",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "dismiss_job",
-      "type": "application/json"
-    },
-    {
-      "href": "http://127.0.0.1:8008/jobs/{jobId}/results",
-      "hreflang": "en",
-      "rel": "service",
-      "title": "get_job_results",
+      "href": "/process/jobs",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/job-list",
+      "title": "Endpoint for job monitoring",
       "type": "application/json"
     }
   ],
-  "title": "Eozilla API Server (local dummy for testing)"
+  "title": "TAO OGC Process API service"
 }</code></pre>
 </div>
 </div>
@@ -1288,11 +1215,7 @@ client</div>
 <pre><code class="text-json">{
   "conformsTo": [
     "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/core",
-    "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/ogc-process-description",
-    "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/json",
-    "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/oas30",
-    "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/job-list",
-    "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/dismiss"
+    "http://www.opengis.net/spec/ogcapi-processes-1/1.0/conf/json"
   ]
 }</code></pre>
 </div>
@@ -1336,36 +1259,128 @@ client</div>
 <pre><code class="text-json">{
   "links": [
     {
-      "href": "http://127.0.0.1:8008/processes",
-      "hreflang": "en",
+      "href": "/process/processes",
       "rel": "self",
-      "title": "get_processes",
+      "type": "application/json"
+    },
+    {
+      "href": "/process/processes/3",
+      "rel": "self",
+      "title": "Process description",
+      "type": "application/json"
+    },
+    {
+      "href": "/process/processes/3/execution",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "title": "Process execution",
+      "type": "application/json"
+    },
+    {
+      "href": "/process/processes/2",
+      "rel": "self",
+      "title": "Process description",
+      "type": "application/json"
+    },
+    {
+      "href": "/process/processes/2/execution",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "title": "Process execution",
+      "type": "application/json"
+    },
+    {
+      "href": "/process/processes/1",
+      "rel": "self",
+      "title": "Process description",
+      "type": "application/json"
+    },
+    {
+      "href": "/process/processes/1/execution",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "title": "Process execution",
+      "type": "application/json"
+    },
+    {
+      "href": "/process/processes/6",
+      "rel": "self",
+      "title": "Process description",
+      "type": "application/json"
+    },
+    {
+      "href": "/process/processes/6/execution",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "title": "Process execution",
+      "type": "application/json"
+    },
+    {
+      "href": "/process/processes/5",
+      "rel": "self",
+      "title": "Process description",
+      "type": "application/json"
+    },
+    {
+      "href": "/process/processes/5/execution",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/execute",
+      "title": "Process execution",
       "type": "application/json"
     }
   ],
   "processes": [
     {
-      "description": "Sleeps for `duration` seconds. Fails on purpose if `fail` is `True`. Returns the effective amount of sleep in seconds.",
-      "id": "sleep_a_while",
-      "title": "Sleep Processor",
-      "version": "0.0.0"
+      "id": "3",
+      "jobControlOptions": [
+        "async-execute"
+      ],
+      "outputTransmission": [
+        "value"
+      ],
+      "title": "Sentinel-2 Vegetation Indices",
+      "version": "1.0"
     },
     {
-      "description": "Returns the list of prime numbers between a `min_val` and `max_val`.",
-      "id": "primes_between",
-      "title": "Prime Processor",
-      "version": "0.0.0"
+      "id": "2",
+      "jobControlOptions": [
+        "async-execute"
+      ],
+      "outputTransmission": [
+        "value"
+      ],
+      "title": "Sentinel-1 Flood Detection",
+      "version": "1.0"
     },
     {
-      "description": "Simulate a set scene images slices for testing. Creates an xarray dataset with `periodicity` time slices and writes it as Zarr into a temporary location. Requires installed `dask`, `xarray`, and `zarr` packages.",
-      "id": "simulate_scene",
-      "title": "Generate scene for testing",
-      "version": "0.0.0"
+      "id": "1",
+      "jobControlOptions": [
+        "async-execute"
+      ],
+      "outputTransmission": [
+        "value"
+      ],
+      "title": "Sentinel-2 Water Indices",
+      "version": "1.0"
     },
     {
-      "id": "return_base_model",
-      "title": "BaseModel Test",
-      "version": "0.0.0"
+      "description": "Sen4CAP L3B LAI Processor ",
+      "id": "6",
+      "jobControlOptions": [
+        "async-execute"
+      ],
+      "outputTransmission": [
+        "value"
+      ],
+      "title": "L3BProcessor - LAI",
+      "version": "1.0"
+    },
+    {
+      "description": "Sen4CAP L3B NDVI Processor ",
+      "id": "5",
+      "jobControlOptions": [
+        "async-execute"
+      ],
+      "outputTransmission": [
+        "value"
+      ],
+      "title": "L3BProcessor - NDVI",
+      "version": "1.0"
     }
   ]
 }</code></pre>
@@ -1393,9 +1408,9 @@ client</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">get_process</span><span class="p">(</span><span class="n">process_id</span><span class="o">=</span><span class="s2">"sleep_a_while"</span><span class="p">)</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">get_process</span><span class="p">(</span><span class="n">process_id</span><span class="o">=</span><span class="s2">"6"</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-6">client.get_process(process_id="sleep_a_while")</div>
+<div class="clipboard-copy-txt" id="cell-6">client.get_process(process_id="6")</div>
 </div>
 </div>
 </div>
@@ -1408,36 +1423,461 @@ client</div>
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <pre><code class="text-json">{
-  "description": "Sleeps for `duration` seconds. Fails on purpose if `fail` is `True`. Returns the effective amount of sleep in seconds.",
-  "id": "sleep_a_while",
+  "id": "6",
   "inputs": {
-    "duration": {
-      "minOccurs": 0,
+    "3c1e113a-71ee-4133-a03e-bd3877e58d26": {
+      "description": "",
       "schema": {
-        "default": 10,
-        "type": "number"
+        "default": "",
+        "description": "",
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
       },
-      "title": "Duration"
+      "title": "baseline"
     },
-    "fail": {
+    "921a5394-9d85-4e80-a9cb-db4267546b0d": {
+      "description": "",
+      "schema": {
+        "default": "",
+        "description": "",
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "siteid"
+    },
+    "9e6d56f2-470a-4d90-8c2a-f76553f81094": {
+      "description": "inxml",
+      "metadata": [
+        {
+          "title": "cardinality"
+        },
+        {
+          "title": "format"
+        },
+        {
+          "title": "sensor"
+        }
+      ],
       "minOccurs": 0,
       "schema": {
-        "default": false,
+        "maxItems": 0,
+        "type": "array"
+      },
+      "title": "inxml"
+    },
+    "a_nodata": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "a_nodata"
+    },
+    "a_offset": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "a_offset"
+    },
+    "a_scale": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "a_scale"
+    },
+    "a_srs": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "a_srs"
+    },
+    "a_ullr": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "a_ullr"
+    },
+    "addalpha": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
         "type": "boolean"
       },
-      "title": "Fail"
-    }
-  },
-  "outputs": {
-    "return_value": {
+      "title": "addalpha"
+    },
+    "allow_projection_difference": {
       "schema": {
-        "type": "number"
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
       },
-      "title": "Return Value"
+      "title": "allow_projection_difference"
+    },
+    "b": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "b"
+    },
+    "co": {
+      "schema": {
+        "maxItems": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "array"
+      },
+      "title": "co"
+    },
+    "colorinterp": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "colorinterp"
+    },
+    "da58cea3-0356-4d63-b4ec-a47195633127": {
+      "description": "",
+      "schema": {
+        "description": "",
+        "maxItems": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "array"
+      },
+      "title": "processor_tiles"
+    },
+    "eco": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "eco"
+    },
+    "epo": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "epo"
+    },
+    "expand": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "expand"
+    },
+    "exponent": {
+      "schema": {
+        "maxItems": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "array"
+      },
+      "title": "exponent"
+    },
+    "gcp": {
+      "schema": {
+        "maxItems": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "array"
+      },
+      "title": "gcp"
+    },
+    "hidenodata": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "hidenodata"
+    },
+    "input_file_list": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "input_file_list"
+    },
+    "mask": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "mask"
+    },
+    "mo": {
+      "schema": {
+        "maxItems": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "array"
+      },
+      "title": "mo"
+    },
+    "norat": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "norat"
+    },
+    "of": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "of"
+    },
+    "oo": {
+      "schema": {
+        "maxItems": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "array"
+      },
+      "title": "oo"
+    },
+    "ot": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "ot"
+    },
+    "outsize": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "outsize"
+    },
+    "overwrite": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "overwrite"
+    },
+    "projwin": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "projwin"
+    },
+    "projwin_srs": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "projwin_srs"
+    },
+    "q": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "q"
+    },
+    "r": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "r"
+    },
+    "resolution": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "resolution"
+    },
+    "scale": {
+      "schema": {
+        "maxItems": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "array"
+      },
+      "title": "scale"
+    },
+    "sd": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "sd"
+    },
+    "sds": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "sds"
+    },
+    "separate": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "separate"
+    },
+    "srcnodata": {
+      "schema": {
+        "maxItems": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "array"
+      },
+      "title": "srcnodata"
+    },
+    "srcwin": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "srcwin"
+    },
+    "stats": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "stats"
+    },
+    "strict": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "strict"
+    },
+    "tap": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "tap"
+    },
+    "te": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "te"
+    },
+    "tileindex": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "tileindex"
+    },
+    "tr": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "string"
+      },
+      "title": "tr"
+    },
+    "unscale": {
+      "schema": {
+        "maxLength": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "boolean"
+      },
+      "title": "unscale"
+    },
+    "vrtnodata": {
+      "schema": {
+        "maxItems": 0,
+        "nullable": true,
+        "title": "Parameter Schema",
+        "type": "array"
+      },
+      "title": "vrtnodata"
     }
   },
-  "title": "Sleep Processor",
-  "version": "0.0.0"
+  "version": "1.0"
 }</code></pre>
 </div>
 </div>
@@ -1450,7 +1890,7 @@ client</div>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
@@ -1463,9 +1903,11 @@ client</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">get_jobs</span><span class="p">()</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">job_list</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">get_jobs</span><span class="p">()</span>
+<span class="n">job_list</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-7">client.get_jobs()</div>
+<div class="clipboard-copy-txt" id="cell-7">job_list = client.get_jobs()
+job_list</div>
 </div>
 </div>
 </div>
@@ -1475,20 +1917,2170 @@ client</div>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <pre><code class="text-json">{
-  "jobs": [],
-  "links": [
+  "jobs": [
     {
-      "href": "http://127.0.0.1:8008/jobs",
-      "hreflang": "en",
-      "rel": "self",
-      "title": "get_jobs",
-      "type": "application/json"
+      "created": "2025-12-09T09:32:33Z",
+      "jobID": "109",
+      "links": [
+        {
+          "href": "/process/jobs109",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs109/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3B NDVI Processor 5.0",
+      "progress": 100,
+      "started": "2025-12-09T09:32:33Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-09T09:32:42Z"
+    },
+    {
+      "created": "2025-12-09T09:29:38Z",
+      "jobID": "108",
+      "links": [
+        {
+          "href": "/process/jobs108",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs108/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3B NDVI Processor 5.0",
+      "progress": 100,
+      "started": "2025-12-09T09:29:38Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-09T09:29:42Z"
+    },
+    {
+      "created": "2025-12-09T09:03:41Z",
+      "jobID": "107",
+      "links": [
+        {
+          "href": "/process/jobs107",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs107/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3B NDVI Processor 5.0",
+      "progress": 100,
+      "started": "2025-12-09T09:03:41Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-09T09:03:52Z"
+    },
+    {
+      "created": "2025-12-09T04:31:53Z",
+      "jobID": "106",
+      "links": [
+        {
+          "href": "/process/jobs106",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs106/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-09T04:31:53Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-09T04:32:05Z"
+    },
+    {
+      "created": "2025-12-08T17:37:44Z",
+      "jobID": "105",
+      "links": [
+        {
+          "href": "/process/jobs105",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs105/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T17:37:44Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T17:38:05Z"
+    },
+    {
+      "created": "2025-12-08T16:37:28Z",
+      "jobID": "104",
+      "links": [
+        {
+          "href": "/process/jobs104",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs104/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T16:37:28Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T16:37:45Z"
+    },
+    {
+      "created": "2025-12-08T16:31:49Z",
+      "jobID": "103",
+      "links": [
+        {
+          "href": "/process/jobs103",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs103/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T16:31:49Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T16:32:05Z"
+    },
+    {
+      "created": "2025-12-08T16:30:30Z",
+      "jobID": "102",
+      "links": [
+        {
+          "href": "/process/jobs102",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs102/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T16:30:30Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T16:30:45Z"
+    },
+    {
+      "created": "2025-12-08T15:00:55Z",
+      "jobID": "101",
+      "links": [
+        {
+          "href": "/process/jobs101",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs101/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T15:00:55Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T15:01:15Z"
+    },
+    {
+      "created": "2025-12-08T14:17:44Z",
+      "jobID": "100",
+      "links": [
+        {
+          "href": "/process/jobs100",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs100/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T14:17:44Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T14:18:05Z"
+    },
+    {
+      "created": "2025-12-08T10:42:14Z",
+      "jobID": "99",
+      "links": [
+        {
+          "href": "/process/jobs99",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs99/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T10:42:14Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T10:42:36Z"
+    },
+    {
+      "created": "2025-12-08T10:14:54Z",
+      "jobID": "98",
+      "links": [
+        {
+          "href": "/process/jobs98",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs98/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T10:14:54Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T10:15:13Z"
+    },
+    {
+      "created": "2025-12-08T10:14:06Z",
+      "jobID": "97",
+      "links": [
+        {
+          "href": "/process/jobs97",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs97/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T10:14:06Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T10:14:23Z"
+    },
+    {
+      "created": "2025-12-08T10:12:57Z",
+      "jobID": "96",
+      "links": [
+        {
+          "href": "/process/jobs96",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs96/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T10:12:57Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T10:13:33Z"
+    },
+    {
+      "created": "2025-12-08T10:10:12Z",
+      "jobID": "95",
+      "links": [
+        {
+          "href": "/process/jobs95",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs95/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T10:10:12Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T10:10:33Z"
+    },
+    {
+      "created": "2025-12-08T10:05:23Z",
+      "jobID": "94",
+      "links": [
+        {
+          "href": "/process/jobs94",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs94/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T10:05:23Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T10:05:25Z"
+    },
+    {
+      "created": "2025-12-08T09:56:46Z",
+      "jobID": "93",
+      "links": [
+        {
+          "href": "/process/jobs93",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs93/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T09:56:46Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T09:57:03Z"
+    },
+    {
+      "created": "2025-12-08T09:56:17Z",
+      "jobID": "92",
+      "links": [
+        {
+          "href": "/process/jobs92",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs92/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T09:56:17Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T09:56:18Z"
+    },
+    {
+      "created": "2025-12-08T09:51:19Z",
+      "jobID": "91",
+      "links": [
+        {
+          "href": "/process/jobs91",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs91/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T09:51:19Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T09:51:20Z"
+    },
+    {
+      "created": "2025-12-08T09:50:55Z",
+      "jobID": "90",
+      "links": [
+        {
+          "href": "/process/jobs90",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs90/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T09:50:55Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T09:50:58Z"
+    },
+    {
+      "created": "2025-12-08T09:50:02Z",
+      "jobID": "89",
+      "links": [
+        {
+          "href": "/process/jobs89",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs89/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T09:50:02Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T09:50:03Z"
+    },
+    {
+      "created": "2025-12-08T09:22:35Z",
+      "jobID": "88",
+      "links": [
+        {
+          "href": "/process/jobs88",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs88/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T09:22:35Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T09:22:36Z"
+    },
+    {
+      "created": "2025-12-08T09:10:15Z",
+      "jobID": "87",
+      "links": [
+        {
+          "href": "/process/jobs87",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs87/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T09:10:15Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T09:10:20Z"
+    },
+    {
+      "created": "2025-12-08T09:09:39Z",
+      "jobID": "86",
+      "links": [
+        {
+          "href": "/process/jobs86",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs86/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T09:09:39Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T09:09:43Z"
+    },
+    {
+      "created": "2025-12-08T09:00:55Z",
+      "jobID": "85",
+      "links": [
+        {
+          "href": "/process/jobs85",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs85/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI - TESTS",
+      "progress": 100,
+      "started": "2025-12-08T09:00:55Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-08T09:01:12Z"
+    },
+    {
+      "created": "2025-12-08T08:58:41Z",
+      "jobID": "84",
+      "links": [
+        {
+          "href": "/process/jobs84",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs84/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T08:58:41Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T08:58:42Z"
+    },
+    {
+      "created": "2025-12-08T08:46:53Z",
+      "jobID": "83",
+      "links": [
+        {
+          "href": "/process/jobs83",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs83/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T08:46:53Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T08:57:24Z"
+    },
+    {
+      "created": "2025-12-08T08:26:41Z",
+      "jobID": "82",
+      "links": [
+        {
+          "href": "/process/jobs82",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs82/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T08:26:41Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T08:26:42Z"
+    },
+    {
+      "created": "2025-12-08T07:32:42Z",
+      "jobID": "81",
+      "links": [
+        {
+          "href": "/process/jobs81",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs81/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-08T07:32:42Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-08T07:32:42Z"
+    },
+    {
+      "created": "2025-12-07T14:25:31Z",
+      "jobID": "80",
+      "links": [
+        {
+          "href": "/process/jobs80",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs80/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-07T14:25:31Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T14:25:33Z"
+    },
+    {
+      "created": "2025-12-07T14:20:11Z",
+      "jobID": "79",
+      "links": [
+        {
+          "href": "/process/jobs79",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs79/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-07T14:20:11Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T14:20:12Z"
+    },
+    {
+      "created": "2025-12-07T14:13:32Z",
+      "jobID": "78",
+      "links": [
+        {
+          "href": "/process/jobs78",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs78/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-07T14:13:32Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T14:16:36Z"
+    },
+    {
+      "created": "2025-12-07T14:12:38Z",
+      "jobID": "77",
+      "links": [
+        {
+          "href": "/process/jobs77",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs77/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-07T14:12:38Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T14:12:52Z"
+    },
+    {
+      "created": "2025-12-07T14:10:40Z",
+      "jobID": "76",
+      "links": [
+        {
+          "href": "/process/jobs76",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs76/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-07T14:10:40Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T14:12:14Z"
+    },
+    {
+      "created": "2025-12-07T14:08:19Z",
+      "jobID": "75",
+      "links": [
+        {
+          "href": "/process/jobs75",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs75/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-07T14:08:19Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T14:08:31Z"
+    },
+    {
+      "created": "2025-12-07T14:00:11Z",
+      "jobID": "74",
+      "links": [
+        {
+          "href": "/process/jobs74",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs74/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-07T14:00:11Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T14:00:13Z"
+    },
+    {
+      "created": "2025-12-07T13:58:48Z",
+      "jobID": "73",
+      "links": [
+        {
+          "href": "/process/jobs73",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs73/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-07T13:58:48Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T13:58:49Z"
+    },
+    {
+      "created": "2025-12-07T13:58:29Z",
+      "jobID": "70",
+      "links": [
+        {
+          "href": "/process/jobs70",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs70/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-07T13:58:29Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T13:58:29Z"
+    },
+    {
+      "created": "2025-12-05T18:56:00Z",
+      "jobID": "72",
+      "links": [
+        {
+          "href": "/process/jobs72",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs72/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T18:56:00Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T13:58:29Z"
+    },
+    {
+      "created": "2025-12-05T18:54:16Z",
+      "jobID": "71",
+      "links": [
+        {
+          "href": "/process/jobs71",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs71/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T18:54:16Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-07T13:58:29Z"
+    },
+    {
+      "created": "2025-12-05T17:42:54Z",
+      "jobID": "69",
+      "links": [
+        {
+          "href": "/process/jobs69",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs69/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T17:42:54Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T17:42:55Z"
+    },
+    {
+      "created": "2025-12-05T17:36:49Z",
+      "jobID": "68",
+      "links": [
+        {
+          "href": "/process/jobs68",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs68/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T17:36:49Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T17:36:50Z"
+    },
+    {
+      "created": "2025-12-05T17:25:11Z",
+      "jobID": "67",
+      "links": [
+        {
+          "href": "/process/jobs67",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs67/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T17:25:11Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T17:25:12Z"
+    },
+    {
+      "created": "2025-12-05T15:59:10Z",
+      "jobID": "66",
+      "links": [
+        {
+          "href": "/process/jobs66",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs66/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:59:10Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:59:12Z"
+    },
+    {
+      "created": "2025-12-05T15:53:51Z",
+      "jobID": "65",
+      "links": [
+        {
+          "href": "/process/jobs65",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs65/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:53:51Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-05T15:54:15Z"
+    },
+    {
+      "created": "2025-12-05T15:49:36Z",
+      "jobID": "64",
+      "links": [
+        {
+          "href": "/process/jobs64",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs64/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:49:36Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:49:41Z"
+    },
+    {
+      "created": "2025-12-05T15:42:14Z",
+      "jobID": "63",
+      "links": [
+        {
+          "href": "/process/jobs63",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs63/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:42:14Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:48:30Z"
+    },
+    {
+      "created": "2025-12-05T15:38:39Z",
+      "jobID": "62",
+      "links": [
+        {
+          "href": "/process/jobs62",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs62/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:38:39Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-05T15:41:55Z"
+    },
+    {
+      "created": "2025-12-05T15:36:21Z",
+      "jobID": "61",
+      "links": [
+        {
+          "href": "/process/jobs61",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs61/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:36:21Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-05T15:38:25Z"
+    },
+    {
+      "created": "2025-12-05T15:34:48Z",
+      "jobID": "60",
+      "links": [
+        {
+          "href": "/process/jobs60",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs60/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:34:48Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:36:01Z"
+    },
+    {
+      "created": "2025-12-05T15:33:17Z",
+      "jobID": "59",
+      "links": [
+        {
+          "href": "/process/jobs59",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs59/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:33:17Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:34:37Z"
+    },
+    {
+      "created": "2025-12-05T15:32:04Z",
+      "jobID": "58",
+      "links": [
+        {
+          "href": "/process/jobs58",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs58/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:32:04Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:33:09Z"
+    },
+    {
+      "created": "2025-12-05T15:31:06Z",
+      "jobID": "57",
+      "links": [
+        {
+          "href": "/process/jobs57",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs57/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:31:06Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:31:56Z"
+    },
+    {
+      "created": "2025-12-05T15:28:00Z",
+      "jobID": "56",
+      "links": [
+        {
+          "href": "/process/jobs56",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs56/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:28:00Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:30:57Z"
+    },
+    {
+      "created": "2025-12-05T15:24:30Z",
+      "jobID": "55",
+      "links": [
+        {
+          "href": "/process/jobs55",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs55/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:24:30Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:24:42Z"
+    },
+    {
+      "created": "2025-12-05T15:22:47Z",
+      "jobID": "54",
+      "links": [
+        {
+          "href": "/process/jobs54",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs54/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:22:47Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:24:16Z"
+    },
+    {
+      "created": "2025-12-05T15:18:55Z",
+      "jobID": "53",
+      "links": [
+        {
+          "href": "/process/jobs53",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs53/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:18:55Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:22:38Z"
+    },
+    {
+      "created": "2025-12-05T15:05:06Z",
+      "jobID": "52",
+      "links": [
+        {
+          "href": "/process/jobs52",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs52/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:05:06Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:05:17Z"
+    },
+    {
+      "created": "2025-12-05T15:02:37Z",
+      "jobID": "51",
+      "links": [
+        {
+          "href": "/process/jobs51",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs51/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T15:02:37Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T15:02:45Z"
+    },
+    {
+      "created": "2025-12-05T14:59:17Z",
+      "jobID": "50",
+      "links": [
+        {
+          "href": "/process/jobs50",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs50/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T14:59:17Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T14:59:19Z"
+    },
+    {
+      "created": "2025-12-05T14:39:02Z",
+      "jobID": "49",
+      "links": [
+        {
+          "href": "/process/jobs49",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs49/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T14:39:02Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T14:43:24Z"
+    },
+    {
+      "created": "2025-12-05T14:38:40Z",
+      "jobID": "48",
+      "links": [
+        {
+          "href": "/process/jobs48",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs48/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T14:38:40Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T14:38:40Z"
+    },
+    {
+      "created": "2025-12-05T14:26:52Z",
+      "jobID": "47",
+      "links": [
+        {
+          "href": "/process/jobs47",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs47/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T14:26:52Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T14:26:54Z"
+    },
+    {
+      "created": "2025-12-05T14:26:22Z",
+      "jobID": "46",
+      "links": [
+        {
+          "href": "/process/jobs46",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs46/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T14:26:22Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T14:26:30Z"
+    },
+    {
+      "created": "2025-12-05T14:19:34Z",
+      "jobID": "45",
+      "links": [
+        {
+          "href": "/process/jobs45",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs45/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T14:19:34Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T14:19:35Z"
+    },
+    {
+      "created": "2025-12-05T14:18:27Z",
+      "jobID": "44",
+      "links": [
+        {
+          "href": "/process/jobs44",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs44/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T14:18:27Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T14:18:29Z"
+    },
+    {
+      "created": "2025-12-05T12:43:52Z",
+      "jobID": "43",
+      "links": [
+        {
+          "href": "/process/jobs43",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs43/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI - TESTS",
+      "progress": 100,
+      "started": "2025-12-05T12:43:52Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-05T12:44:06Z"
+    },
+    {
+      "created": "2025-12-05T08:50:15Z",
+      "jobID": "42",
+      "links": [
+        {
+          "href": "/process/jobs42",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs42/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T08:50:15Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T08:50:20Z"
+    },
+    {
+      "created": "2025-12-05T08:33:18Z",
+      "jobID": "41",
+      "links": [
+        {
+          "href": "/process/jobs41",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs41/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T08:33:18Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T08:33:24Z"
+    },
+    {
+      "created": "2025-12-05T08:30:44Z",
+      "jobID": "40",
+      "links": [
+        {
+          "href": "/process/jobs40",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs40/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T08:30:44Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-05T08:32:36Z"
+    },
+    {
+      "created": "2025-12-05T08:18:44Z",
+      "jobID": "39",
+      "links": [
+        {
+          "href": "/process/jobs39",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs39/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T08:18:44Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-05T08:28:34Z"
+    },
+    {
+      "created": "2025-12-05T08:17:08Z",
+      "jobID": "38",
+      "links": [
+        {
+          "href": "/process/jobs38",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs38/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T08:17:08Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T08:17:47Z"
+    },
+    {
+      "created": "2025-12-05T08:03:20Z",
+      "jobID": "37",
+      "links": [
+        {
+          "href": "/process/jobs37",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs37/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T08:03:20Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T08:04:30Z"
+    },
+    {
+      "created": "2025-12-05T07:10:09Z",
+      "jobID": "36",
+      "links": [
+        {
+          "href": "/process/jobs36",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs36/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T07:10:09Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T07:56:34Z"
+    },
+    {
+      "created": "2025-12-05T07:09:16Z",
+      "jobID": "34",
+      "links": [
+        {
+          "href": "/process/jobs34",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs34/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T07:09:16Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T07:09:16Z"
+    },
+    {
+      "created": "2025-12-05T07:08:22Z",
+      "jobID": "35",
+      "links": [
+        {
+          "href": "/process/jobs35",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs35/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T07:08:22Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T07:09:16Z"
+    },
+    {
+      "created": "2025-12-05T07:00:09Z",
+      "jobID": "33",
+      "links": [
+        {
+          "href": "/process/jobs33",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs33/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T07:00:09Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T07:00:11Z"
+    },
+    {
+      "created": "2025-12-05T06:59:24Z",
+      "jobID": "32",
+      "links": [
+        {
+          "href": "/process/jobs32",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs32/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T06:59:24Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T06:59:25Z"
+    },
+    {
+      "created": "2025-12-05T05:17:47Z",
+      "jobID": "31",
+      "links": [
+        {
+          "href": "/process/jobs31",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs31/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T05:17:47Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T05:17:48Z"
+    },
+    {
+      "created": "2025-12-05T04:50:53Z",
+      "jobID": "30",
+      "links": [
+        {
+          "href": "/process/jobs30",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs30/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-05T04:50:53Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-05T04:50:54Z"
+    },
+    {
+      "created": "2025-12-04T20:30:55Z",
+      "jobID": "29",
+      "links": [
+        {
+          "href": "/process/jobs29",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs29/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-04T20:30:55Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-04T20:31:40Z"
+    },
+    {
+      "created": "2025-12-04T20:29:53Z",
+      "jobID": "28",
+      "links": [
+        {
+          "href": "/process/jobs28",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs28/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-04T20:29:53Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-04T20:29:54Z"
+    },
+    {
+      "created": "2025-12-04T20:28:06Z",
+      "jobID": "27",
+      "links": [
+        {
+          "href": "/process/jobs27",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs27/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-04T20:28:06Z",
+      "status": "successful",
+      "type": "process",
+      "updated": "2025-12-04T20:29:23Z"
+    },
+    {
+      "created": "2025-12-04T20:27:40Z",
+      "jobID": "26",
+      "links": [
+        {
+          "href": "/process/jobs26",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs26/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI, 04/12/2025 22:10:38",
+      "progress": 100,
+      "started": "2025-12-04T20:27:40Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-04T20:27:40Z"
+    },
+    {
+      "created": "2025-12-04T20:27:40Z",
+      "jobID": "25",
+      "links": [
+        {
+          "href": "/process/jobs25",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs25/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI, 04/12/2025 21:59:28",
+      "progress": 100,
+      "started": "2025-12-04T20:27:40Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-04T20:27:40Z"
+    },
+    {
+      "created": "2025-12-04T20:27:40Z",
+      "jobID": "24",
+      "links": [
+        {
+          "href": "/process/jobs24",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs24/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI, 04/12/2025 21:58:18",
+      "progress": 100,
+      "started": "2025-12-04T20:27:40Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-04T20:27:40Z"
+    },
+    {
+      "created": "2025-12-04T18:28:28Z",
+      "jobID": "13",
+      "links": [
+        {
+          "href": "/process/jobs13",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs13/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-04T18:28:28Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-04T18:28:30Z"
+    },
+    {
+      "created": "2025-12-04T18:12:13Z",
+      "jobID": "12",
+      "links": [
+        {
+          "href": "/process/jobs12",
+          "rel": "self",
+          "title": "Job status",
+          "type": "application/json"
+        },
+        {
+          "href": "/process/jobs12/results",
+          "rel": "self",
+          "title": "Job results (when status=successful)",
+          "type": "application/json"
+        }
+      ],
+      "processID": "L3BProcessor - NDVI",
+      "progress": 100,
+      "started": "2025-12-04T18:12:13Z",
+      "status": "failed",
+      "type": "process",
+      "updated": "2025-12-04T18:12:15Z"
     }
-  ]
+  ],
+  "links": []
 }</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0ba3c153-4950-4155-9dbe-a0ac9e8a44cb">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">gavicore.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">JobStatus</span>
+
+<span class="n">sucessful_jobs</span> <span class="o">=</span> <span class="p">[</span><span class="n">job</span><span class="o">.</span><span class="n">jobID</span> <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">job_list</span><span class="o">.</span><span class="n">jobs</span> <span class="k">if</span> <span class="n">job</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">JobStatus</span><span class="o">.</span><span class="n">successful</span><span class="p">]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">sucessful_jobs</span><span class="p">)</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-8">from gavicore.models import JobStatus
+
+sucessful_jobs = [job.jobID for job in job_list.jobs if job.status == JobStatus.successful]
+len(sucessful_jobs)</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>21</pre>
 </div>
 </div>
 </div>
@@ -1503,7 +4095,7 @@ client</div>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1515,7 +4107,7 @@ client</div>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">execute_process</span><span class="p">(</span><span class="n">process_id</span><span class="o">=</span><span class="s2">"sleep_a_while"</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="n">ProcessRequest</span><span class="p">(</span><span class="n">duration</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-8">client.execute_process(process_id="sleep_a_while", request=ProcessRequest(duration=2))</div>
+<div class="clipboard-copy-txt" id="cell-9">client.execute_process(process_id="sleep_a_while", request=ProcessRequest(duration=2))</div>
 </div>
 </div>
 </div>
@@ -1524,79 +4116,28 @@ client</div>
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<pre><code class="text-json">{
-  "created": "2025-11-12T10:14:54.537952Z",
-  "jobID": "job_0",
-  "processID": "sleep_a_while",
-  "progress": 0,
-  "started": "2025-11-12T10:14:54.538644Z",
-  "status": "running",
-  "type": "process",
-  "updated": "2025-11-12T10:14:54.538798Z"
-}</code></pre>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[8]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> client.execute_process(process_id=<span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">sleep_a_while</span><span class="ansi-yellow-fg">"</span>, request=<span class="ansi-yellow-bg">ProcessRequest</span>(duration=<span class="ansi-green-fg">2</span>))
+
+<span class="ansi-red-fg">NameError</span>: name 'ProcessRequest' is not defined</pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=4cd38b1d-5989-4991-9b62-d1981d33a46e">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=bf4d3ff2-b436-4f46-abd4-5986ce263655">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">execute_process</span><span class="p">(</span><span class="n">process_id</span><span class="o">=</span><span class="s2">"sleep_a_while"</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="p">{</span><span class="s2">"fail"</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-9">client.execute_process(process_id="sleep_a_while", request={"fail": True})</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[9]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<pre><code class="text-json">{
-  "created": "2025-11-12T10:14:54.565282Z",
-  "jobID": "job_1",
-  "processID": "sleep_a_while",
-  "progress": 0,
-  "started": "2025-11-12T10:14:54.567659Z",
-  "status": "running",
-  "type": "process",
-  "updated": "2025-11-12T10:14:54.567745Z"
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=21b94f40-5a1b-408f-a3a7-52de97b05b82">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-10">
@@ -1609,43 +4150,21 @@ client</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">execute_process</span><span class="p">(</span><span class="n">process_id</span><span class="o">=</span><span class="s2">"primes_between"</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="p">{})</span>
+<div class="highlight-ipynb hl-python"><pre><span></span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-10">client.execute_process(process_id="primes_between", request={})</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<pre><code class="text-json">{
-  "created": "2025-11-12T10:14:54.591914Z",
-  "finished": "2025-11-12T10:14:54.592663Z",
-  "jobID": "job_2",
-  "message": "Done",
-  "processID": "primes_between",
-  "started": "2025-11-12T10:14:54.592480Z",
-  "status": "successful",
-  "type": "process",
-  "updated": "2025-11-12T10:14:54.592637Z"
-}</code></pre>
+<div class="clipboard-copy-txt" id="cell-10"></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=9cf5e867-d91e-45dd-91b3-a54bc2d087a7">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4cd38b1d-5989-4991-9b62-d1981d33a46e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-11">
@@ -1658,76 +4177,21 @@ client</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">get_jobs</span><span class="p">()</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">execute_process</span><span class="p">(</span><span class="n">process_id</span><span class="o">=</span><span class="s2">"sleep_a_while"</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="p">{</span><span class="s2">"fail"</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-11">client.get_jobs()</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<pre><code class="text-json">{
-  "jobs": [
-    {
-      "created": "2025-11-12T10:14:54.537952Z",
-      "jobID": "job_0",
-      "processID": "sleep_a_while",
-      "progress": 0,
-      "started": "2025-11-12T10:14:54.538644Z",
-      "status": "running",
-      "type": "process",
-      "updated": "2025-11-12T10:14:54.538798Z"
-    },
-    {
-      "created": "2025-11-12T10:14:54.565282Z",
-      "jobID": "job_1",
-      "processID": "sleep_a_while",
-      "progress": 0,
-      "started": "2025-11-12T10:14:54.567659Z",
-      "status": "running",
-      "type": "process",
-      "updated": "2025-11-12T10:14:54.567745Z"
-    },
-    {
-      "created": "2025-11-12T10:14:54.591914Z",
-      "finished": "2025-11-12T10:14:54.592663Z",
-      "jobID": "job_2",
-      "message": "Done",
-      "processID": "primes_between",
-      "started": "2025-11-12T10:14:54.592480Z",
-      "status": "successful",
-      "type": "process",
-      "updated": "2025-11-12T10:14:54.592637Z"
-    }
-  ],
-  "links": [
-    {
-      "href": "http://127.0.0.1:8008/jobs",
-      "hreflang": "en",
-      "rel": "self",
-      "title": "get_jobs",
-      "type": "application/json"
-    }
-  ]
-}</code></pre>
+<div class="clipboard-copy-txt" id="cell-11">client.execute_process(process_id="sleep_a_while", request={"fail": True})</div>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=fe96d358-084e-4e2c-af93-4c6562b0f12e">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=21b94f40-5a1b-408f-a3a7-52de97b05b82">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-12">
@@ -1740,43 +4204,21 @@ client</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="s2">"job_2"</span><span class="p">)</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">execute_process</span><span class="p">(</span><span class="n">process_id</span><span class="o">=</span><span class="s2">"primes_between"</span><span class="p">,</span> <span class="n">request</span><span class="o">=</span><span class="p">{})</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-12">client.get_job("job_2")</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<pre><code class="text-json">{
-  "created": "2025-11-12T10:14:54.591914Z",
-  "finished": "2025-11-12T10:14:54.592663Z",
-  "jobID": "job_2",
-  "message": "Done",
-  "processID": "primes_between",
-  "started": "2025-11-12T10:14:54.592480Z",
-  "status": "successful",
-  "type": "process",
-  "updated": "2025-11-12T10:14:54.592637Z"
-}</code></pre>
+<div class="clipboard-copy-txt" id="cell-12">client.execute_process(process_id="primes_between", request={})</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b7f99444-d724-4451-aeae-0c23e8245dd1">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=9cf5e867-d91e-45dd-91b3-a54bc2d087a7">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-13">
@@ -1789,21 +4231,21 @@ client</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># client.get_job_results("job_1")</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">get_jobs</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-13"># client.get_job_results("job_1")</div>
+<div class="clipboard-copy-txt" id="cell-13">client.get_jobs()</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=736d52d8-d91a-435b-8dfb-b016a5139201">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=fe96d358-084e-4e2c-af93-4c6562b0f12e">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-14">
@@ -1816,23 +4258,21 @@ client</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">get_jobs</span><span class="p">()</span><span class="o">.</span><span class="n">jobs</span><span class="p">:</span>
-    <span class="n">client</span><span class="o">.</span><span class="n">dismiss_job</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">jobID</span><span class="p">)</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="s2">"job_2"</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-14">for job in client.get_jobs().jobs:
-    client.dismiss_job(job.jobID)</div>
+<div class="clipboard-copy-txt" id="cell-14">client.get_job("job_2")</div>
 </div>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=4636fdfc-3f61-40b4-889e-497c2dd50d91">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b7f99444-d724-4451-aeae-0c23e8245dd1">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
 <clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-15">
@@ -1845,60 +4285,16 @@ client</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">get_jobs</span><span class="p">()</span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="c1"># client.get_job_results("job_1")</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-15">client.get_jobs()</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
-<pre><code class="text-json">{
-  "jobs": [
-    {
-      "created": "2025-11-12T10:14:54.537952Z",
-      "jobID": "job_0",
-      "processID": "sleep_a_while",
-      "progress": 1,
-      "started": "2025-11-12T10:14:54.538644Z",
-      "status": "running",
-      "type": "process",
-      "updated": "2025-11-12T10:14:54.639215Z"
-    },
-    {
-      "created": "2025-11-12T10:14:54.565282Z",
-      "jobID": "job_1",
-      "processID": "sleep_a_while",
-      "progress": 1,
-      "started": "2025-11-12T10:14:54.567659Z",
-      "status": "running",
-      "type": "process",
-      "updated": "2025-11-12T10:14:54.670866Z"
-    }
-  ],
-  "links": [
-    {
-      "href": "http://127.0.0.1:8008/jobs",
-      "hreflang": "en",
-      "rel": "self",
-      "title": "get_jobs",
-      "type": "application/json"
-    }
-  ]
-}</code></pre>
+<div class="clipboard-copy-txt" id="cell-15"># client.get_job_results("job_1")</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f6f7b188-2124-480c-bb54-f7dabf22076a">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=736d52d8-d91a-435b-8dfb-b016a5139201">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -1916,16 +4312,18 @@ client</div>
 </div>
 </clipboard-copy>
 </div>
-<div class="highlight-ipynb hl-python"><pre><span></span>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="n">client</span><span class="o">.</span><span class="n">get_jobs</span><span class="p">()</span><span class="o">.</span><span class="n">jobs</span><span class="p">:</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">dismiss_job</span><span class="p">(</span><span class="n">job</span><span class="o">.</span><span class="n">jobID</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-16"></div>
+<div class="clipboard-copy-txt" id="cell-16">for job in client.get_jobs().jobs:
+    client.dismiss_job(job.jobID)</div>
 </div>
 </div>
 </div>
 </div>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cd2d8bd5-1f52-4edf-868b-7730d8077602">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4636fdfc-3f61-40b4-889e-497c2dd50d91">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -1943,9 +4341,63 @@ client</div>
 </div>
 </clipboard-copy>
 </div>
+<div class="highlight-ipynb hl-python"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">get_jobs</span><span class="p">()</span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-17">client.get_jobs()</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=f6f7b188-2124-480c-bb54-f7dabf22076a">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-18">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
 <div class="highlight-ipynb hl-python"><pre><span></span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-17"></div>
+<div class="clipboard-copy-txt" id="cell-18"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=cd2d8bd5-1f52-4edf-868b-7730d8077602">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="CodeMirror cm-s-jupyter">
+<div class="zeroclipboard-container">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-19">
+<div>
+<span class="notice" hidden="">Copied!</span>
+<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
+<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+</clipboard-copy>
+</div>
+<div class="highlight-ipynb hl-python"><pre><span></span>
+</pre></div>
+<div class="clipboard-copy-txt" id="cell-19"></div>
 </div>
 </div>
 </div>
