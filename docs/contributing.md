@@ -120,6 +120,11 @@ by running
 pixi run gen-client
 ```
 
+### Releasing
+
+Making a GitHub release triggers a workflow which publishes corresponding
+packages to PyPI.
+
 ## License
 
 The Sen4CAP-client is open source made available under the terms and conditions of the 
