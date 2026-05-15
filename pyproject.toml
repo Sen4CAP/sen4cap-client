@@ -51,8 +51,8 @@ dependencies = [
   "uri-template",
   "httpx", "pydevd-pycharm>=253.28294.336,<254",
   # Eozilla dependencies
-#  "cuiman >=0.0.8",
-#  "gavicore >=0.0.8",
+  "cuiman >=0.1.0",
+  "gavicore >=0.1.0",
 ]
 
 [project.urls]
