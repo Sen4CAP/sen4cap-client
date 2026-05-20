@@ -24,4 +24,4 @@ jobs:
           pixi run python -m twine check dist/*
       - name: Upload to PyPI
         run: |
-          pixi run twine upload --username __token__ --password ${{ secrets.PYPI_TOKEN }} */dist/*
+          pixi run twine upload --username __token__ --password ${{ secrets.PYPI_TOKEN }} dist/*
