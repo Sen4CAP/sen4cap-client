@@ -110,6 +110,7 @@ pixi-pycharm = ">=0.0.8,<0.0.9"
 # Development & build tools
 pip = "*"
 hatch = "*"
+twine = ">=6.2.0"
 # Code style & linting
 isort = "*"
 ruff = "*"
