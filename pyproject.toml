@@ -46,6 +46,8 @@ requires-python = ">=3.11"
 dependencies = [
   "click",
   "pydantic",
+  "pydantic-settings",
+  "pystac",
   "pyyaml",
   "typer",
   "uri-template",
@@ -101,12 +103,14 @@ fastapi = "*"
 httpx = "*"
 pydantic = ">=2,<3"
 pydantic-settings = ">=2,<3"
+pystac = ">=1.14,<2"
 pyyaml = "*"
+rioxarray = ">=0.22.0,<1"
 typer = "*"
 uri-template = "*"
 uvicorn = "*"
 # IDE integration
-pixi-pycharm = ">=0.0.8,<0.0.9"
+pixi-pycharm = ">=0.0.11"
 # Development & build tools
 pip = "*"
 hatch = "*"
