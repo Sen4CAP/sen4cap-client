@@ -1,0 +1,53 @@
+type: object
+properties:
+
+  startdate:
+    title: Start date
+    type: string
+    format: date
+    x-ui-order: 10
+
+  enddate:
+    title: End date
+    type: string
+    format: date
+    x-ui-order: 11
+
+  geometry:
+    title: Geometry
+    type: array
+    minItems: 4
+    maxItems: 4
+    items:
+      type: number
+    x-ui-order: 20
+    x-ui-widget: map
+
+  indicatorname:
+    title: Indicator name
+    type: string
+    enum:
+      - NDVI
+      - LAI
+    x-ui-order: 21
+
+  prddestroot:
+    type: string
+    default: "/SEN4CAP_L3B"
+    x-ui-advanced: true
+
+  configfile:
+    type: string
+    default: "/mnt/tao/cfg/sen4cap/sen2agri.conf"
+    x-ui-advanced: true
+
+  cfgfile:
+    type: string
+    default: "/mnt/tao/cfg/sen4cap/sen2agri.conf"
+    x-ui-advanced: true
+
+required:
+  - startdate
+  - enddate
+  - geometry
+  - indicatorname
