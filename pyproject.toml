@@ -213,3 +213,8 @@ cmd = "coverage xml -o coverage.xml && coverage report"
 
 [tool.pixi.tasks.cov-base]
 cmd = "pytest --cov src/sen4cap_client --cov-report= --cov-append tests"
+
+# pixi run jptr
+
+[tool.pixi.tasks.jptr]
+cmd = "jupyter-lab"
