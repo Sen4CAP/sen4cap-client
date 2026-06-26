@@ -3,36 +3,10 @@
 #  https://opensource.org/license/apache-2-0.
 
 from pathlib import Path
-from typing import Annotated, Any, Literal, Optional, TypeAlias
 
-from cuiman.api import AsyncClient, Client, ClientConfig, ClientError
-from gavicore.models import InputDescription, ProcessDescription
-from gavicore.util.model import extend_model
-from pydantic import Field
+from cuiman.api import AsyncClient, Client, ClientConfig
+from cuiman.api.auth import AuthConfig, login
 from pydantic_settings import SettingsConfigDict
-
-UiLevel: TypeAlias = Literal["common", "advanced"]
-
-
-class InputDescriptionX(InputDescription):
-    level: Annotated[
-        Optional[UiLevel],
-        Field(
-            alias="x-uiLevel",
-            title="UI level",
-            description="Describes the level of this input.",
-        ),
-    ] = "common"
-
-
-class ProcessDescriptionX(ProcessDescription):
-    inputs: Optional[dict[str, InputDescriptionX]] = None  # type: ignore[assignment]
-
-
-# TODO: we can now remove this line (and the function) as the solution using
-#  ClientConfig.return_type_map with InputDescriptionX and ProcessDescriptionX
-#  is more robust.
-extend_model(InputDescription, InputDescriptionX)
 
 
 class Sen4CAPConfig(ClientConfig):
@@ -42,36 +16,48 @@ class Sen4CAPConfig(ClientConfig):
         extra="allow",  # ClientConfig uses "forbid"
     )
 
-    @classmethod
-    def accept_input(
-        cls,
-        process_description: ProcessDescription,
-        input_name: str,
-        input_description: InputDescription,
-        **params: Any,
-    ):
-        requested_level = params.get("level") or "common"
-        input_level = getattr(input_description, "level", "common")
-        if requested_level == "advanced":
-            return True
-        return input_level == "common"
 
-
-ClientConfig.default_path = Path("~").expanduser() / ".sen4cap-client"
-ClientConfig.default_config = Sen4CAPConfig(
+_CONFIG_BASE = Sen4CAPConfig(
     api_url="http://localhost:8080/process/",
     auth_url="http://localhost:8080/auth/login",
     auth_type="login",
     token_header="X-Auth-Token",
     use_bearer=False,
 )
-ClientConfig.return_type_map[ProcessDescription] = ProcessDescriptionX
-ClientConfig.return_type_map[InputDescription] = InputDescriptionX
+_DEBUG = False
+
+ClientConfig.default_path = Path("~").expanduser() / ".sen4cap-client"
+ClientConfig.default_config = _CONFIG_BASE
+
+
+def create_config(username: str, password: str) -> ClientConfig:
+    auth_config = AuthConfig(
+        auth_url=_CONFIG_BASE.auth_url,
+        auth_type="login",
+        username=username,
+        password=password,
+    )
+    token = login(auth_config)
+    config_dict = _CONFIG_BASE.model_dump()
+    config_dict.update(
+        auth_type="token",
+        token=token,
+    )
+    return Sen4CAPConfig(**config_dict)
+
+
+def create_client(username: str, password: str) -> Client:
+    return Client(config=create_config(username, password), _debug=_DEBUG)
+
+
+def create_async_client(username: str, password: str) -> AsyncClient:
+    return AsyncClient(config=create_config(username, password), _debug=_DEBUG)
+
 
 __all__ = [
     "AsyncClient",
     "Client",
     "ClientConfig",
-    "ClientError",
-    "Sen4CAPConfig",
+    "create_client",
+    "create_async_client",
 ]

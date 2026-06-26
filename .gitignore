@@ -1,6 +1,8 @@
 # Temporary source dependencies
 eozilla/
 
+notebooks/credentials.json
+
 # Documentation generation
 docs/notebooks/*.ipynb
 
