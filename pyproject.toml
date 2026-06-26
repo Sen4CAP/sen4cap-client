@@ -95,9 +95,9 @@ channels = ["conda-forge"]
 platforms = ["linux-64", "win-64", "osx-64"]
 
 [tool.pixi.dependencies]
-# Combined sub-workspace dependencies to prevent our editable
-# PyPI dependencies (our project's sub-workspaces) to install
-# PyPI packages instead of using conda packages.
+# --- Combined sub-workspace dependencies to prevent our editable
+#     PyPI dependencies (our project's sub-workspaces) to install
+#     PyPI packages instead of using conda packages.
 click = "*"
 fastapi = "*"
 httpx = "*"
@@ -109,20 +109,20 @@ rioxarray = ">=0.22.0,<1"
 typer = "*"
 uri-template = "*"
 uvicorn = "*"
-# IDE integration
+# --- IDE integration
 pixi-pycharm = ">=0.0.11"
-# Development & build tools
+# --- Development & build tools
 pip = "*"
 hatch = "*"
 twine = ">=6.2.0"
-# Code style & linting
+# --- Code style & linting
 isort = "*"
 ruff = "*"
 mypy = "*"
-# Unit-testing
+# --- Unit-testing
 pytest = "*"
 pytest-cov = "*"
-# Client testing
+# --- Client testing
 ipyleaflet = "*"
 ipywidgets = "*"
 ipywidgets_bokeh = "*"
@@ -130,11 +130,11 @@ jupyter = "*"
 notebook = "*"
 panel = "*"
 watchfiles = "*"
-# Use cases testing
+# --- Use cases testing
 dask = "*"
 xarray = "*"
 zarr = "*"
-# Documentation
+# --- Documentation
 mkdocs = "*"
 mkdocs-autorefs = "*"
 mkdocs-material = "*"
@@ -142,13 +142,14 @@ mkdocstrings = "*"
 mkdocstrings-python = "*"
 mkdocs-jupyter = "*"
 nbformat = "*"
-# For mermaid diagrams in docs
+# --- For mermaid diagrams in docs
 pymdown-extensions = "*"
-# Eozilla packages for development
-# wraptile = ">=0.0.8"
-gavicore = "*"
-cuiman = "*"
-wraptile = "*"
+# --- Required Eozilla packages
+# gavicore = "*"
+# cuiman = "*"
+# --- Eozilla packages for development
+# wraptile = "*"
+# procodile = "*"
 
 [tool.pixi.pypi-dependencies]
 sen4cap_client = { path = ".", editable = true }
@@ -156,9 +157,10 @@ sen4cap_client = { path = ".", editable = true }
 # Uncomment the following to allow using eozilla from sources
 # Note, using the wraptile server is for testing only
 #
-# cuiman = { path = "./eozilla/cuiman", editable = true }
-# gavicore = { path = "./eozilla/gavicore", editable = true }
-# wraptile = { path = "./eozilla/wraptile", editable = true }
+cuiman = { path = "../eozilla/cuiman", editable = true }
+gavicore = { path = "../eozilla/gavicore", editable = true }
+wraptile = { path = "../eozilla/wraptile", editable = true }
+procodile = { path = "../eozilla/procodile", editable = true }
 
 # ---------------------------------------------------------------------
 # Pixi tasks
