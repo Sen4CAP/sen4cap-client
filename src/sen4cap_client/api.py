@@ -8,6 +8,8 @@ from cuiman.api import AsyncClient, Client, ClientConfig
 from cuiman.api.auth import AuthConfig, login
 from pydantic_settings import SettingsConfigDict
 
+from .opener import Sen4CAPJobResultsOpener
+
 
 class Sen4CAPConfig(ClientConfig):
     model_config = SettingsConfigDict(
@@ -25,6 +27,7 @@ _CONFIG_BASE = Sen4CAPConfig(
     use_bearer=False,
 )
 _DEBUG = False
+Sen4CAPConfig.register_job_result_opener(Sen4CAPJobResultsOpener)
 
 ClientConfig.default_path = Path("~").expanduser() / ".sen4cap-client"
 ClientConfig.default_config = _CONFIG_BASE
