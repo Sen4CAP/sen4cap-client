@@ -6,15 +6,15 @@ site_name: ESA Sen4CAP Client
 repo_url: https://github.com/Sen4CAP/sen4cap-client
 repo_name: sen4cap-client
 
-copyright: Copyright &copy; 2025 ESA Sen4CAP Team
+copyright: Copyright &copy; 2025-2026 ESA Sen4CAP Team
 
 nav:
   - Overview: index.md
   - Installation: installation.md
   - User Guides:
-        - notebooks/client-gui.ipynb
-        - notebooks/client-api.ipynb
-        - notebooks/client-cli.ipynb
+    - notebooks/client-api.ipynb
+    - notebooks/client-app.ipynb
+    - notebooks/client-cli.ipynb
   - CLI Reference: cli.md
   - API Reference: api.md
   - Contributing: contributing.md

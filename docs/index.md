@@ -9,4 +9,4 @@ are relevant for CAP management.
 
 _Note, the Python client and its documentation is still in an early development stage._
 
-[Get Started](installation){ .md-button .md-button--primary }
+[Get Started](./installation.md){ .md-button .md-button--primary }

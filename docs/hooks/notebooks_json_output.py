@@ -27,6 +27,7 @@ def on_pre_build(config):
         if _patch_notebook(ipynb):
             print(f"[hooks] Patched: {ipynb}")
 
+
 def _patch_notebook(path: Path):
     """
     Changes the output type of Jupyter notebook cells from
@@ -45,14 +46,23 @@ def _patch_notebook(path: Path):
         for out in cell.get("outputs", []):
             data = out.get("data", {})
             if isinstance(data, dict) and "application/json" in data:
-                pretty = html.escape(json.dumps(data["application/json"],
-                                                indent=2,
-                                                ensure_ascii=False))
-                data["text/html"] = f"<pre><code class='text-json'>{pretty}</code></pre>"
+                pretty = html.escape(
+                    json.dumps(data["application/json"], indent=2, ensure_ascii=False)
+                )
+                data["text/html"] = (
+                    f"<pre><code class='text-json'>{pretty}</code></pre>"
+                )
                 changed = True
     if changed:
         nbf.write(nb, path)
     return changed
+
+
+def _ignore(src: str, names: list[str]) -> list[str]:
+    """Ignore parts of the notebooks folder."""
+    print("---> Ignore: ", src, type(src), names)
+    return [n for n in names if n == "deprecated"]
+
 
 def _update_files_in_docs(source: Path, destination: Path):
     """
@@ -63,4 +73,4 @@ def _update_files_in_docs(source: Path, destination: Path):
         - destination: Path to copy original notebooks to prepare for and add to
         mkdocs documentation
     """
-    shutil.copytree(source, destination, dirs_exist_ok=True)
+    shutil.copytree(source, destination, dirs_exist_ok=True, ignore=_ignore)
