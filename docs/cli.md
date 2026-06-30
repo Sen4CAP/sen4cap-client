@@ -43,4 +43,5 @@
 * `get-job`            Get job details.           
 * `dismiss-job`        Cancel a running or delete a finished job. 
 * `get-job-results`    Get job results.           
+* `show-app`           Show the client app in a browser.           
 
