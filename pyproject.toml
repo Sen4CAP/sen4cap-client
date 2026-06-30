@@ -4,7 +4,7 @@
 
 [project]
 name = "sen4cap-client"
-version = "0.1.0"
+version = "0.2.0.dev0"
 description = "Python client for the ESA Sen4CAP project"
 readme = "README.md"
 authors = [
