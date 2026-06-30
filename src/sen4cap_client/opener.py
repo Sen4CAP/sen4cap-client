@@ -3,7 +3,7 @@ from typing import Any
 import httpx
 import pystac
 import rioxarray as rio
-from cuiman.api.opener import JobResultOpener, JobResultOpenContext
+from cuiman.api.opener import JobResultOpenContext, JobResultOpener
 from gavicore.models import Link
 
 
@@ -32,7 +32,7 @@ class Sen4CAPJobResultsOpener(JobResultOpener):
         stac_url: str = ctx.output_value.href
 
         # The desired asset's name
-        asset_name: str = (ctx.options or {}).get("asset_name")
+        asset_name = (ctx.options or {}).get("asset_name")
         assert isinstance(asset_name, str) and bool(asset_name)
 
         # The STAC item contains an assets dictionary, giving links to the

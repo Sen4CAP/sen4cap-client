@@ -1,6 +1,5 @@
 import pytest
 import xarray as xr
-
 from cuiman.api.opener import JobResultOpenContext, JobResultOpenerRegistry
 from cuiman.api.opener.opener import open_job_result
 from gavicore.models import JobResults

@@ -7,10 +7,7 @@ from typing import Annotated
 
 import panel as pn
 import typer
-
-
 from gavicore.ui.panel.schema2ui import schemas_to_ui
-
 
 pn.extension()
 

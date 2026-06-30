@@ -27,6 +27,7 @@ _CONFIG_BASE = Sen4CAPConfig(
     use_bearer=False,
 )
 _DEBUG = False
+
 Sen4CAPConfig.register_job_result_opener(Sen4CAPJobResultsOpener)
 
 ClientConfig.default_path = Path("~").expanduser() / ".sen4cap-client"
@@ -61,6 +62,7 @@ __all__ = [
     "AsyncClient",
     "Client",
     "ClientConfig",
+    "Sen4CAPConfig",
     "create_client",
     "create_async_client",
 ]
