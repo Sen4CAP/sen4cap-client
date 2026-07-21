@@ -483,10 +483,8 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/noarch/zict-3.0.0-pyhd8ed1ab_1.conda
       - conda: https://conda.anaconda.org/conda-forge/noarch/zipp-4.1.0-pyhcf101f3_0.conda
       - pypi: .
-      - pypi: ../eozilla/cuiman
-      - pypi: ../eozilla/gavicore
-      - pypi: ../eozilla/procodile
-      - pypi: ../eozilla/wraptile
+      - pypi: https://files.pythonhosted.org/packages/ca/3d/ee923a5c177b71b8c5ffe168ed3bdaef04fb45f81b51770ddfed96cfa416/gavicore-0.2.0.dev1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/e9/09/fbefba5f6fd50663893a9e4ffa269f37fc7f7479e9890775425591a7208e/cuiman-0.2.0.dev1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ec/54/e861ada9f7604c1063476e9ad2505e4bd8a8133572e9902219e3d5bc69bf/remotestate-0.3.2-py3-none-any.whl
       osx-64:
       - conda: https://conda.anaconda.org/conda-forge/noarch/_python_abi3_support-1.0-hd8ed1ab_2.conda
@@ -906,10 +904,8 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zlib-ng-2.3.3-h8bce59a_1.conda
       - conda: https://conda.anaconda.org/conda-forge/osx-64/zstd-1.5.7-h3eecb57_6.conda
       - pypi: .
-      - pypi: ../eozilla/cuiman
-      - pypi: ../eozilla/gavicore
-      - pypi: ../eozilla/procodile
-      - pypi: ../eozilla/wraptile
+      - pypi: https://files.pythonhosted.org/packages/ca/3d/ee923a5c177b71b8c5ffe168ed3bdaef04fb45f81b51770ddfed96cfa416/gavicore-0.2.0.dev1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/e9/09/fbefba5f6fd50663893a9e4ffa269f37fc7f7479e9890775425591a7208e/cuiman-0.2.0.dev1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ec/54/e861ada9f7604c1063476e9ad2505e4bd8a8133572e9902219e3d5bc69bf/remotestate-0.3.2-py3-none-any.whl
       win-64:
       - conda: https://conda.anaconda.org/conda-forge/noarch/_python_abi3_support-1.0-hd8ed1ab_2.conda
@@ -1333,10 +1329,8 @@ environments:
       - conda: https://conda.anaconda.org/conda-forge/win-64/zlib-ng-2.3.3-h0261ad2_1.conda
       - conda: https://conda.anaconda.org/conda-forge/win-64/zstd-1.5.7-h534d264_6.conda
       - pypi: .
-      - pypi: ../eozilla/cuiman
-      - pypi: ../eozilla/gavicore
-      - pypi: ../eozilla/procodile
-      - pypi: ../eozilla/wraptile
+      - pypi: https://files.pythonhosted.org/packages/ca/3d/ee923a5c177b71b8c5ffe168ed3bdaef04fb45f81b51770ddfed96cfa416/gavicore-0.2.0.dev1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/e9/09/fbefba5f6fd50663893a9e4ffa269f37fc7f7479e9890775425591a7208e/cuiman-0.2.0.dev1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ec/54/e861ada9f7604c1063476e9ad2505e4bd8a8133572e9902219e3d5bc69bf/remotestate-0.3.2-py3-none-any.whl
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_openmp_mutex-4.5-20_gnu.conda
@@ -15460,46 +15454,29 @@ packages:
   - cuiman>=0.2.0.dev0
   - gavicore>=0.2.0.dev0
   requires_python: '>=3.11'
-- pypi: ../eozilla/cuiman
-  name: cuiman
+- pypi: https://files.pythonhosted.org/packages/ca/3d/ee923a5c177b71b8c5ffe168ed3bdaef04fb45f81b51770ddfed96cfa416/gavicore-0.2.0.dev1-py3-none-any.whl
+  name: gavicore
+  version: 0.2.0.dev1
+  sha256: 0d13caed1197b80b8f4ee21a52adca7b838ea2769edff88dd9b58fd7d3d2f56d
   requires_dist:
-  - click
+  - pydantic
+  - pyyaml
+  - typer>=0.26.0,<1
+  requires_python: '>=3.11'
+- pypi: https://files.pythonhosted.org/packages/e9/09/fbefba5f6fd50663893a9e4ffa269f37fc7f7479e9890775425591a7208e/cuiman-0.2.0.dev1-py3-none-any.whl
+  name: cuiman
+  version: 0.2.0.dev1
+  sha256: 9e79ef0d635a3dde00f1866b79953bdcf53d9d84a787c18488122618faf2d3a0
+  requires_dist:
+  - gavicore>=0.2.0.dev1
+  - httpx
   - pydantic
   - pydantic-settings
   - pyyaml
   - remotestate>=0.3.1,<1
-  - typer
+  - typer>=0.26.0,<1
   - uri-template
-  - httpx
-  - gavicore>=0.2.0.dev0
   requires_python: '>=3.10'
-- pypi: ../eozilla/gavicore
-  name: gavicore
-  requires_dist:
-  - click
-  - pydantic
-  - pyyaml
-  - typer
-  requires_python: '>=3.11'
-- pypi: ../eozilla/procodile
-  name: procodile
-  requires_dist:
-  - pydantic
-  - pyyaml
-  - typer
-  - gavicore>=0.2.0.dev0
-  requires_python: '>=3.10'
-- pypi: ../eozilla/wraptile
-  name: wraptile
-  requires_dist:
-  - fastapi
-  - pydantic
-  - pyyaml
-  - typer
-  - uvicorn
-  - gavicore>=0.2.0.dev0
-  - procodile>=0.2.0.dev0
-  requires_python: '>=3.11'
 - pypi: https://files.pythonhosted.org/packages/ec/54/e861ada9f7604c1063476e9ad2505e4bd8a8133572e9902219e3d5bc69bf/remotestate-0.3.2-py3-none-any.whl
   name: remotestate
   version: 0.3.2
