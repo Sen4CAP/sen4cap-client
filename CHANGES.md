@@ -1,3 +1,10 @@
+## Changes in version 0.2.0 (in development)
+
+- Added a _job result opener_ so that the client's `open_job_result()` method
+  can open the datasets created by processor runs. 
+- Changed `notebooks/client-gui.ipynb` to demonstrate the new Eozilla App UI.
+- Depend on eozilla 0.2.x packages.
+
 ## Changes in version 0.1.0
 
 - Depend on eozilla releases, not repository (#15)
