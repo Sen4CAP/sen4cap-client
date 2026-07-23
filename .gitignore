@@ -2,6 +2,7 @@
 eozilla/
 
 notebooks/credentials.json
+notebooks/config.json
 
 # Documentation generation
 docs/notebooks/*.ipynb
