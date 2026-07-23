@@ -13,10 +13,10 @@ nav:
   - Installation: installation.md
   - User Guides:
     - notebooks/client-api.ipynb
-    - notebooks/client-app.ipynb
+    - notebooks/client-gui.ipynb
     - notebooks/client-cli.ipynb
-  - CLI Reference: cli.md
   - API Reference: api.md
+  - CLI Reference: cli.md
   - Contributing: contributing.md
 
 theme:

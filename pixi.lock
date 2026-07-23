@@ -15443,16 +15443,18 @@ packages:
 - pypi: .
   name: sen4cap-client
   requires_dist:
-  - click
+  - httpx
   - pydantic
   - pydantic-settings
   - pystac
   - pyyaml
+  - rasterio
+  - rioxarray
   - typer
   - uri-template
-  - httpx
-  - cuiman>=0.2.0.dev0
-  - gavicore>=0.2.0.dev0
+  - xarray
+  - cuiman>=0.2.0.dev1
+  - gavicore>=0.2.0.dev1
   requires_python: '>=3.11'
 - pypi: https://files.pythonhosted.org/packages/ca/3d/ee923a5c177b71b8c5ffe168ed3bdaef04fb45f81b51770ddfed96cfa416/gavicore-0.2.0.dev1-py3-none-any.whl
   name: gavicore
