@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Any
 
 from cuiman.api import AsyncClient, Client, ClientConfig
-from cuiman.api.auth import AuthConfig, login
+from cuiman.api.auth import login
 from pydantic_settings import SettingsConfigDict
 
 from .opener import Sen4CAPJobResultsOpener
