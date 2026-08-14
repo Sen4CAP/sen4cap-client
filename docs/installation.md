@@ -4,18 +4,55 @@
 
 ### Using pip
 
-The `sen4cap-client` package is not yet deployed on PyPI, therefore
-installing it as a package using `pip` is not yet available. 
+The `sen4cap-client` package is available on PyPI, and can be
+installed with `pip`:
+
+```bash
+pip install sen4cap-client
+```
 
 ### Using conda/mamba 
 
-The `sen4cap-client` package is not yet deployed on conda-forge, therefore
-installing it using as a conda package using `conda` or `mamba` is not yet available. 
+The `sen4cap-client` package is available on conda-forge and can be
+installed using `mamba` or `conda`. To install into an existing,
+activated conda environment:
+
+```bash
+mamba install --channel conda-forge sen4cap-client
+```
+
+To create and activate a new environment containing `sen4cap-client`:
+
+```bash
+mamba create --channel conda-forge --name sen4cap-client sen4cap-client
+mamba activate sen4cap-client
+```
 
 ### Using pixi
 
-The `sen4cap-client` package is not yet deployed on conda-forge, therefore
-installing it as a conda package using `pixi` is not yet available. 
+You can use the pixi package manager to install the conda-forge package:
+
+```bash
+mkdir sen4cap-test
+cd sen4cap-test
+
+pixi init
+pixi add python
+pixi add eozilla
+pixi shell
+```
+
+Pixi can also install the PyPI package:
+
+```bash
+mkdir sen4cap-test
+cd sen4cap-test
+
+pixi init
+pixi add python
+pixi add --pypi eozilla
+pixi shell
+```
 
 ### Using GitHub
 
@@ -24,7 +61,7 @@ need to install both [git](https://git-scm.com/install/) and
 [pixi](https://pixi.sh/latest/installation/) first. Then:
 
 ```bash
-git clone https://github.com/eo-tools/sen4cap-client.git
+git clone https://github.com/Sen4CAP/sen4cap-client.git
 cd sen4cap-client
 pixi install
 pixi shell

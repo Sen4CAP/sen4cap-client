@@ -7,6 +7,7 @@
 - Changed `notebooks/client-gui.ipynb` to demonstrate the new Eozilla App UI
   which is shown by `client.show_app()`.
 - Depend on eozilla 0.2.x packages.
+- Update installation instructions. (#30)
 
 ## Changes in version 0.1.0
 
