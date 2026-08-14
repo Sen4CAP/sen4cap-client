@@ -38,7 +38,7 @@ cd sen4cap-test
 
 pixi init
 pixi add python
-pixi add eozilla
+pixi add sen4cap-client
 pixi shell
 ```
 
@@ -50,7 +50,7 @@ cd sen4cap-test
 
 pixi init
 pixi add python
-pixi add --pypi eozilla
+pixi add --pypi sen4cap-client
 pixi shell
 ```
 
