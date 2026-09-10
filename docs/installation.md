@@ -67,8 +67,9 @@ pixi install
 pixi shell
 ```
 
-The installed development environment includes also JupyterLab so the recommended
-way to get started is to take a look at the notebooks in the `notebooks` folder.
+Start with the [Python API](guides/api.md), [command-line](guides/cli.md), or
+[App](guides/app.md) guide. The development environment also includes JupyterLab
+for exploring the original examples in the `notebooks` folder:
 
 ```bash
 cd notebooks

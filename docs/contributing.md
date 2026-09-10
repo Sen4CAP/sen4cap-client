@@ -59,44 +59,20 @@ The dev mode is useful if you are changing server code:
 wraptile dev wraptile.services.local.testing:service
 ```
 
-Run client API
-
-```python
-from sen4cap_client import Client
-
-client = Client()
-client.get_processes()
-client.get_jobs()
-```
-
-Run client GUI (in Jupyter notebooks)
-
-```python
-from sen4cap_client.gui import Client
-
-client = Client()
-client.show()
-client.show_jobs()
-```
-
-Run client CLI
-
-```commandline
-$ sen4cap_client --help
-```
+See the [Python API](guides/api.md), [App](guides/app.md), and
+[command-line](guides/cli.md) guides for client usage and runnable examples.
 
 ### Formatting & Linting
 
 ```commandline
-pixi run isort .
-pixi run ruff format 
-pixi run ruff check
+pixi run format
+pixi run checks
 ```
 
 ### Testing & Coverage
 
 ```commandline
-pixi run test
+pixi run tests
 pixi run coverage
 ```
 
@@ -108,17 +84,65 @@ The Sen4CAP-client's documentation is built using the
 With repository root as current working directory:
 
 ```bash
-mkdocs build
-mkdocs serve
-mkdocs gh-deploy
+pixi run docs-build
+pixi run docs-serve
 ```
 
-After changing the CLI code, always update its documentation `docs/cli.md` 
-by running
+#### Editing guides and examples
+
+Maintain the three user guides directly in `docs/guides/`. Python, shell, and
+JSON examples live in `examples/guides/`; Markdown includes them using
+[PyMdown Snippets](https://facelessuser.github.io/pymdown-extensions/extensions/snippets/).
+The notebooks in `notebooks/` remain independent examples. Documentation builds
+neither copy nor execute them. Any copies left under `docs/notebooks/` by an
+older build are excluded from the site.
+
+To display part of a Python file, surround it with named section comments:
+
+```python
+# ;--8<-- [start:example-name]
+print("Hello from the example")
+# ;--8<-- [end:example-name]
+```
+
+Include that section inside a Markdown code fence:
+
+````markdown
+```python
+;--8<-- "examples/guides/example.py:example-name"
+```
+````
+
+Use stable section names instead of line numbers. Whole files, such as a JSON
+request, can be included without a section suffix. Includes resolve from the
+repository root; `check_paths: true` makes missing includes fail the build.
+Subsections are dedented for display. Include enough context for a reader to
+understand each excerpt, and link to the complete example file.
+
+Format and check Python examples with the existing tools:
 
 ```bash
-pixi run gen-client
+pixi run format
+pixi run checks
+pixi run pytest tests/test_guide_examples.py
+pixi run docs-build
 ```
+
+`checks` lints the Python example files and verifies their formatting. Type
+checking examples is optional and is not enabled by default. The guide tests
+run offline with mocked clients; they check submission and job-result handling
+without credentials or processing jobs. Run the example scripts manually
+against a configured service when testing a complete workflow. Shell recipes
+are copied section by section, not executed as a batch.
+
+Store screenshots and plots in `docs/assets/guides/`, use descriptive filenames
+and alt text, and record their origin in `examples/guides/README.md`. Refresh
+images deliberately when the relevant interface or result changes; the build
+only copies the committed assets. Review guides in `docs-serve` because GitHub
+Markdown previews do not expand Snippets directives.
+
+Keep `docs/cli.md` aligned with CLI changes by checking the installed command's
+`--help` output.
 
 ### Releasing
 

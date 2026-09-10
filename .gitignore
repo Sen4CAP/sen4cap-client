@@ -4,8 +4,8 @@ eozilla/
 notebooks/credentials.json
 notebooks/config.json
 
-# Documentation generation
-docs/notebooks/*.ipynb
+# Legacy generated documentation (no longer used)
+docs/notebooks/
 
 # Testing
 *.zarr/
