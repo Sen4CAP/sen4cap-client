@@ -4,9 +4,12 @@ Use the Python API to discover processes, submit requests, monitor jobs, and
 open their results. Start with [installation and configuration](../installation.md).
 The examples below use the configuration saved by `sen4cap-client configure`.
 
-The complete [API example](https://github.com/Sen4CAP/sen4cap-client/blob/main/examples/guides/api.py)
-can be run from the repository root in the development environment. Its
-`inspect`, `submit`, and `results` commands let you run each stage separately.
+Run the Python blocks below in order in the same Python session or notebook.
+Each step defines a small function and then calls it, reusing the same `client`
+and the `job_id` returned by submission. Start from the repository root in the
+development environment so the example request file can be found.
+The functions and calls are maintained in the
+[API example](https://github.com/Sen4CAP/sen4cap-client/blob/main/examples/guides/api.py).
 The [original notebook](https://github.com/Sen4CAP/sen4cap-client/blob/main/notebooks/client-api.ipynb)
 is also available for interactive exploration.
 
@@ -15,13 +18,12 @@ is also available for interactive exploration.
 The examples use `create_client()` to load the saved service configuration and
 authenticate. Explicit keyword arguments can override configuration values; see
 the [configuration reference](https://eo-tools.github.io/eozilla/cuiman/configuration/).
-In a Python session, create `client = create_client()` before passing it to
-the functions below, and call `client.close()` when finished. The complete
-script uses `contextlib.closing`
-to do this even if a request fails.
+Import the dependencies and create the client:
 
 ```python
 --8<-- "examples/guides/api.py:imports"
+
+--8<-- "examples/guides/api.py:create-client"
 ```
 
 ## Discover processes
@@ -32,10 +34,10 @@ List available processes, then inspect a process's inputs and outputs:
 --8<-- "examples/guides/api.py:inspect"
 ```
 
-Run this step:
+Call the function with the client and the process ID:
 
-```bash
---8<-- "examples/guides/cli.sh:api-inspect"
+```python
+--8<-- "examples/guides/api.py:inspect-call"
 ```
 
 This guide uses process `218` and the NDVI request from the original notebook.
@@ -60,22 +62,25 @@ returned `jobID` for subsequent calls:
 --8<-- "examples/guides/api.py:submit"
 ```
 
-```bash
---8<-- "examples/guides/cli.sh:api-submit"
+Call it with the request file's path. Run this call once to create the job:
+
+```python
+--8<-- "examples/guides/api.py:submit-call"
 ```
 
 ## Monitor the job and inspect results
 
-Replace `YOUR_JOB_ID` below with the ID printed during submission. While the
-job is accepted or running, repeat this step later. If it fails or is dismissed,
-inspect the job information before submitting another request.
+Use the `job_id` returned above to inspect the same job. While the job is
+accepted or running, repeat the `inspect_results(client, job_id)` call later;
+do not repeat the submission call. If it fails or is dismissed, inspect the
+job information before submitting another request.
 
 ```python
 --8<-- "examples/guides/api.py:results"
 ```
 
-```bash
---8<-- "examples/guides/cli.sh:api-results"
+```python
+--8<-- "examples/guides/api.py:results-call"
 ```
 
 `client.get_jobs()` lists jobs. To cancel a running job or delete a finished
@@ -93,8 +98,10 @@ or result types.
 --8<-- "examples/guides/api.py:plot"
 ```
 
-```bash
---8<-- "examples/guides/cli.sh:api-plot"
+Once `inspect_results` returns results, plot the asset for that same job:
+
+```python
+--8<-- "examples/guides/api.py:plot-call"
 ```
 
 Plotting requires Matplotlib, which is included in the development environment.
@@ -102,6 +109,53 @@ The image below is a saved result from the original example; a new job's
 result can differ.
 
 ![NDVI raster plotted for the example area of interest](../assets/guides/api/ndvi-result.png)
+
+## Close the client
+
+When you have finished inspecting and plotting results, close the client:
+
+```python
+--8<-- "examples/guides/api.py:close-client"
+```
+
+In a script, put the calls in a `try` block and `client.close()` in its `finally`
+block so the client is also closed if a request fails. The `example_session()`
+function in the source file demonstrates this pattern.
+
+## Optional: run the functions from a terminal
+
+The same source file provides Typer commands that create and close a client and
+call the functions introduced above. These are an alternative to the Python
+session. Run only the stage you need from the repository root:
+
+| Command | Function called |
+| --- | --- |
+| `inspect` | `inspect_process` |
+| `submit` | `submit_process` |
+| `results` | `inspect_results` |
+| `results --plot` | `inspect_results`, then `plot_result` if results are ready |
+
+```bash
+--8<-- "examples/guides/cli.sh:api-inspect"
+```
+
+To submit a new job:
+
+```bash
+--8<-- "examples/guides/cli.sh:api-submit"
+```
+
+Replace `YOUR_JOB_ID` with the ID printed by submission to inspect that job:
+
+```bash
+--8<-- "examples/guides/cli.sh:api-results"
+```
+
+Once the job succeeds, inspect and plot its result:
+
+```bash
+--8<-- "examples/guides/cli.sh:api-plot"
+```
 
 See the [API reference](../api.md) for the client interfaces, or the
 [App guide](app.md) to explore processes visually.

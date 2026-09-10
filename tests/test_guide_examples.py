@@ -150,3 +150,39 @@ def test_api_results_command_only_plots_when_requested(monkeypatch, plot):
     else:
         plot_result.assert_not_called()
     client.close.assert_called_once()
+
+
+@pytest.mark.parametrize("status", ["accepted", "successful"])
+def test_api_session_reuses_submitted_job_and_closes_client(monkeypatch, status):
+    client = Mock(spec=Client)
+    client.execute_process.return_value = JobInfo(jobID="new-job-42", status="accepted")
+    client.get_job.return_value = JobInfo(jobID="new-job-42", status=status)
+    monkeypatch.setattr(api, "create_client", lambda: client)
+    monkeypatch.chdir(REQUEST_PATH.parents[2])
+    plot_result = Mock()
+    monkeypatch.setattr(api, "plot_result", plot_result)
+
+    assert api.example_session() == "new-job-42"
+
+    client.get_process.assert_called_once_with(process_id="218")
+    client.execute_process.assert_called_once()
+    client.get_job.assert_called_once_with(job_id="new-job-42")
+    if status == "successful":
+        client.get_job_results.assert_called_once_with(job_id="new-job-42")
+        plot_result.assert_called_once_with(client, "new-job-42", asset_name="SNDVI")
+    else:
+        client.get_job_results.assert_not_called()
+        plot_result.assert_not_called()
+    client.close.assert_called_once()
+
+
+def test_api_session_closes_client_after_request_error(monkeypatch):
+    client = Mock(spec=Client)
+    client.get_processes.side_effect = RuntimeError("service unavailable")
+    monkeypatch.setattr(api, "create_client", lambda: client)
+
+    with pytest.raises(RuntimeError, match="service unavailable"):
+        api.example_session()
+
+    client.execute_process.assert_not_called()
+    client.close.assert_called_once()

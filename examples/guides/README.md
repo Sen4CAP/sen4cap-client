@@ -3,8 +3,11 @@
 These files supply the code shown in the handwritten Markdown guides. They are
 independent of the notebooks in `notebooks/`.
 
-- `api.py`: executable API walkthrough with `inspect`, `submit`, and `results`
-  subcommands. Run `python examples/guides/api.py --help` from the repository root.
+- `api.py`: API functions and the direct Python calls shown in the guide.
+  `example_session()` demonstrates client cleanup, submitting once and checking
+  results once; follow the guide interactively to check again after processing.
+  Optional `inspect`, `submit`, and `results` subcommands call the same functions.
+  Run `python examples/guides/api.py --help` from the repository root.
 - `app.py`: browser App launcher and reusable helpers for notebook interaction.
 - `notebook_app.py`: launch the App from Jupyter with
   `%run -i examples/guides/notebook_app.py`, using the repository root as the

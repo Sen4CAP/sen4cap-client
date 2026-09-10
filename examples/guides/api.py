@@ -8,8 +8,10 @@ from contextlib import closing
 from pathlib import Path
 from typing import Annotated
 
-# --8<-- [start:imports]
 import typer
+
+# isort: split
+# --8<-- [start:imports]
 from gavicore.models import JobStatus, ProcessRequest
 
 from sen4cap_client.api import create_client
@@ -72,6 +74,43 @@ def plot_result(client, job_id, asset_name="SNDVI"):
 
 
 # --8<-- [end:plot]
+
+
+def example_session():
+    """Submit once, check once, and plot if ready; return the job ID.
+
+    The guide shows these calls individually so readers can wait for processing
+    before checking results again. Importing this file does not run this session.
+    """
+    # --8<-- [start:create-client]
+    client = create_client()
+    # --8<-- [end:create-client]
+    try:
+        # --8<-- [start:inspect-call]
+        process_id = "218"
+        inspect_process(client, process_id)
+        # --8<-- [end:inspect-call]
+
+        # --8<-- [start:submit-call]
+        from pathlib import Path
+
+        request_path = Path("examples/guides/ndvi-request.json")
+        job_id = submit_process(client, process_id, request_path)
+        # --8<-- [end:submit-call]
+
+        # --8<-- [start:results-call]
+        results = inspect_results(client, job_id)
+        # --8<-- [end:results-call]
+
+        # --8<-- [start:plot-call]
+        if results is not None:
+            plot_result(client, job_id, asset_name="SNDVI")
+        # --8<-- [end:plot-call]
+        return job_id
+    finally:
+        # --8<-- [start:close-client]
+        client.close()
+        # --8<-- [end:close-client]
 
 
 cli = typer.Typer(help=__doc__, add_completion=False, no_args_is_help=True)
