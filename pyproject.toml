@@ -150,15 +150,15 @@ sen4cap_client = { path = ".", editable = true }
 # Uncomment the following to allow using eozilla from PyPI
 # Note, using the wraptile/procodile is for testing only
 #
-gavicore = ">=0.2.0.dev1"
-cuiman = ">=0.2.0.dev1"
+#gavicore = ">=0.2.0.dev1"
+#cuiman = ">=0.2.0.dev1"
 #
 # Uncomment the following to allow using eozilla from sources
 #
-# cuiman = { path = "../eozilla/cuiman", editable = true }
-# gavicore = { path = "../eozilla/gavicore", editable = true }
-# wraptile = { path = "../eozilla/wraptile", editable = true }
-# procodile = { path = "../eozilla/procodile", editable = true }
+cuiman = { path = "../eozilla/cuiman", editable = true }
+gavicore = { path = "../eozilla/gavicore", editable = true }
+wraptile = { path = "../eozilla/wraptile", editable = true }
+procodile = { path = "../eozilla/procodile", editable = true }
 
 # ---------------------------------------------------------------------
 # Pixi tasks
