@@ -19,17 +19,15 @@ class Sen4CAPConfig(ClientConfig):
         extra="allow",  # ClientConfig uses "forbid"
     )
 
+    default_path = Path("~").expanduser() / ".sen4cap-client"
 
-Sen4CAPConfig.register_job_result_opener(Sen4CAPJobResultsOpener)
-
-ClientConfig.default_path = Path("~").expanduser() / ".sen4cap-client"
-ClientConfig.default_config = Sen4CAPConfig(
-    api_url="http://localhost:8080/process/",
-    auth=LoginAuthConfig(
+    api_url = "http://localhost:8080/process/"
+    auth = LoginAuthConfig(
         login_url="http://localhost:8080/auth/login",
         access_token_header="X-Auth-Token",
-    ),
-)
+    )
+
+    extra_job_result_openers = [Sen4CAPJobResultsOpener]
 
 
 def create_client(**config: Any) -> Client:
@@ -47,7 +45,7 @@ def create_client(**config: Any) -> Client:
         An instance of a synchronous cuiman client for Sen4CAP. See
         https://eo-tools.github.io/eozilla/cuiman/ for details.
     """
-    return Client(**config)
+    return Client(config_type=Sen4CAPConfig, **config)
 
 
 def create_async_client(**config: Any) -> AsyncClient:
@@ -65,7 +63,7 @@ def create_async_client(**config: Any) -> AsyncClient:
         An instance of an asynchronous cuiman client for Sen4CAP. See
         https://eo-tools.github.io/eozilla/cuiman/ for details.
     """
-    return AsyncClient(**config)
+    return AsyncClient(config_type=Sen4CAPConfig, **config)
 
 
 __all__ = [
