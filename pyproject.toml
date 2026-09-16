@@ -135,14 +135,12 @@ zarr = "*"
 mkdocs = "==1.6.1"
 mkdocs-autorefs = ">=1.4.3,<1.5"
 mkdocs-get-deps = ">=0.2,<0.3"
-mkdocs-jupyter = ">=0.25.1,<0.26"
 mkdocs-material = ">=9.7.1,<9.8"
 mkdocs-material-extensions = ">=1.3.1,<1.4"
 mkdocstrings = ">=1.0.0,<1.1"
 mkdocstrings-python = ">=2.0.1,<2.1"
-nbformat = ">=5.10.4,<5.11"
 pygments = ">=2.19,<2.20"
-# --- For mermaid diagrams in docs
+# --- Markdown extensions, including code snippets
 pymdown-extensions = "*"
 
 [tool.pixi.pypi-dependencies]
@@ -165,10 +163,14 @@ cuiman = ">=0.2.0.dev1"
 # ---------------------------------------------------------------------
 
 [tool.pixi.tasks]
-format-with-isort = "isort src tests"
-format-with-ruff = "ruff format src tests"
+format-with-isort = "isort src tests examples/guides"
+format-with-ruff = "ruff format src tests examples/guides"
 check-with-ruff = "ruff check src"
+check-examples = "ruff check examples/guides"
+check-example-format = "ruff format --check examples/guides"
 check-with-mypy = "mypy src"
+docs-build = "python -m mkdocs build --strict"
+docs-serve = "python -m mkdocs serve"
 tests = "pytest tests"
 cov-report-html = "coverage html -d .cov-report && coverage report"
 cov-report-xml = "coverage xml -o coverage.xml && coverage report"
@@ -183,7 +185,7 @@ depends-on = ["format-with-isort", "format-with-ruff"]
 # pixi run checks
 
 [tool.pixi.tasks.checks]
-depends-on = ["check-with-ruff", "check-with-mypy"]
+depends-on = ["check-with-ruff", "check-with-mypy", "check-examples", "check-example-format"]
 
 # pixi run coverage
 

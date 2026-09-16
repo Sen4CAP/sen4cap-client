@@ -23,6 +23,9 @@ jobs:
       - name: Run checks
         run: pixi run checks
 
+      - name: Build documentation
+        run: pixi run docs-build
+
       - name: Run test & coverage
         run: pixi run coverage-ci
 
@@ -33,4 +36,3 @@ jobs:
           slug: Sen4CAP/sen4cap-client
 
       # Add other pixi tasks here
-
