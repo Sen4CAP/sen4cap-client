@@ -6,7 +6,8 @@ from pathlib import Path
 from typing import Any
 
 from cuiman.api import AsyncClient, Client, ClientConfig
-from cuiman.api.auth import LoginAuthConfig
+from cuiman.api.auth import AuthConfig, LoginAuthConfig
+from pydantic import HttpUrl
 from pydantic_settings import SettingsConfigDict
 
 from .opener import Sen4CAPJobResultsOpener
@@ -21,9 +22,9 @@ class Sen4CAPConfig(ClientConfig):
 
     default_path = Path("~").expanduser() / ".sen4cap-client"
 
-    api_url = "http://localhost:8080/process/"
-    auth = LoginAuthConfig(
-        login_url="http://localhost:8080/auth/login",
+    api_url: str | None = "http://localhost:8080/process/"
+    auth: AuthConfig = LoginAuthConfig(
+        login_url=HttpUrl("http://localhost:8080/auth/login"),
         access_token_header="X-Auth-Token",
     )
 
