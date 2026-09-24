@@ -7,6 +7,7 @@ exit 0
 # --8<-- [start:configure]
 sen4cap-client --help
 sen4cap-client configure
+sen4cap-client login
 # --8<-- [end:configure]
 
 # --8<-- [start:inspect]

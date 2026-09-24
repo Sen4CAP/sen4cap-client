@@ -30,29 +30,22 @@ credentials in the OS keyring for the selected profile.
 ## Execute a process and open its result
 
 Process IDs, input names, and output names come from the service. Inspect
-`client.get_process(process_id)` before building a request. The example below
-uses the Sen4CAP NDVI process `218`; adapt it to your deployment.
+`client.get_process(process_id)` before building a request. This example uses
+the shared NDVI request for process `218`. Run it from the repository root and
+adapt `examples/guides/ndvi-request.json` to your deployment first; its input
+and output keys are UUIDs from the example service, not display labels.
+The [Python API guide](guides/api.md) shows the request and each step.
 
 ```python
 from contextlib import closing
+from pathlib import Path
 
 from gavicore.models import ProcessRequest
 from sen4cap_client.api import create_client
 
 with closing(create_client()) as client:
-    request = ProcessRequest(
-        inputs={
-            "startdate": "2024-06-01",
-            "enddate": "2024-06-07",
-            "indicatorname": "NDVI",
-            "geom": "POLYGON ((9.66 53.75,10.38 53.75,10.38 53.35,9.66 53.35,9.66 53.75))",
-        },
-        outputs={
-            "stacitemsfile": {
-                "format": {"mediaType": "application/json"},
-                "transmissionMode": "reference",
-            }
-        },
+    request = ProcessRequest.model_validate_json(
+        Path("examples/guides/ndvi-request.json").read_text(encoding="utf-8")
     )
     job = client.execute_process(process_id="218", request=request)
     print(job.jobID, job.status)
@@ -120,8 +113,10 @@ Result opening can also raise `JobResultOpenError`, `JobResultStatusError`
 (from `cuiman.api.opener`), or `TimeoutError`.
 
 For the full inherited API, see [Cuiman](https://eo-tools.github.io/eozilla/cuiman/).
-The [API notebook](notebooks/client-api.ipynb) and
-[GUI notebook](notebooks/client-gui.ipynb) demonstrate the workflow interactively.
+The [Python API guide](guides/api.md) and [App guide](guides/app.md) demonstrate
+the workflow using the maintained examples in `examples/guides/`. The independent
+[notebooks](https://github.com/Sen4CAP/sen4cap-client/tree/main/notebooks)
+remain available in the repository; they are not published as documentation pages.
 
 ## Sen4CAP factory reference
 

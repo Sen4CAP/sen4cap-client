@@ -12,6 +12,12 @@ copyright: Copyright &copy; 2025-2026 ESA Sen4CAP Team
 exclude_docs: |
   /notebooks/
 
+validation:
+  links:
+    not_found: warn
+    unrecognized_links: warn
+    anchors: warn
+
 nav:
   - Overview: index.md
   - Installation: installation.md
@@ -51,7 +57,8 @@ markdown_extensions:
   - attr_list
   - admonition
   - pymdownx.details
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      pygments_lang_class: true
   - pymdownx.superfences
   - pymdownx.snippets:
       base_path: !relative $config_dir

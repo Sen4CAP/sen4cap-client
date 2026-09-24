@@ -8,7 +8,8 @@ with validated algorithms, products, workflows and best practices for agricultur
 are relevant for CAP management.
 
 Start by installing the client and [configuring your service and login](configuration.md).
-Use the [Python API](api.md), [command-line interface](cli.md), or the notebook GUI
+Use the [Python API guide](guides/api.md), [command-line guide](guides/cli.md),
+or [App guide](guides/app.md)
 to discover processes, submit jobs, and open their results.
 
 [Get Started](./installation.md){ .md-button .md-button--primary }

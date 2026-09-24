@@ -170,12 +170,14 @@ are not needed for client development against an existing service.
 ### Build the documentation
 
 ```bash
-pixi run mkdocs build --strict
-pixi run mkdocs serve
+pixi run docs-build
+pixi run docs-serve
 ```
 
-The build copies the active notebooks into `docs/notebooks/`; edit their sources
-in `notebooks/`. The notebooks are rendered without executing service calls.
+Edit the Markdown guides in `docs/guides/` and their shared code snippets in
+`examples/guides/`. The build includes those snippets without executing them.
+The independent notebooks in `notebooks/` are neither copied nor executed;
+old copies under `docs/notebooks/` are excluded from the site.
 
 See [configuration](configuration.md) for profiles and authentication, the
 [Python API](api.md) for client factories, and the [CLI guide](cli.md) for commands.

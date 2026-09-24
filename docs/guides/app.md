@@ -2,7 +2,8 @@
 
 The App provides a visual interface for choosing processes, entering inputs,
 submitting jobs, and inspecting their status. It uses the configuration saved
-by `sen4cap-client configure`; see [getting started](../installation.md).
+by `sen4cap-client configure` and credentials saved by `sen4cap-client login`;
+see [configuration and authentication](../configuration.md).
 
 ## Open in a browser
 
@@ -22,8 +23,9 @@ Your service may offer different processes or input fields.
 
 ![App process inputs for the example NDVI request](../assets/guides/app/process-inputs.png)
 
-*Example form for process 218. Available processes and inputs depend on your
-service.*
+*Historical example form from Cuiman 0.2.0.dev1. The current app's appearance,
+available processes, and inputs can differ; see the
+[image provenance](https://github.com/Sen4CAP/sen4cap-client/blob/main/examples/guides/README.md#static-image-provenance).*
 
 Enter the date range and area of interest, select the desired product and
 outputs, then submit the process request. Monitor the resulting job in the

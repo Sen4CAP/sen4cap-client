@@ -6,32 +6,23 @@ your deployment. The following example uses the Sen4CAP NDVI process `218`.
 
 ## CLI request files
 
-The CLI accepts JSON or YAML. Save this as `request.json` and adapt the values:
+The CLI accepts JSON or YAML. Save this as a UTF-8 file named `request.json` and adapt the values:
 
 ```json
-{
-  "process_id": "218",
-  "inputs": {
-    "startdate": "2024-06-01",
-    "enddate": "2024-06-07",
-    "indicatorname": "NDVI",
-    "geom": "POLYGON ((9.66 53.75,10.38 53.75,10.38 53.35,9.66 53.35,9.66 53.75))"
-  },
-  "outputs": {
-    "stacitemsfile": {
-      "format": {"mediaType": "application/json"},
-      "transmissionMode": "reference"
-    }
-  }
-}
+--8<-- "examples/guides/ndvi-request.json"
 ```
+
+Its UUID keys come from the example service's process description. Use the
+actual input/output keys returned by your deployment, even when its labels
+say "Start date" or "NDVI". Supply the process ID separately:
 
 ```bash
-sen4cap-client validate-request --request request.json
-sen4cap-client execute-process --request request.json
+sen4cap-client validate-request 218 --request request.json
+sen4cap-client execute-process 218 --request request.json
 ```
 
-`process_id` can instead be supplied as a positional argument. That argument and
+A CLI request file may also include a top-level `"process_id": "218"`; in that
+case the positional argument is optional. The positional argument and
 repeated `--input NAME=VALUE` (`-i`) options override matching file values.
 Use `--request -` to read from standard input. `--dotpath` interprets dots in input
 names as nested object paths; check `execute-process --help` for all options.
@@ -46,14 +37,9 @@ Pass a `gavicore.models.ProcessRequest` to `client.execute_process()`. The proce
 ID is a separate argument and is not part of this model. To reuse a CLI file:
 
 ```python
-import json
-from pathlib import Path
-
 from gavicore.util.request import ExecutionRequest
 
-execution = ExecutionRequest.model_validate(
-    json.loads(Path("request.json").read_text(encoding="utf-8"))
-)
+execution = ExecutionRequest.create(process_id="218", request_path="request.json")
 # client is an instance returned by create_client().
 job = client.execute_process(
     process_id=execution.process_id,

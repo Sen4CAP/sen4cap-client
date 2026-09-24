@@ -47,17 +47,17 @@ pixi shell
 
 ### Testing the Sen4CAP-client
 
-Run local test server
+Configure and log in to a running Sen4CAP service before running live examples:
 
-```commandline
-wraptile run -- wraptile.services.local.testing:service
+```bash
+sen4cap-client configure
+sen4cap-client login
+pixi run pytest -s scripts/integration_test.py
 ```
 
-The dev mode is useful if you are changing server code:
-
-```commandline
-wraptile dev wraptile.services.local.testing:service
-```
+The default development environment installs the client dependencies, not an
+Eozilla test server. To develop Eozilla alongside the client, follow
+[the editable-dependency instructions](installation.md#implementing-enhancements).
 
 See the [Python API](guides/api.md), [App](guides/app.md), and
 [command-line](guides/cli.md) guides for client usage and runnable examples.
@@ -134,7 +134,8 @@ pixi run docs-build
 `checks` lints the Python example files and verifies their formatting. Type
 checking examples is optional and is not enabled by default. The guide tests
 run offline with mocked clients; they check submission and job-result handling
-without credentials or processing jobs. Run the example scripts manually
+without credentials or processing jobs. The documentation test builds the site
+and checks local links, anchors, and assets, including snippet-expanded pages. Run the example scripts manually
 against a configured service when testing a complete workflow. Shell recipes
 are copied section by section, not executed as a batch.
 

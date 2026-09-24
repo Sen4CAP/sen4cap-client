@@ -85,8 +85,10 @@ pixi install
 pixi shell
 ```
 
-The installed development environment includes also JupyterLab so the recommended
-way to get started is to take a look at the notebooks in the `notebooks` folder.
+Start with the [Python API](docs/guides/api.md), [CLI](docs/guides/cli.md), or
+[App](docs/guides/app.md) guide. Their runnable examples live in `examples/guides/`.
+The development environment also includes JupyterLab for the independent
+notebooks in `notebooks/`.
 
 ```bash
 cd notebooks
@@ -161,6 +163,10 @@ To run all tests, execute
 ```bash
 pixi run tests
 ```
+
+Build and preview the Markdown documentation with `pixi run docs-build` and
+`pixi run docs-serve`. Builds include the shared examples without executing them
+and do not copy the independent notebooks.
 
 To generate a coverage report, execute
 

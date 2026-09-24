@@ -57,18 +57,16 @@ def _check_server(client):
             w += 1
         else:
             for input_name, input_desc in process.inputs.items():
-                if not input_name.isidentifier():
-                    print(f"{w_prefix}: input {input_name!r}: inappropriate name")
-                # if not hasattr(input_desc, "level"):
-                #    print(f"{w_prefix}: input {input_name!r}: missing level")
+                # OGC input identifiers may be UUIDs, not Python identifiers.
                 if not input_desc.title:
                     print(f"{w_prefix}: input {input_name!r}: missing title")
+                    w += 1
         if not process.outputs:
             print(f"{w_prefix}: missing outputs")
             w += 1
         if w == 0:
-            print(f"Process process {process_id!r} ok")
-        warnings += 1
+            print(f"Process {process_id!r} ok")
+        warnings += w
     if not warnings:
         print("Process list ok")
 

@@ -38,7 +38,14 @@ to match its inputs before submitting it:
 ```bash
 sen4cap-client list-processes
 sen4cap-client get-process 218
-sen4cap-client create-request 218 --format json > request.json
+sen4cap-client create-request 218 --format json
+```
+
+Save the printed template as UTF-8 `request.json`, then edit its inputs before
+continuing. Windows PowerShell 5.1 output redirection creates UTF-16 by default,
+so do not use plain `>` there.
+
+```bash
 sen4cap-client validate-request --request request.json
 sen4cap-client execute-process --request request.json
 ```
