@@ -45,80 +45,71 @@ pixi install
 pixi shell
 ```
 
-### Testing the Sen4CAP-client
+### Test against a service
 
-Run local test server
+Configure the processing API and authentication endpoints for a running service,
+then log in. The default client environment does not install the Eozilla server
+packages. See [installation](installation.md#implementing-enhancements) if you
+need to develop Eozilla alongside the client.
 
-```commandline
-wraptile run -- wraptile.services.local.testing:service
+```bash
+sen4cap-client configure
+sen4cap-client login
+sen4cap-client list-processes
+pixi run pytest -s scripts/integration_test.py
 ```
 
-The dev mode is useful if you are changing server code:
-
-```commandline
-wraptile dev wraptile.services.local.testing:service
-```
-
-Run client API
+Use the Sen4CAP factory in Python:
 
 ```python
-from sen4cap_client import Client
+from contextlib import closing
 
-client = Client()
-client.get_processes()
-client.get_jobs()
+from sen4cap_client.api import create_client
+
+with closing(create_client()) as client:
+    print(client.get_processes())
+    print(client.get_jobs())
 ```
 
-Run client GUI (in Jupyter notebooks)
+To open the GUI in a notebook, keep the client alive while using the app:
 
 ```python
-from sen4cap_client.gui import Client
+from sen4cap_client.api import create_client
 
-client = Client()
-client.show()
-client.show_jobs()
+client = create_client()
+client.login()
+app = client.show_app()
 ```
 
-Run client CLI
+When finished, call `app.serve_result.stop()` and `client.close()`.
+The [GUI notebook](notebooks/client-gui.ipynb) demonstrates shared request state.
 
-```commandline
-$ sen4cap_client --help
-```
+### Formatting, checks, and tests
 
-### Formatting & Linting
-
-```commandline
-pixi run isort .
-pixi run ruff format 
-pixi run ruff check
-```
-
-### Testing & Coverage
-
-```commandline
-pixi run test
+```bash
+pixi run format
+pixi run checks
+pixi run tests
 pixi run coverage
 ```
 
+The live-service test in `tests/test_client.py` is skipped without its local
+credentials file. Unit tests do not require a running service.
+
 ### Documentation
 
-The Sen4CAP-client's documentation is built using the 
-[mkdocs](https://www.mkdocs.org/) tool.
-
-With repository root as current working directory:
+From the repository root:
 
 ```bash
-mkdocs build
-mkdocs serve
-mkdocs gh-deploy
+pixi run mkdocs build --strict
+pixi run mkdocs serve
 ```
 
-After changing the CLI code, always update its documentation `docs/cli.md` 
-by running
-
-```bash
-pixi run gen-client
-```
+Edit active notebook sources in `notebooks/`; the build copies them into
+`docs/notebooks/` and renders them without executing requests. Clear stale
+outputs when changing examples. Keep the hand-maintained CLI reference aligned
+with `sen4cap-client --help` and each command's `--help`. The Python factory
+reference is generated from its docstrings.
 
 ### Releasing
 

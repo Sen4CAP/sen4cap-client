@@ -26,7 +26,13 @@ def test_cli_uses_sen4cap_profile(tmp_path, monkeypatch):
 
     result = CliRunner().invoke(
         sen4cap_client.cli.cli,
-        ["configure", "--api-url", "https://example.test/process/", "--auth-type", "none"],
+        [
+            "configure",
+            "--api-url",
+            "https://example.test/process/",
+            "--auth-type",
+            "none",
+        ],
     )
 
     assert result.exit_code == 0, result.output

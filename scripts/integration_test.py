@@ -2,7 +2,9 @@
 #  Permissions are hereby granted under the terms of the Apache 2.0 License:
 #  https://opensource.org/license/apache-2-0.
 
-from sen4cap_client.api import Client
+from contextlib import closing
+
+from sen4cap_client.api import create_client
 
 
 def test_with_server():
@@ -12,14 +14,18 @@ def test_with_server():
     ```bash
     git clone https://github.com/Sen4CAP/sen4cap-client.git
     cd sen4cap-client
-    git clone https://github.com/eo-tools/eozilla.git
     pixi install
     pixi shell
     sen4cap-client configure
+    sen4cap-client login
     pytest -s scripts/integration_test.py
     ```
     """
-    client = Client()
+    with closing(create_client()) as client:
+        _check_server(client)
+
+
+def _check_server(client):
 
     capabilities = client.get_capabilities()
     assert len(capabilities.links) > 0, "empty capability links"
@@ -53,7 +59,7 @@ def test_with_server():
             for input_name, input_desc in process.inputs.items():
                 if not input_name.isidentifier():
                     print(f"{w_prefix}: input {input_name!r}: inappropriate name")
-                #if not hasattr(input_desc, "level"):
+                # if not hasattr(input_desc, "level"):
                 #    print(f"{w_prefix}: input {input_name!r}: missing level")
                 if not input_desc.title:
                     print(f"{w_prefix}: input {input_name!r}: missing title")
@@ -73,5 +79,6 @@ def test_with_server():
     for job_info in jobs:
         job_id = job_info.jobID
         job = client.get_job(job_id=job_id)
+        assert job.jobID == job_id
         print(f"Job {job_id!r} ok")
     print("Jobs ok")

@@ -6,17 +6,23 @@ site_name: ESA Sen4CAP Client
 repo_url: https://github.com/Sen4CAP/sen4cap-client
 repo_name: sen4cap-client
 
+exclude_docs: |
+  /hooks/
+  /notebooks/README.md
+
 copyright: Copyright &copy; 2025-2026 ESA Sen4CAP Team
 
 nav:
   - Overview: index.md
   - Installation: installation.md
+  - Configuration: configuration.md
   - User Guides:
     - notebooks/client-api.ipynb
     - notebooks/client-gui.ipynb
     - notebooks/client-cli.ipynb
   - API Reference: api.md
   - CLI Reference: cli.md
+  - Request Format: request-format.md
   - Contributing: contributing.md
 
 theme:
@@ -60,7 +66,9 @@ extra:
 plugins:
   - search
   - autorefs
-  - mkdocs-jupyter
+  - mkdocs-jupyter:
+      include: ["*.ipynb"]
+      execute: false
   - mkdocstrings:
       handlers:
         python:

@@ -13,9 +13,12 @@ Python client for the processing service of the [ESA Sen4CAP project](https://ww
 
 ---
 
-_Note, this project and its documentation is still in an early development stage._
+See the [documentation](https://Sen4CAP.github.io/sen4cap-client/) for guides and reference material.
 
 ## Installation
+
+Requires Python **3.11 or newer**. This checkout targets Cuiman 0.3.1+ and
+Gavicore 0.3.0+; older packaged releases may expose a different API.
 
 ### Using pip
 
@@ -76,7 +79,7 @@ need to install both [git](https://git-scm.com/install/) and
 [pixi](https://pixi.sh/latest/installation/) first. Then:
 
 ```bash
-git clone https://github.com/eo-tools/sen4cap-client.git
+git clone https://github.com/Sen4CAP/sen4cap-client.git
 cd sen4cap-client
 pixi install
 pixi shell
@@ -106,13 +109,39 @@ Python API and its GUI:
 
 ```bash
 sen4cap-client configure
+sen4cap-client login
 ```
+
+Enter the API and login URLs supplied by your service administrator: the defaults
+point to `localhost`, not a hosted service. Configuration saves public settings
+in `~/.sen4cap-client`; login saves credentials in the OS keyring. If you log in
+during configuration, the separate login command is optional.
 
 List the available processes of the Sen4CAP processing service:
 
 ```bash
 sen4cap-client list-processes
 ```
+
+## Python API
+
+Use the Sen4CAP factories so that Python shares the CLI's configuration and
+registers the Sen4CAP STAC result opener:
+
+```python
+from contextlib import closing
+
+from sen4cap_client.api import create_client
+
+with closing(create_client()) as client:
+    print(client.get_processes())
+```
+
+Use `create_async_client()` for asynchronous calls and `await client.close()`
+when finished. Authentication overrides are nested, for example
+`create_client(auth={"auth_type": "none"})` for an unauthenticated service.
+See [configuration](docs/configuration.md), the [Python API](docs/api.md), and
+[CLI guide](docs/cli.md) for details.
 
 ## Development
 
@@ -149,58 +178,40 @@ The `sen4cap-client` code relies heavily on the
 * [gavicore](https://github.com/eo-tools/eozilla/tree/main/gavicore)
   which provides common OGC model classes and basic utilities.  
 
-Should `sen4cap-client` require non-Sen4CAP-specific enhancements it 
-would likely be best to implement the required changes in the respective 
-Eozilla packages. For this, check out the Eozilla sources directly into 
-the project root:
+For changes shared with other Eozilla clients, check out Eozilla beside this
+repository, matching the editable paths in `pyproject.toml`:
 
 ```bash
-git clone https://github.com/Sen4CAP/sen4cap-client.git
-cd sen4cap-client
+cd ..
 git clone https://github.com/eo-tools/eozilla.git
-pixi install
-pixi run tests
-````
-
-The resulting folder structure:
-
-```commandline
-    ${projects}/
-    └── sen4cap-client/
-        ├── ...
-        └── eozilla/
-            ├── cuiman/
-            ├── gavicore/
-            └── ...
+cd sen4cap-client
 ```
 
-Then, during development, change `sen4cap-client/pyproject.toml` as follows
+The layout is `<projects>/sen4cap-client/` and `<projects>/eozilla/`.
+Keep `cuiman` and `gavicore` in the project's `dependencies` list. In
+`[tool.pixi.pypi-dependencies]`, comment out their version-based entries and
+uncomment only these editable entries:
 
-1. Comment out the dependencies `cuiman` and `gavicore` in the 
-   `[project.dependencies]` table.
-
-2. Uncomment the editable PyPI dependencies for `cuiman` and `gavicore` in 
-   the `[tool.pixi.pypi-dependencies]` table.
-
-Then run once more
-
-```bash
-pixi install
+```toml
+cuiman = { path = "../eozilla/cuiman", editable = true }
+gavicore = { path = "../eozilla/gavicore", editable = true }
 ```
+
+Then run `pixi install` and `pixi run tests`. The local packages must satisfy the
+project's version requirements. The server packages `wraptile` and `procodile`
+are not needed for client development against an existing service.
 
 ### Integration tests
 
-This is how to run a simple server integration test:
+After configuring and logging in to a running service:
 
 ```bash
-git clone https://github.com/Sen4CAP/sen4cap-client.git
-cd sen4cap-client
-git clone https://github.com/eo-tools/eozilla.git
-pixi install
-pixi shell
-sen4cap-client configure
-pytest -s scripts/integration_test.py
+pixi run pytest -s scripts/integration_test.py
 ```
+
+This makes live service calls. The separate `tests/test_client.py` smoke test
+requires `notebooks/credentials.json` containing factory configuration overrides
+(such as `api_url` and nested `auth`); it is skipped when that file is absent.
 
 ### Running the client in a remote VM (Windows 11)
 

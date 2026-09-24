@@ -58,12 +58,6 @@ def _patch_notebook(path: Path):
     return changed
 
 
-def _ignore(src: str, names: list[str]) -> list[str]:
-    """Ignore parts of the notebooks folder."""
-    print("---> Ignore: ", src, type(src), names)
-    return [n for n in names if n == "deprecated"]
-
-
 def _update_files_in_docs(source: Path, destination: Path):
     """
     Adds notebooks to docs/notebooks
@@ -73,4 +67,8 @@ def _update_files_in_docs(source: Path, destination: Path):
         - destination: Path to copy original notebooks to prepare for and add to
         mkdocs documentation
     """
-    shutil.copytree(source, destination, dirs_exist_ok=True, ignore=_ignore)
+    destination.mkdir(parents=True, exist_ok=True)
+    # Only active notebooks are documentation sources. Do not copy local
+    # profiles, credentials, generated requests, or deprecated notebooks.
+    for notebook in source.glob("*.ipynb"):
+        shutil.copy2(notebook, destination / notebook.name)

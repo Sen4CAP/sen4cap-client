@@ -34,12 +34,15 @@ class Sen4CAPConfig(ClientConfig):
 def create_client(**config: Any) -> Client:
     """Create a synchronous Sen4CAP client from given configuration.
 
-    Provided configuration values, if any, override Sen4CAP default
-    values or values read from persistent configuration that were
-    previously written by the CLI command `sen4cap-client configure`.
+    Uses the Sen4CAP profile, environment namespace, and result opener.
+    Explicit settings override environment variables and the saved profile
+    written by `sen4cap-client configure`. Authentication fields belong in
+    the nested `auth` mapping. Call `login()` explicitly if interactive
+    authentication is needed, and `close()` when finished.
 
     Args:
-        config: Configuration overrides. See
+        config: Client options such as `api_url`, `auth`, and `config_path`.
+            The default profile is `~/.sen4cap-client`. See
             https://eo-tools.github.io/eozilla/cuiman/configuration/
             for details.
     Returns:
@@ -52,12 +55,13 @@ def create_client(**config: Any) -> Client:
 def create_async_client(**config: Any) -> AsyncClient:
     """Create an asynchronous Sen4CAP client from given configuration.
 
-    Provided configuration values, if any, override Sen4CAP default
-    values or values read from persistent configuration that were
-    previously written by the CLI command `sen4cap-client configure`.
+    Uses the same Sen4CAP settings and result opener as `create_client()`.
+    Authentication fields belong in the nested `auth` mapping. Await service
+    calls, `login()`, and `close()`; client construction is synchronous.
 
     Args:
-        config: Configuration overrides. See
+        config: Client options such as `api_url`, `auth`, and `config_path`.
+            The default profile is `~/.sen4cap-client`. See
             https://eo-tools.github.io/eozilla/cuiman/configuration/
             for details.
     Returns:

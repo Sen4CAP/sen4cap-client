@@ -1,4 +1,4 @@
-## Changes in version 0.2.0 (in development)
+## Changes in version 0.2.0 
 
 - Added client factory functions `create_client()` and `create_async_client()`
   which are now the preferred way to create a Sen4CAP client.
@@ -6,7 +6,7 @@
   can open the datasets created by processor runs. 
 - Changed `notebooks/client-gui.ipynb` to demonstrate the new Eozilla App UI
   which is shown by `client.show_app()`.
-- Depend on eozilla 0.2.x packages.
+- Depend on eozilla 0.3.x packages.
 - Update installation instructions. (#30, #34)
 
 ## Changes in version 0.1.0
