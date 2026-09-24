@@ -3,10 +3,10 @@
     "startdate": "2024-06-01",
     "enddate": "2024-06-07",
     "indicatorname": "NDVI",
-    "geam": "POLYGON ((9.66 53.75,10.38 53.75,10.38 53.35,9.66 53.35,9.66 53.75))"
+    "geom": "POLYGON ((9.66 53.75,10.38 53.75,10.38 53.35,9.66 53.35,9.66 53.75))"
   },
   "outputs": {
-    "stacitemfile": {
+    "stacitemsfile": {
       "format": {"mediaType": "application/json"},
       "transmissionMode": "reference"
     }

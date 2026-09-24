@@ -72,7 +72,7 @@ def test_submit_returns_server_job_id_and_validates_request():
     assert job_id == "new-job-42"
     request = client.execute_process.call_args.kwargs["request"]
     assert isinstance(request, ProcessRequest)
-    assert request.inputs["691adc8e-9bba-4f42-86e2-ccd72189edc3"] == "NDVI"
+    assert request.inputs["indicatorname"] == "NDVI"
     assert client.execute_process.call_args.kwargs["process_id"] == "218"
 
 
@@ -127,9 +127,9 @@ def test_app_updates_shared_inputs_without_replacing_outputs():
     app.set_dates_and_area(client_app)
 
     updated = client_app.get_process_request("218")
-    assert updated.inputs["c30145a7-029c-4499-98bc-9903ca46531c"] == "2024-06-03"
-    assert updated.inputs["472efeab-514a-4e15-9dba-d5812d653065"] == "2024-06-11"
-    assert updated.inputs["691adc8e-9bba-4f42-86e2-ccd72189edc3"] == "NDVI"
+    assert updated.inputs["startdate"] == "2024-06-03"
+    assert updated.inputs["enddate"] == "2024-06-11"
+    assert updated.inputs["indicatorname"] == "NDVI"
     assert updated.outputs == request.outputs
 
 

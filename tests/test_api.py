@@ -58,7 +58,7 @@ async def test_create_client(
             assert client.config.api_url == "https://example.test/process/"
             assert isinstance(client.config.auth, NoAuthConfig)
         else:
-            assert client.config.api_url == "https://sen4x.tao.c-s.ro/process/"
+            assert client.config.api_url == "https://sen4x.tao.c-s.ro/process"
             assert isinstance(client.config.auth, LoginAuthConfig)
             assert (
                 str(client.config.auth.login_url)
