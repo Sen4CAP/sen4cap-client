@@ -58,10 +58,11 @@ async def test_create_client(
             assert client.config.api_url == "https://example.test/process/"
             assert isinstance(client.config.auth, NoAuthConfig)
         else:
-            assert client.config.api_url == "http://localhost:8080/process/"
+            assert client.config.api_url == "https://sen4x.tao.c-s.ro/process/"
             assert isinstance(client.config.auth, LoginAuthConfig)
             assert (
-                str(client.config.auth.login_url) == "http://localhost:8080/auth/login"
+                str(client.config.auth.login_url)
+                == "https://sen4x.tao.c-s.ro/auth/login"
             )
             assert client.config.auth.access_token_header == "X-Auth-Token"
     finally:

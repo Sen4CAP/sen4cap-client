@@ -22,9 +22,9 @@ class Sen4CAPConfig(ClientConfig):
 
     default_path = Path("~").expanduser() / ".sen4cap-client"
 
-    api_url: str | None = "http://localhost:8080/process/"
+    api_url: str | None = "https://sen4x.tao.c-s.ro/process/"
     auth: AuthConfig = LoginAuthConfig(
-        login_url=HttpUrl("http://localhost:8080/auth/login"),
+        login_url=HttpUrl("https://sen4x.tao.c-s.ro/auth/login"),
         access_token_header="X-Auth-Token",
     )
 
