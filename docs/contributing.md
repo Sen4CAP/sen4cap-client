@@ -45,50 +45,33 @@ pixi install
 pixi shell
 ```
 
-### Test against a service
+### Testing the Sen4CAP-client
 
-Configure the processing API and authentication endpoints for a running service,
-then log in. The default client environment does not install the Eozilla server
-packages. See [installation](installation.md#implementing-enhancements) if you
-need to develop Eozilla alongside the client.
+Run local test server
 
-```bash
-sen4cap-client configure
-sen4cap-client login
-sen4cap-client list-processes
-pixi run pytest -s scripts/integration_test.py
+```commandline
+wraptile run -- wraptile.services.local.testing:service
 ```
 
-Use the Sen4CAP factory in Python:
+The dev mode is useful if you are changing server code:
 
-```python
-from contextlib import closing
-
-from sen4cap_client.api import create_client
-
-with closing(create_client()) as client:
-    print(client.get_processes())
-    print(client.get_jobs())
+```commandline
+wraptile dev wraptile.services.local.testing:service
 ```
 
-To open the GUI in a notebook, keep the client alive while using the app:
-
-```python
-from sen4cap_client.api import create_client
-
-client = create_client()
-client.login()
-app = client.show_app()
-```
-
-When finished, call `app.serve_result.stop()` and `client.close()`.
-The [GUI notebook](notebooks/client-gui.ipynb) demonstrates shared request state.
+See the [Python API](guides/api.md), [App](guides/app.md), and
+[command-line](guides/cli.md) guides for client usage and runnable examples.
 
 ### Formatting, checks, and tests
 
-```bash
+```commandline
 pixi run format
 pixi run checks
+```
+
+### Testing & Coverage
+
+```commandline
 pixi run tests
 pixi run coverage
 ```
@@ -98,18 +81,71 @@ credentials file. Unit tests do not require a running service.
 
 ### Documentation
 
-From the repository root:
+The Sen4CAP-client's documentation is built using the 
+[mkdocs](https://www.mkdocs.org/) tool.
+
+With repository root as current working directory:
 
 ```bash
-pixi run mkdocs build --strict
-pixi run mkdocs serve
+pixi run docs-build
+pixi run docs-serve
 ```
 
-Edit active notebook sources in `notebooks/`; the build copies them into
-`docs/notebooks/` and renders them without executing requests. Clear stale
-outputs when changing examples. Keep the hand-maintained CLI reference aligned
-with `sen4cap-client --help` and each command's `--help`. The Python factory
-reference is generated from its docstrings.
+#### Editing guides and examples
+
+Maintain the three user guides directly in `docs/guides/`. Python, shell, and
+JSON examples live in `examples/guides/`; Markdown includes them using
+[PyMdown Snippets](https://facelessuser.github.io/pymdown-extensions/extensions/snippets/).
+The notebooks in `notebooks/` remain independent examples. Documentation builds
+neither copy nor execute them. Any copies left under `docs/notebooks/` by an
+older build are excluded from the site.
+
+To display part of a Python file, surround it with named section comments:
+
+```python
+# ;--8<-- [start:example-name]
+print("Hello from the example")
+# ;--8<-- [end:example-name]
+```
+
+Include that section inside a Markdown code fence:
+
+````markdown
+```python
+;--8<-- "examples/guides/example.py:example-name"
+```
+````
+
+Use stable section names instead of line numbers. Whole files, such as a JSON
+request, can be included without a section suffix. Includes resolve from the
+repository root; `check_paths: true` makes missing includes fail the build.
+Subsections are dedented for display. Include enough context for a reader to
+understand each excerpt, and link to the complete example file.
+
+Format and check Python examples with the existing tools:
+
+```bash
+pixi run format
+pixi run checks
+pixi run pytest tests/test_guide_examples.py
+pixi run docs-build
+```
+
+`checks` lints the Python example files and verifies their formatting. Type
+checking examples is optional and is not enabled by default. The guide tests
+run offline with mocked clients; they check submission and job-result handling
+without credentials or processing jobs. Run the example scripts manually
+against a configured service when testing a complete workflow. Shell recipes
+are copied section by section, not executed as a batch.
+
+Store screenshots and plots in `docs/assets/guides/`, use descriptive filenames
+and alt text, and record their origin in `examples/guides/README.md`. Refresh
+images deliberately when the relevant interface or result changes; the build
+only copies the committed assets. Review guides in `docs-serve` because GitHub
+Markdown previews do not expand Snippets directives.
+
+Keep `docs/cli.md` aligned with CLI changes by checking the installed command's
+`--help` output.
 
 ### Releasing
 

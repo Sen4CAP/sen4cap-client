@@ -1,4 +1,4 @@
-#  Copyright (c) 2025 by ESA Sen4CAP team and contributors
+#  Copyright (c) 2025,2026 by ESA Sen4CAP team and contributors
 #  Permissions are hereby granted under the terms of the Apache 2.0 License:
 #  https://opensource.org/license/apache-2-0.
 
@@ -6,20 +6,20 @@ site_name: ESA Sen4CAP Client
 repo_url: https://github.com/Sen4CAP/sen4cap-client
 repo_name: sen4cap-client
 
-exclude_docs: |
-  /hooks/
-  /notebooks/README.md
-
 copyright: Copyright &copy; 2025-2026 ESA Sen4CAP Team
+
+# Ignore copies left by older notebook-based builds.
+exclude_docs: |
+  /notebooks/
 
 nav:
   - Overview: index.md
   - Installation: installation.md
   - Configuration: configuration.md
   - User Guides:
-    - notebooks/client-api.ipynb
-    - notebooks/client-gui.ipynb
-    - notebooks/client-cli.ipynb
+    - Python API: guides/api.md
+    - App: guides/app.md
+    - Command Line: guides/cli.md
   - API Reference: api.md
   - CLI Reference: cli.md
   - Request Format: request-format.md
@@ -46,12 +46,17 @@ theme:
         name: Switch to light mode
   features:
     - navigation.top
-  custom_dir: docs/overrides
 
 markdown_extensions:
   - attr_list
   - admonition
   - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: !relative $config_dir
+      check_paths: true
+      dedent_subsections: true
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
@@ -66,9 +71,6 @@ extra:
 plugins:
   - search
   - autorefs
-  - mkdocs-jupyter:
-      include: ["*.ipynb"]
-      execute: false
   - mkdocstrings:
       handlers:
         python:
@@ -83,6 +85,3 @@ plugins:
 
 extra_css:
     - overrides/css/custom.css
-
-hooks:
-    - docs/hooks/notebooks_json_output.py

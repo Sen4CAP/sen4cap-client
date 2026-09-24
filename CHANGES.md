@@ -5,9 +5,13 @@
 - Added a _job result opener_ so that the client's `open_job_result()` method
   can open the datasets created by processor runs. 
 - Changed `notebooks/client-gui.ipynb` to demonstrate the new Eozilla App UI
-  which is shown by `client.show_app()`.
+  which is launched by `client.show_app()`.
 - Depend on eozilla 0.3.x packages.
 - Update installation instructions. (#30, #34)
+- Replaced notebook-generated API, CLI, and App user guides with Markdown
+  pages, static images, and reusable code snippets that can be formatted,
+  linted, and tested. Simplified the MkDocs configuration and preserved the
+  original notebooks. (#32)
 
 ## Changes in version 0.1.0
 
