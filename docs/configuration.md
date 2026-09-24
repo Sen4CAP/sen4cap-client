@@ -13,18 +13,20 @@ sen4cap-client login
 sen4cap-client list-processes
 ```
 
-Enter the processing API and authentication URLs supplied by your service
-administrator. The built-in defaults point to a **local** server:
+The built-in defaults point to the default Sen4CAP processing service.
+For another deployment, enter the processing API and authentication URLs
+supplied by your service administrator:
 
-| Setting | Default |
-| --- | --- |
-| `api_url` | `http://localhost:8080/process/` |
-| `auth.auth_type` | `login` |
-| `auth.login_url` | `http://localhost:8080/auth/login` |
-| `auth.access_token_header` | `X-Auth-Token` |
+| Setting | Default                               |
+| --- |---------------------------------------|
+| `api_url` | `https://your-service.example/process/`           |
+| `auth.auth_type` | `login`                               |
+| `auth.login_url` | `https://your-service.example/auth/login` |
+| `auth.access_token_header` | `X-Auth-Token`                        |
 
-These URLs do not select a hosted Sen4CAP service. `configure` saves public
-settings and may offer to log in afterwards. `login` obtains credentials and
+These are defaults for new configurations; an existing profile or environment
+setting takes precedence. Access requires credentials for the selected service.
+`configure` saves public settings and may offer to log in afterwards. `login` obtains credentials and
 stores them in the OS keyring; `logout` removes locally stored credentials for
 that profile. If you logged in during configuration, a separate login is optional.
 
@@ -108,6 +110,19 @@ missing secrets after settings resolution. A previously resolved configuration
 object is a snapshot and does not reread those sources when reused.
 
 ## Updating older setups
+
+Changing the built-in defaults does not rewrite an existing profile. To switch
+a profile that still points to localhost or another endpoint to the current
+default service, set the URLs explicitly and log in:
+
+```bash
+sen4cap-client configure --api-url https://your-service.example/process/ --auth-type login --login-url https://sen4x.tao.c-s.ro/auth/login --access-token-header X-Auth-Token
+sen4cap-client login
+```
+
+For a custom profile, add `--config PATH` to both commands. Check your `.env` and
+`SEN4CAP_` environment variables as well, because they override saved settings.
+
 
 If an earlier CLI version wrote a Cuiman profile at `~/.eozilla/config`, run
 `sen4cap-client configure` and `sen4cap-client login` again to set up the shared

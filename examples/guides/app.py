@@ -26,9 +26,9 @@ def open_app(display="browser"):
 # --8<-- [start:request]
 def set_dates_and_area(app, process_id="218"):
     request = app.process_requests[process_id]
-    request.inputs["c30145a7-029c-4499-98bc-9903ca46531c"] = "2024-06-03"
-    request.inputs["472efeab-514a-4e15-9dba-d5812d653065"] = "2024-06-11"
-    request.inputs["bed1920e-51c0-406e-b22e-70d1f86d95d4"] = (
+    request.inputs["startdate"] = "2024-06-03"
+    request.inputs["enddate"] = "2024-06-11"
+    request.inputs["geom"] = (
         "POLYGON ((9.66 53.75,10.38 53.75,10.38 53.35,9.66 53.35,9.66 53.75))"
     )
 

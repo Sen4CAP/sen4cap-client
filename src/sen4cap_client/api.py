@@ -20,9 +20,12 @@ class Sen4CAPConfig(ClientConfig):
         extra="allow",  # ClientConfig uses "forbid"
     )
 
+    cli_name = "sen4cap-client"
+    display_name = "Sen4CAP Client"
+
     default_path = Path("~").expanduser() / ".sen4cap-client"
 
-    api_url: str | None = "https://sen4x.tao.c-s.ro/process/"
+    api_url: str | None = "https://sen4x.tao.c-s.ro/process"
     auth: AuthConfig = LoginAuthConfig(
         login_url=HttpUrl("https://sen4x.tao.c-s.ro/auth/login"),
         access_token_header="X-Auth-Token",

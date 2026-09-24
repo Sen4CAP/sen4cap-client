@@ -98,9 +98,11 @@ sen4cap-client configure
 sen4cap-client login
 ```
 
-Enter the API and login URLs supplied by your service administrator: the defaults
-point to `localhost`, not a hosted service. Configuration saves public settings
-in `~/.sen4cap-client`; login saves credentials in the OS keyring. If you log in
+The built-in defaults point to the default Sen4CAP processing service: the
+processing API is `/process/` and the login endpoint is `/auth/login`. Use the
+URLs supplied by your administrator for another deployment. Configuration saves
+public settings in `~/.sen4cap-client`; login saves credentials in the OS keyring.
+Existing profiles and environment settings override the defaults. If you log in
 during configuration, the separate login command is optional.
 
 List the available processes of the Sen4CAP processing service:

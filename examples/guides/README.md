@@ -18,7 +18,8 @@ independent of the notebooks in `notebooks/`.
 
 Live examples require `sen4cap-client configure` and `sen4cap-client login`
 (unless you logged in during configuration or the service needs no authentication).
-Use the service URLs supplied by your administrator; the defaults are local.
+The defaults use `https://sen4x.tao.c-s.ro`; use the URLs supplied by your
+administrator for another deployment. Existing profiles override these defaults.
 Process and input identifiers
 come from the original process 218 example; adapt them to your service. The
 submit command creates a real processing job. Use its returned ID for results.
