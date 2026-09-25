@@ -1,4 +1,4 @@
-## Changes in version 0.2.0 (in development)
+## Changes in version 0.2.0
 
 - Added client factory functions `create_client()` and `create_async_client()`
   which are now the preferred way to create a Sen4CAP client.
