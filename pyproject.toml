@@ -55,8 +55,8 @@ dependencies = [
   "uri-template",
   "xarray",
   # Eozilla dependencies
-  "cuiman >=0.2.0.dev1",
-  "gavicore >=0.2.0.dev1",
+  "cuiman >=0.3.1",
+  "gavicore >=0.3.0",
 ]
 
 [project.urls]
@@ -101,7 +101,7 @@ platforms = ["linux-64", "win-64", "osx-64"]
 #     PyPI dependencies (our project's sub-workspaces) to install
 #     PyPI packages instead of using conda packages.
 fastapi = "*"
-httpx = "*"
+httpx2 = "*"
 pydantic = ">=2,<3"
 pydantic-settings = ">=2,<3"
 pystac = ">=1.14,<2"
@@ -110,6 +110,8 @@ rioxarray = ">=0.22.0,<1"
 typer = "*"
 uri-template = "*"
 uvicorn = "*"
+xarray = ">=2026.7"
+zarr = "*"
 # --- IDE integration
 pixi-pycharm = ">=0.0.11"
 # --- Development & build tools
@@ -127,10 +129,6 @@ pytest-cov = "*"
 # --- Notebooks
 jupyter = "*"
 matplotlib = ">=3.11.0,<4"
-# --- Use cases testing
-dask = "*"
-xarray = "*"
-zarr = "*"
 # --- Documentation
 mkdocs = "==1.6.1"
 mkdocs-autorefs = ">=1.4.3,<1.5"
@@ -148,15 +146,15 @@ sen4cap_client = { path = ".", editable = true }
 # Uncomment the following to allow using eozilla from PyPI
 # Note, using the wraptile/procodile is for testing only
 #
-gavicore = ">=0.2.0.dev1"
-cuiman = ">=0.2.0.dev1"
+cuiman = ">=0.3.1"
+gavicore = ">=0.3.0"
 #
 # Uncomment the following to allow using eozilla from sources
 #
-# cuiman = { path = "../eozilla/cuiman", editable = true }
-# gavicore = { path = "../eozilla/gavicore", editable = true }
-# wraptile = { path = "../eozilla/wraptile", editable = true }
-# procodile = { path = "../eozilla/procodile", editable = true }
+#cuiman = { path = "../eozilla/cuiman", editable = true }
+#gavicore = { path = "../eozilla/gavicore", editable = true }
+#wraptile = { path = "../eozilla/wraptile", editable = true }
+#procodile = { path = "../eozilla/procodile", editable = true }
 
 # ---------------------------------------------------------------------
 # Pixi tasks

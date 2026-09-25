@@ -12,15 +12,23 @@ copyright: Copyright &copy; 2025-2026 ESA Sen4CAP Team
 exclude_docs: |
   /notebooks/
 
+validation:
+  links:
+    not_found: warn
+    unrecognized_links: warn
+    anchors: warn
+
 nav:
   - Overview: index.md
   - Installation: installation.md
+  - Configuration: configuration.md
   - User Guides:
     - Python API: guides/api.md
     - App: guides/app.md
     - Command Line: guides/cli.md
   - API Reference: api.md
   - CLI Reference: cli.md
+  - Request Format: request-format.md
   - Contributing: contributing.md
 
 theme:
@@ -49,7 +57,8 @@ markdown_extensions:
   - attr_list
   - admonition
   - pymdownx.details
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      pygments_lang_class: true
   - pymdownx.superfences
   - pymdownx.snippets:
       base_path: !relative $config_dir

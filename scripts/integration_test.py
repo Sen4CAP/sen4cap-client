@@ -2,7 +2,9 @@
 #  Permissions are hereby granted under the terms of the Apache 2.0 License:
 #  https://opensource.org/license/apache-2-0.
 
-from sen4cap_client.api import Client
+from contextlib import closing
+
+from sen4cap_client.api import create_client
 
 
 def test_with_server():
@@ -12,14 +14,18 @@ def test_with_server():
     ```bash
     git clone https://github.com/Sen4CAP/sen4cap-client.git
     cd sen4cap-client
-    git clone https://github.com/eo-tools/eozilla.git
     pixi install
     pixi shell
     sen4cap-client configure
+    sen4cap-client login
     pytest -s scripts/integration_test.py
     ```
     """
-    client = Client()
+    with closing(create_client()) as client:
+        _check_server(client)
+
+
+def _check_server(client):
 
     capabilities = client.get_capabilities()
     assert len(capabilities.links) > 0, "empty capability links"
@@ -51,18 +57,16 @@ def test_with_server():
             w += 1
         else:
             for input_name, input_desc in process.inputs.items():
-                if not input_name.isidentifier():
-                    print(f"{w_prefix}: input {input_name!r}: inappropriate name")
-                #if not hasattr(input_desc, "level"):
-                #    print(f"{w_prefix}: input {input_name!r}: missing level")
+                # OGC input identifiers may be UUIDs, not Python identifiers.
                 if not input_desc.title:
                     print(f"{w_prefix}: input {input_name!r}: missing title")
+                    w += 1
         if not process.outputs:
             print(f"{w_prefix}: missing outputs")
             w += 1
         if w == 0:
-            print(f"Process process {process_id!r} ok")
-        warnings += 1
+            print(f"Process {process_id!r} ok")
+        warnings += w
     if not warnings:
         print("Process list ok")
 
@@ -73,5 +77,6 @@ def test_with_server():
     for job_info in jobs:
         job_id = job_info.jobID
         job = client.get_job(job_id=job_id)
+        assert job.jobID == job_id
         print(f"Job {job_id!r} ok")
     print("Jobs ok")

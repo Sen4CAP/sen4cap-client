@@ -2,6 +2,9 @@
 
 ## Installation
 
+Requires Python **3.11 or newer**. This checkout targets Cuiman 0.3.1+ and
+Gavicore 0.3.0+; older packaged releases may expose a different API.
+
 ### Using pip
 
 The `sen4cap-client` package is available on PyPI, and can be
@@ -92,7 +95,15 @@ Python API and its GUI:
 
 ```bash
 sen4cap-client configure
+sen4cap-client login
 ```
+
+The built-in defaults point to the default Sen4CAP processing service: the
+processing API is `/process/` and the login endpoint is `/auth/login`. Use the
+URLs supplied by your administrator for another deployment. Configuration saves
+public settings in `~/.sen4cap-client`; login saves credentials in the OS keyring.
+Existing profiles and environment settings override the defaults. If you log in
+during configuration, the separate login command is optional.
 
 List the available processes of the Sen4CAP processing service:
 
@@ -135,30 +146,40 @@ The `sen4cap-client` code relies heavily on the
 * [gavicore](https://github.com/eo-tools/eozilla/tree/main/gavicore)
   which provides common OGC model classes and basic utilities.  
 
-Should `sen4cap-client` require non-Sen4CAP-specific enhancements it 
-would likely be best to implement the required changes in the respective 
-Eozilla packages. For this, check out the Eozilla sources directly next 
-to this project's sources to achieve this folder structure:
+For changes shared with other Eozilla clients, check out Eozilla beside this
+repository, matching the editable paths in `pyproject.toml`:
 
-```commandline
-    <projects>/
-    ├── sen4cap-client/
-    └── eozilla/
-        ├── cuiman/
-        ├── gavicore/
-        └── ...
+```bash
+cd ..
+git clone https://github.com/eo-tools/eozilla.git
+cd sen4cap-client
 ```
 
-Then, during development, change `sen4cap-client/pyproject.toml` as follows
+The layout is `<projects>/sen4cap-client/` and `<projects>/eozilla/`.
+Keep `cuiman` and `gavicore` in the project's `dependencies` list. In
+`[tool.pixi.pypi-dependencies]`, comment out their version-based entries and
+uncomment only these editable entries:
 
-1. Comment out the dependencies `cuiman` and `gavicore` in the 
-   `[project.dependencies]` table.
-
-2. Uncomment the editable PyPI dependencies for `cuiman` and `gavicore` in 
-   the `[tool.pixi.pypi-dependencies]` table.
-
-Then run once more
-
-```commandline
-pixi install
+```toml
+cuiman = { path = "../eozilla/cuiman", editable = true }
+gavicore = { path = "../eozilla/gavicore", editable = true }
 ```
+
+Then run `pixi install` and `pixi run tests`. The local packages must satisfy the
+project's version requirements. The server packages `wraptile` and `procodile`
+are not needed for client development against an existing service.
+
+### Build the documentation
+
+```bash
+pixi run docs-build
+pixi run docs-serve
+```
+
+Edit the Markdown guides in `docs/guides/` and their shared code snippets in
+`examples/guides/`. The build includes those snippets without executing them.
+The independent notebooks in `notebooks/` are neither copied nor executed;
+old copies under `docs/notebooks/` are excluded from the site.
+
+See [configuration](configuration.md) for profiles and authentication, the
+[Python API](api.md) for client factories, and the [CLI guide](cli.md) for commands.

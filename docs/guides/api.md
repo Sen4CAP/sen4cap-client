@@ -1,8 +1,10 @@
 # Python API guide
 
 Use the Python API to discover processes, submit requests, monitor jobs, and
-open their results. Start with [installation and configuration](../installation.md).
-The examples below use the configuration saved by `sen4cap-client configure`.
+open their results. Start with [installation](../installation.md) and
+[configuration and login](../configuration.md). The examples below use the
+profile saved by `sen4cap-client configure` and credentials saved by
+`sen4cap-client login`.
 
 Run the Python blocks below in order in the same Python session or notebook.
 Each step defines a small function and then calls it, reusing the same `client`
@@ -16,8 +18,10 @@ is also available for interactive exploration.
 ## Create a client
 
 The examples use `create_client()` to load the saved service configuration and
-authenticate. Explicit keyword arguments can override configuration values; see
-the [configuration reference](https://eo-tools.github.io/eozilla/cuiman/configuration/).
+credentials. Construction does not contact the service or prompt for login.
+Service calls authenticate using the resolved credentials; call `client.login()`
+first if interactive authentication is needed. Explicit keyword arguments can
+override configuration values; see the [configuration reference](../configuration.md).
 Import the dependencies and create the client:
 
 ```python
@@ -91,8 +95,15 @@ for the corresponding command.
 
 For the example process, the output links to a STAC item. Its assets identify
 the available data products. `open_job_result()` opens the selected `SNDVI`
-asset as an xarray data array. Other processes may have different asset names
-or result types.
+asset as an xarray data array. The asset must expose `alternate.s3.href`, and
+the STAC and raster URLs must be accessible independently of the processing
+API's authentication. Other processes may have different asset names or result
+types. For multiple outputs, pass `output_name` to `open_job_result()`.
+
+`open_job_result()` polls accepted/running jobs and can raise `TimeoutError`;
+use its `timeout` and `poll_interval` options to control waiting. Failed or
+dismissed jobs raise a job-status error. The example below is called after the
+job has succeeded.
 
 ```python
 --8<-- "examples/guides/api.py:plot"

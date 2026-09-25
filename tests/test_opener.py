@@ -142,7 +142,7 @@ def expected_s3_url(asset_name):
 @pytest.mark.asyncio
 async def test_job_results_opener_accept_job_result():
     opener = Sen4CAPJobResultsOpener()
-    config = Sen4CAPConfig(auth_type="none")
+    config = Sen4CAPConfig(auth={"auth_type": "none"})
 
     # empty job results -> fail
     ctx = JobResultOpenContext(
@@ -170,7 +170,7 @@ async def test_job_results_opener_accept_job_result():
 @pytest.mark.asyncio
 async def test_job_results_opener_open_job_result(monkeypatch):
     opener = Sen4CAPJobResultsOpener()
-    config = Sen4CAPConfig(auth_type="none")
+    config = Sen4CAPConfig(auth={"auth_type": "none"})
 
     expected_data, fetched_urls, opened_urls = mock_opener_io(monkeypatch)
 
@@ -189,7 +189,7 @@ async def test_job_results_opener_open_job_result(monkeypatch):
 async def test_job_results_opener_in_action(monkeypatch):
     registry = JobResultOpenerRegistry.create_default()
     registry.register(Sen4CAPJobResultsOpener)
-    config = Sen4CAPConfig(auth_type="none")
+    config = Sen4CAPConfig(auth={"auth_type": "none"})
     expected_data, fetched_urls, opened_urls = mock_opener_io(monkeypatch)
 
     ctx = JobResultOpenContext(

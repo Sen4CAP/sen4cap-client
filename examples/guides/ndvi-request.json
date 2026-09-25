@@ -1,12 +1,12 @@
 {
   "inputs": {
-    "c30145a7-029c-4499-98bc-9903ca46531c": "2024-06-01",
-    "472efeab-514a-4e15-9dba-d5812d653065": "2024-06-07",
-    "691adc8e-9bba-4f42-86e2-ccd72189edc3": "NDVI",
-    "bed1920e-51c0-406e-b22e-70d1f86d95d4": "POLYGON ((9.66 53.75,10.38 53.75,10.38 53.35,9.66 53.35,9.66 53.75))"
+    "startdate": "2024-06-01",
+    "enddate": "2024-06-07",
+    "indicatorname": "NDVI",
+    "geom": "POLYGON ((9.66 53.75,10.38 53.75,10.38 53.35,9.66 53.35,9.66 53.75))"
   },
   "outputs": {
-    "db96d3e8-0243-48dc-ac9a-6470d2c39eb8": {
+    "stacitemsfile": {
       "format": {"mediaType": "application/json"},
       "transmissionMode": "reference"
     }

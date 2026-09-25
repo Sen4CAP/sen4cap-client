@@ -1,16 +1,125 @@
-# Python API Reference
+# Python API
 
-The `sen4cap_client.Client` class provides a synchronous API for interacting with 
-the Sen4CAP processing service.
-If you want an asynchronous version, use the `AsyncClient` class instead.
-It provides the same interface, but using asynchronous server calls.
+Use the factories in `sen4cap_client.api`. They select the Sen4CAP configuration,
+saved profile, and job-result opener. The re-exported `Client`, `AsyncClient`, and
+`ClientConfig` classes are Cuiman classes; constructing `Client()` directly uses
+Cuiman's defaults instead.
 
-Both clients return their configuration as a `sen4cap_client.ClientConfig` object.
+## Create a client
 
-Methods of the `sen4cap_client.Client` and `sen4cap_client.AsyncClient` 
-may raise a `sen4cap_client.ClientError` if a server call fails. 
+After [configuring and logging in](configuration.md), you can list processes:
 
-The `sen4cap_client` Python API is a thin wrapper around the 
-[Eozilla](https://eo-tools.github.io/eozilla/) Client API 
-called [Cuiman](https://eo-tools.github.io/eozilla/client-api/).
- 
+```python
+from contextlib import closing
+
+from sen4cap_client.api import create_client
+
+with closing(create_client()) as client:
+    processes = client.get_processes()
+    for process in processes.processes:
+        print(process.id, process.title)
+```
+
+The factory accepts `api_url`, `auth`, and `config_path` overrides. See
+[configuration](configuration.md) for nested authentication settings and precedence.
+Creating a client does not contact the service or prompt for credentials.
+Call `client.login()` explicitly when interactive authentication is needed;
+ordinary API calls do not prompt. Use `client.login(save=True)` to persist
+credentials in the OS keyring for the selected profile.
+
+## Execute a process and open its result
+
+Process IDs, input names, and output names come from the service. Inspect
+`client.get_process(process_id)` before building a request. This example uses
+the shared NDVI request for process `218`. Run it from the repository root and
+adapt `examples/guides/ndvi-request.json` to your deployment first; its input
+and output keys are UUIDs from the example service, not display labels.
+The [Python API guide](guides/api.md) shows the request and each step.
+
+```python
+from contextlib import closing
+from pathlib import Path
+
+from gavicore.models import ProcessRequest
+from sen4cap_client.api import create_client
+
+with closing(create_client()) as client:
+    request = ProcessRequest.model_validate_json(
+        Path("examples/guides/ndvi-request.json").read_text(encoding="utf-8")
+    )
+    job = client.execute_process(process_id="218", request=request)
+    print(job.jobID, job.status)
+    data = client.open_job_result(
+        job_id=job.jobID, asset_name="SNDVI", timeout=3600
+    )
+    try:
+        print(data)
+    finally:
+        data.close()
+```
+
+`execute_process()` submits a server-side job and returns a `JobInfo`; it does
+not wait for processing to finish. Keep its `jobID` for subsequent calls.
+`open_job_result()` polls accepted/running jobs until completion or timeout.
+If results contain several outputs, pass `output_name` to select one.
+
+The Sen4CAP opener requires a result link to a STAC item with
+`/collections/…/items/…` in its URL and an `asset_name` option. The selected asset
+must have `alternate.s3.href`; it is opened with `rioxarray.open_rasterio()`.
+For the single-raster NDVI example this returns an `xarray.DataArray`. The STAC
+and raster URLs must be accessible independently: this opener does not forward
+the processing API's authentication headers. Other output formats may be handled
+by Cuiman's built-in openers.
+
+## Asynchronous calls
+
+```python
+import asyncio
+
+from sen4cap_client.api import create_async_client
+
+async def main():
+    client = create_async_client()
+    try:
+        processes = await client.get_processes()
+        print(processes)
+    finally:
+        await client.close()
+
+asyncio.run(main())
+```
+
+In a notebook use `await main()` instead of `asyncio.run(main())`. Await the
+async client's API operations, `login()`, `open_job_result()`, and `close()`.
+`show_app()` is a regular method on either client.
+
+## Methods and errors
+
+| Method | Purpose |
+| --- | --- |
+| `get_capabilities()` / `get_conformance()` | Inspect the service and supported standards. |
+| `get_processes()` / `get_process(process_id)` | Discover processes and their input/output schemas. |
+| `execute_process(process_id, request)` | Submit a `ProcessRequest`; return a `JobInfo`. |
+| `get_jobs()` / `get_job(job_id)` | List jobs or inspect one job's status. |
+| `get_job_results(job_id)` | Retrieve output values or links for a successful job. |
+| `open_job_result(job_id, **options)` | Wait for completion and open a selected output. |
+| `dismiss_job(job_id)` | Cancel a running job or delete a finished job. |
+| `show_app()` | Open the GUI and return an app object. |
+
+Models such as `ProcessRequest`, `JobInfo`, and `JobResults` are provided by
+`gavicore.models`. Import API errors from `cuiman.api`, for example
+`from cuiman.api import ClientError`; they are not exported by `sen4cap_client`.
+Result opening can also raise `JobResultOpenError`, `JobResultStatusError`
+(from `cuiman.api.opener`), or `TimeoutError`.
+
+For the full inherited API, see [Cuiman](https://eo-tools.github.io/eozilla/cuiman/).
+The [Python API guide](guides/api.md) and [App guide](guides/app.md) demonstrate
+the workflow using the maintained examples in `examples/guides/`. The independent
+[notebooks](https://github.com/Sen4CAP/sen4cap-client/tree/main/notebooks)
+remain available in the repository; they are not published as documentation pages.
+
+## Sen4CAP factory reference
+
+::: sen4cap_client.api.create_client
+
+::: sen4cap_client.api.create_async_client

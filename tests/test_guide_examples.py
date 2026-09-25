@@ -1,3 +1,5 @@
+import ast
+import json
 from pathlib import Path
 from unittest.mock import Mock
 
@@ -9,9 +11,56 @@ from remotestate import ServeResult
 from typer.testing import CliRunner
 
 from examples.guides import api, app
+from scripts.integration_test import _check_server
 from sen4cap_client.cli import cli
 
 REQUEST_PATH = Path(__file__).resolve().parents[1] / "examples/guides/ndvi-request.json"
+
+
+@pytest.mark.parametrize("name", ["client-api.ipynb", "client-gui.ipynb"])
+def test_notebook_request_keys_match_shared_example(name):
+    root = REQUEST_PATH.parents[2]
+    notebook = json.loads((root / "notebooks" / name).read_text(encoding="utf-8"))
+    expected = json.loads(REQUEST_PATH.read_text(encoding="utf-8"))
+    requests = []
+    for cell in notebook["cells"]:
+        if cell["cell_type"] != "code":
+            continue
+        for node in ast.walk(ast.parse("".join(cell["source"]))):
+            if not isinstance(node, ast.Call):
+                continue
+            if isinstance(node.func, ast.Name) and node.func.id == "ProcessRequest":
+                requests.append(
+                    {kw.arg: ast.literal_eval(kw.value) for kw in node.keywords}
+                )
+            elif (
+                isinstance(node.func, ast.Attribute)
+                and node.func.attr == "set_process_request"
+            ):
+                requests.append(ast.literal_eval(node.args[1]))
+    assert len(requests) == 1
+    request = ProcessRequest.model_validate(requests[0])
+    assert request.inputs.keys() == expected["inputs"].keys()
+    assert request.outputs.keys() == expected["outputs"].keys()
+
+
+def test_live_check_accepts_uuid_input_names(capsys):
+    client = Mock(spec=Client)
+    client.get_capabilities.return_value.links = [Mock()]
+    client.get_conformance.return_value.conformsTo = ["example-conformance"]
+    client.get_processes.return_value.processes = [Mock(id="218")]
+    process = client.get_process.return_value
+    process.title = "NDVI"
+    process.description = "NDVI processing"
+    process.inputs = {"c30145a7-029c-4499-98bc-9903ca46531c": Mock(title="Start date")}
+    process.outputs = {"result": Mock()}
+    client.get_jobs.return_value.jobs = []
+
+    _check_server(client)
+
+    output = capsys.readouterr().out
+    assert "Warning:" not in output
+    assert "Process list ok" in output
 
 
 def test_submit_returns_server_job_id_and_validates_request():
@@ -23,7 +72,7 @@ def test_submit_returns_server_job_id_and_validates_request():
     assert job_id == "new-job-42"
     request = client.execute_process.call_args.kwargs["request"]
     assert isinstance(request, ProcessRequest)
-    assert request.inputs["691adc8e-9bba-4f42-86e2-ccd72189edc3"] == "NDVI"
+    assert request.inputs["indicatorname"] == "NDVI"
     assert client.execute_process.call_args.kwargs["process_id"] == "218"
 
 
@@ -78,9 +127,9 @@ def test_app_updates_shared_inputs_without_replacing_outputs():
     app.set_dates_and_area(client_app)
 
     updated = client_app.get_process_request("218")
-    assert updated.inputs["c30145a7-029c-4499-98bc-9903ca46531c"] == "2024-06-03"
-    assert updated.inputs["472efeab-514a-4e15-9dba-d5812d653065"] == "2024-06-11"
-    assert updated.inputs["691adc8e-9bba-4f42-86e2-ccd72189edc3"] == "NDVI"
+    assert updated.inputs["startdate"] == "2024-06-03"
+    assert updated.inputs["enddate"] == "2024-06-11"
+    assert updated.inputs["indicatorname"] == "NDVI"
     assert updated.outputs == request.outputs
 
 

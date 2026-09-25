@@ -17,7 +17,12 @@ is not required.
 --8<-- "examples/guides/cli.sh:configure"
 ```
 
-Enter the service settings and credentials supplied for your deployment.
+The built-in defaults point to the default Sen4CAP processing service.
+Accept the defaults, or enter the service URLs supplied for another deployment. 
+`configure` saves public settings and may offer to log in.
+`login` obtains credentials and saves them in the OS keyring; if you already
+logged in during configuration, the separate login command is optional.
+See [configuration](../configuration.md) for profiles and authentication options.
 Use `--help` after any command to inspect its arguments and options.
 
 ## Inspect a process
