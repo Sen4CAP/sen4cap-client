@@ -9,7 +9,7 @@
       
       
       
-        <link rel="prev" href="../cli/">
+        <link rel="prev" href="../request-format/">
       
       
       
@@ -309,6 +309,33 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
     
@@ -318,10 +345,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
             
   
   
@@ -339,8 +366,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -357,14 +384,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../notebooks/client-api/" class="md-nav__link">
+      <a href="../guides/api/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Client API Usage
+    Python API
   
 
     
@@ -385,14 +412,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../notebooks/client-gui/" class="md-nav__link">
+      <a href="../guides/app/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Client GUI Usage
+    App
   
 
     
@@ -413,14 +440,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../notebooks/client-cli/" class="md-nav__link">
+      <a href="../guides/cli/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Client CLI Usage
+    Command Line
   
 
     
@@ -483,6 +510,33 @@
     
   
     CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../request-format/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Request Format
   
 
     
@@ -629,10 +683,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#formatting-linting" class="md-nav__link">
+  <a href="#formatting-checks-and-tests" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Formatting &amp; Linting
+        Formatting, checks, and tests
       
     </span>
   </a>
@@ -658,6 +712,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#editing-guides-and-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Editing guides and examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -790,10 +861,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#formatting-linting" class="md-nav__link">
+  <a href="#formatting-checks-and-tests" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Formatting &amp; Linting
+        Formatting, checks, and tests
       
     </span>
   </a>
@@ -819,6 +890,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Documentation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#editing-guides-and-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Editing guides and examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -892,58 +980,83 @@ corresponding issue. </p>
 <h3 id="setup">Setup</h3>
 <p>Before you start, make sure you have <a href="https://pixi.sh">pixi</a> installed.</p>
 <p>Checkout sources</p>
-<pre><code class="language-commandline">git clone https://github.com/Sen4CAP/sen4cap-client.git
+<div class="language-text highlight"><pre><span></span><code>git clone https://github.com/Sen4CAP/sen4cap-client.git
 cd ./sen4cap-client
-</code></pre>
+</code></pre></div>
 <p>Create a new Python environment and activate it:</p>
-<pre><code class="language-commandline">pixi install 
+<div class="language-text highlight"><pre><span></span><code>pixi install 
 pixi shell
-</code></pre>
+</code></pre></div>
 <h3 id="testing-the-sen4cap-client">Testing the Sen4CAP-client</h3>
-<p>Run local test server</p>
-<pre><code class="language-commandline">wraptile run -- wraptile.services.local.testing:service
-</code></pre>
-<p>The dev mode is useful if you are changing server code:</p>
-<pre><code class="language-commandline">wraptile dev wraptile.services.local.testing:service
-</code></pre>
-<p>Run client API</p>
-<pre><code class="language-python">from sen4cap_client import Client
-
-client = Client()
-client.get_processes()
-client.get_jobs()
-</code></pre>
-<p>Run client GUI (in Jupyter notebooks)</p>
-<pre><code class="language-python">from sen4cap_client.gui import Client
-
-client = Client()
-client.show()
-client.show_jobs()
-</code></pre>
-<p>Run client CLI</p>
-<pre><code class="language-commandline">$ sen4cap_client --help
-</code></pre>
-<h3 id="formatting-linting">Formatting &amp; Linting</h3>
-<pre><code class="language-commandline">pixi run isort .
-pixi run ruff format 
-pixi run ruff check
-</code></pre>
+<p>Configure and log in to a running Sen4CAP service before running live examples:</p>
+<div class="language-bash highlight"><pre><span></span><code>sen4cap-client<span class="w"> </span>configure
+sen4cap-client<span class="w"> </span>login
+pixi<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>-s<span class="w"> </span>scripts/integration_test.py
+</code></pre></div>
+<p>The default development environment installs the client dependencies, not an
+Eozilla test server. To develop Eozilla alongside the client, follow
+<a href="../installation/#implementing-enhancements">the editable-dependency instructions</a>.</p>
+<p>See the <a href="../guides/api/">Python API</a>, <a href="../guides/app/">App</a>, and
+<a href="../guides/cli/">command-line</a> guides for client usage and runnable examples.</p>
+<h3 id="formatting-checks-and-tests">Formatting, checks, and tests</h3>
+<div class="language-text highlight"><pre><span></span><code>pixi run format
+pixi run checks
+</code></pre></div>
 <h3 id="testing-coverage">Testing &amp; Coverage</h3>
-<pre><code class="language-commandline">pixi run test
+<div class="language-text highlight"><pre><span></span><code>pixi run tests
 pixi run coverage
-</code></pre>
+</code></pre></div>
+<p>The live-service test in <code>tests/test_client.py</code> is skipped without its local
+credentials file. Unit tests do not require a running service.</p>
 <h3 id="documentation">Documentation</h3>
 <p>The Sen4CAP-client's documentation is built using the 
 <a href="https://www.mkdocs.org/">mkdocs</a> tool.</p>
 <p>With repository root as current working directory:</p>
-<pre><code class="language-bash">mkdocs build
-mkdocs serve
-mkdocs gh-deploy
-</code></pre>
-<p>After changing the CLI code, always update its documentation <code>docs/cli.md</code> 
-by running</p>
-<pre><code class="language-bash">pixi run gen-client
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code>pixi<span class="w"> </span>run<span class="w"> </span>docs-build
+pixi<span class="w"> </span>run<span class="w"> </span>docs-serve
+</code></pre></div>
+<h4 id="editing-guides-and-examples">Editing guides and examples</h4>
+<p>Maintain the three user guides directly in <code>docs/guides/</code>. Python, shell, and
+JSON examples live in <code>examples/guides/</code>; Markdown includes them using
+<a href="https://facelessuser.github.io/pymdown-extensions/extensions/snippets/">PyMdown Snippets</a>.
+The notebooks in <code>notebooks/</code> remain independent examples. Documentation builds
+neither copy nor execute them. Any copies left under <code>docs/notebooks/</code> by an
+older build are excluded from the site.</p>
+<p>To display part of a Python file, surround it with named section comments:</p>
+<div class="language-python highlight"><pre><span></span><code><span class="c1"># --8&lt;-- [start:example-name]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello from the example&quot;</span><span class="p">)</span>
+<span class="c1"># --8&lt;-- [end:example-name]</span>
+</code></pre></div>
+<p>Include that section inside a Markdown code fence:</p>
+<div class="language-markdown highlight"><pre><span></span><code><span class="sb">```python</span>
+<span class="o">--</span><span class="mi">8</span><span class="o">&lt;--</span> <span class="s2">&quot;examples/guides/example.py:example-name&quot;</span>
+<span class="sb">```</span>
+</code></pre></div>
+<p>Use stable section names instead of line numbers. Whole files, such as a JSON
+request, can be included without a section suffix. Includes resolve from the
+repository root; <code>check_paths: true</code> makes missing includes fail the build.
+Subsections are dedented for display. Include enough context for a reader to
+understand each excerpt, and link to the complete example file.</p>
+<p>Format and check Python examples with the existing tools:</p>
+<div class="language-bash highlight"><pre><span></span><code>pixi<span class="w"> </span>run<span class="w"> </span>format
+pixi<span class="w"> </span>run<span class="w"> </span>checks
+pixi<span class="w"> </span>run<span class="w"> </span>pytest<span class="w"> </span>tests/test_guide_examples.py
+pixi<span class="w"> </span>run<span class="w"> </span>docs-build
+</code></pre></div>
+<p><code>checks</code> lints the Python example files and verifies their formatting. Type
+checking examples is optional and is not enabled by default. The guide tests
+run offline with mocked clients; they check submission and job-result handling
+without credentials or processing jobs. The documentation test builds the site
+and checks local links, anchors, and assets, including snippet-expanded pages. Run the example scripts manually
+against a configured service when testing a complete workflow. Shell recipes
+are copied section by section, not executed as a batch.</p>
+<p>Store screenshots and plots in <code>docs/assets/guides/</code>, use descriptive filenames
+and alt text, and record their origin in <code>examples/guides/README.md</code>. Refresh
+images deliberately when the relevant interface or result changes; the build
+only copies the committed assets. Review guides in <code>docs-serve</code> because GitHub
+Markdown previews do not expand Snippets directives.</p>
+<p>Keep <code>docs/cli.md</code> aligned with CLI changes by checking the installed command's
+<code>--help</code> output.</p>
 <h3 id="releasing">Releasing</h3>
 <p>Making a GitHub release triggers a workflow which publishes corresponding
 packages to PyPI.</p>

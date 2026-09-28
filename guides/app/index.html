@@ -9,28 +9,28 @@
       
       
       
-        <link rel="prev" href="../cli/">
+        <link rel="prev" href="../api/">
       
       
-        <link rel="next" href="../contributing/">
+        <link rel="next" href="../cli/">
       
       
         
       
       
-      <link rel="icon" href="../assets/favicon.ico">
+      <link rel="icon" href="../../assets/favicon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>Request Format - ESA Sen4CAP Client</title>
+        <title>App - ESA Sen4CAP Client</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -49,11 +49,11 @@
       
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../overrides/css/custom.css">
+      <link rel="stylesheet" href="../../overrides/css/custom.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#process-execution-requests" class="md-skip">
+        <a href="#app-guide" class="md-skip">
           Skip to content
         </a>
       
@@ -94,9 +94,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="ESA Sen4CAP Client" class="md-header__button md-logo" aria-label="ESA Sen4CAP Client" data-md-component="logo">
+    <a href="../.." title="ESA Sen4CAP Client" class="md-header__button md-logo" aria-label="ESA Sen4CAP Client" data-md-component="logo">
       
-  <img src="../assets/icon.png" alt="logo">
+  <img src="../../assets/icon.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Request Format
+              App
             
           </span>
         </div>
@@ -229,9 +229,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="ESA Sen4CAP Client" class="md-nav__button md-logo" aria-label="ESA Sen4CAP Client" data-md-component="logo">
+    <a href="../.." title="ESA Sen4CAP Client" class="md-nav__button md-logo" aria-label="ESA Sen4CAP Client" data-md-component="logo">
       
-  <img src="../assets/icon.png" alt="logo">
+  <img src="../../assets/icon.png" alt="logo">
 
     </a>
     ESA Sen4CAP Client
@@ -258,7 +258,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -285,7 +285,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../installation/" class="md-nav__link">
+      <a href="../../installation/" class="md-nav__link">
         
   
   
@@ -312,7 +312,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../configuration/" class="md-nav__link">
+      <a href="../../configuration/" class="md-nav__link">
         
   
   
@@ -336,18 +336,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
@@ -368,7 +370,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             
@@ -386,7 +388,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/api/" class="md-nav__link">
+      <a href="../api/" class="md-nav__link">
         
   
   
@@ -411,10 +413,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../guides/app/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    App
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -430,6 +459,81 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#open-in-a-browser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Open in a browser
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#choose-a-process-and-enter-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choose a process and enter inputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-from-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch from Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-the-app-in-a-notebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use the App in a notebook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update-inputs-from-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update inputs from Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -442,7 +546,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../guides/cli/" class="md-nav__link">
+      <a href="../cli/" class="md-nav__link">
         
   
   
@@ -477,7 +581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api/" class="md-nav__link">
+      <a href="../../api/" class="md-nav__link">
         
   
   
@@ -504,7 +608,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+      <a href="../../cli/" class="md-nav__link">
         
   
   
@@ -528,37 +632,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Request Format
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../request-format/" class="md-nav__link">
         
   
   
@@ -574,48 +651,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#cli-request-files" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        CLI request files
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#python-requests" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Python requests
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -627,7 +662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contributing/" class="md-nav__link">
+      <a href="../../contributing/" class="md-nav__link">
         
   
   
@@ -674,10 +709,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#cli-request-files" class="md-nav__link">
+  <a href="#open-in-a-browser" class="md-nav__link">
     <span class="md-ellipsis">
       
-        CLI request files
+        Open in a browser
       
     </span>
   </a>
@@ -685,10 +720,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#python-requests" class="md-nav__link">
+  <a href="#choose-a-process-and-enter-inputs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Python requests
+        Choose a process and enter inputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#launch-from-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Launch from Python
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#use-the-app-in-a-notebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use the App in a notebook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update-inputs-from-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Update inputs from Python
       
     </span>
   </a>
@@ -715,56 +783,80 @@
   
 
 
-<h1 id="process-execution-requests">Process execution requests</h1>
-<p>Inspect <code>sen4cap-client get-process PROCESS_ID</code> or
-<code>client.get_process(process_id)</code> for the input and output names supported by
-your deployment. The following example uses the Sen4CAP NDVI process <code>218</code>.</p>
-<h2 id="cli-request-files">CLI request files</h2>
-<p>The CLI accepts JSON or YAML. Save this as a UTF-8 file named <code>request.json</code> and adapt the values:</p>
-<div class="language-json highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">&quot;inputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;startdate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-06-01&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;enddate&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2024-06-07&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;indicatorname&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;NDVI&quot;</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">&quot;geom&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;POLYGON ((9.66 53.75,10.38 53.75,10.38 53.35,9.66 53.35,9.66 53.75))&quot;</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">&quot;outputs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;stacitemsfile&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;mediaType&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;application/json&quot;</span><span class="p">},</span>
-<span class="w">      </span><span class="nt">&quot;transmissionMode&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;reference&quot;</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">}</span>
-<span class="p">}</span>
+<h1 id="app-guide">App guide</h1>
+<p>The App provides a visual interface for choosing processes, entering inputs,
+submitting jobs, and inspecting their status. It uses the configuration saved
+by <code>sen4cap-client configure</code> and credentials saved by <code>sen4cap-client login</code>;
+see <a href="../../configuration/">configuration and authentication</a>.</p>
+<h2 id="open-in-a-browser">Open in a browser</h2>
+<p>The simplest way to launch the App is from a terminal:</p>
+<div class="language-bash highlight"><pre><span></span><code>sen4cap-client<span class="w"> </span>show-app
 </code></pre></div>
-<p>Its UUID keys come from the example service's process description. Use the
-actual input/output keys returned by your deployment, even when its labels
-say "Start date" or "NDVI". Supply the process ID separately:</p>
-<div class="language-bash highlight"><pre><span></span><code>sen4cap-client<span class="w"> </span>validate-request<span class="w"> </span><span class="m">218</span><span class="w"> </span>--request<span class="w"> </span>request.json
-sen4cap-client<span class="w"> </span>execute-process<span class="w"> </span><span class="m">218</span><span class="w"> </span>--request<span class="w"> </span>request.json
-</code></pre></div>
-<p>A CLI request file may also include a top-level <code>"process_id": "218"</code>; in that
-case the positional argument is optional. The positional argument and
-repeated <code>--input NAME=VALUE</code> (<code>-i</code>) options override matching file values.
-Use <code>--request -</code> to read from standard input. <code>--dotpath</code> interprets dots in input
-names as nested object paths; check <code>execute-process --help</code> for all options.</p>
-<p><code>create-request PROCESS_ID</code> generates a template from the server description.
-Review and fill in its inputs. <code>validate-request</code> checks the local request model,
-not whether a remote processor accepts the specific input values.</p>
-<h2 id="python-requests">Python requests</h2>
-<p>Pass a <code>gavicore.models.ProcessRequest</code> to <code>client.execute_process()</code>. The process
-ID is a separate argument and is not part of this model. To reuse a CLI file:</p>
-<div class="language-python highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">gavicore.util.request</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExecutionRequest</span>
+<p>Keep the terminal open while using the App. Press Ctrl+C to stop it.</p>
+<h2 id="choose-a-process-and-enter-inputs">Choose a process and enter inputs</h2>
+<p>Select a process from the process list and review its description, inputs, and
+outputs. This guide uses the same process <code>218</code> as the <a href="../api/">API guide</a>.
+Your service may offer different processes or input fields.</p>
+<p><img alt="App process inputs for the example NDVI request" src="../../assets/guides/app/process-inputs.png" /></p>
+<p><em>Historical example form from Cuiman 0.2.0.dev1. The current app's appearance,
+available processes, and inputs can differ; see the
+<a href="https://github.com/Sen4CAP/sen4cap-client/blob/main/examples/guides/README.md#static-image-provenance">image provenance</a>.</em></p>
+<p>Enter the date range and area of interest, select the desired product and
+outputs, then submit the process request. Monitor the resulting job in the
+App's jobs view. Results become available after processing succeeds; failed
+jobs should be inspected for error details.</p>
+<p>For raster results, use the <a href="../api/#open-and-plot-an-asset">API guide</a> to open
+the desired STAC asset in Python.</p>
+<h2 id="launch-from-python">Launch from Python</h2>
+<p>The <a href="https://github.com/Sen4CAP/sen4cap-client/blob/main/examples/guides/app.py">App example</a>
+returns both the client and the App so that you can interact with them:</p>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">sen4cap_client.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_client</span>
 
-<span class="n">execution</span> <span class="o">=</span> <span class="n">ExecutionRequest</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">process_id</span><span class="o">=</span><span class="s2">&quot;218&quot;</span><span class="p">,</span> <span class="n">request_path</span><span class="o">=</span><span class="s2">&quot;request.json&quot;</span><span class="p">)</span>
-<span class="c1"># client is an instance returned by create_client().</span>
-<span class="n">job</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">execute_process</span><span class="p">(</span>
-    <span class="n">process_id</span><span class="o">=</span><span class="n">execution</span><span class="o">.</span><span class="n">process_id</span><span class="p">,</span>
-    <span class="n">request</span><span class="o">=</span><span class="n">execution</span><span class="o">.</span><span class="n">to_process_request</span><span class="p">(),</span>
-<span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">open_app</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;browser&quot;</span><span class="p">):</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">create_client</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">show_app</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="n">display</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">640</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">raise</span>
+    <span class="k">return</span> <span class="n">client</span><span class="p">,</span> <span class="n">app</span>
 </code></pre></div>
-<p>The conversion removes CLI-only fields and applies any requested dot-path
-nesting. Keep <code>job.jobID</code> for status and result calls; output availability depends
-on successful completion. See the <a href="../api/">Python API guide</a>.</p>
+<p>Run the complete script from the repository root to open a browser and keep the
+App running until Ctrl+C:</p>
+<div class="language-bash highlight"><pre><span></span><code>python<span class="w"> </span>examples/guides/app.py
+</code></pre></div>
+<h2 id="use-the-app-in-a-notebook">Use the App in a notebook</h2>
+<p>The same helper can embed the App in Jupyter. With the repository root as the
+notebook's working directory, use the following example, or run it with
+<code>%run -i examples/guides/notebook_app.py</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">examples.guides.app</span><span class="w"> </span><span class="kn">import</span> <span class="n">open_app</span><span class="p">,</span> <span class="n">set_dates_and_area</span>  <span class="c1"># noqa: F401</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">client</span><span class="p">,</span> <span class="n">app</span> <span class="o">=</span> <span class="n">open_app</span><span class="p">(</span><span class="n">display</span><span class="o">=</span><span class="s2">&quot;notebook&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Keep <code>client</code> and <code>app</code> available for subsequent cells. The
+<a href="https://github.com/Sen4CAP/sen4cap-client/blob/main/notebooks/client-gui.ipynb">original App notebook</a>
+also remains available.</p>
+<h2 id="update-inputs-from-python">Update inputs from Python</h2>
+<p>After opening process <code>218</code> in the App, call <code>set_dates_and_area(app)</code> to change
+its dates and area of interest through the shared request state:</p>
+<div class="language-python highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_dates_and_area</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">process_id</span><span class="o">=</span><span class="s2">&quot;218&quot;</span><span class="p">):</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">process_requests</span><span class="p">[</span><span class="n">process_id</span><span class="p">]</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;startdate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2024-06-03&quot;</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;enddate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2024-06-11&quot;</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="s2">&quot;geom&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;POLYGON ((9.66 53.75,10.38 53.75,10.38 53.35,9.66 53.35,9.66 53.75))&quot;</span>
+    <span class="p">)</span>
+</code></pre></div>
+<p>The input IDs are specific to this process. Use the IDs from your own process
+description when adapting the example. Changing the request updates the form;
+it does not submit a job. Review the form before executing it.</p>
+<p>When finished with an App opened from a notebook, stop its server and close
+the client:</p>
+<div class="language-python highlight"><pre><span></span><code><span class="n">app</span><span class="o">.</span><span class="n">serve_result</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+<span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div>
 
 
 
@@ -851,10 +943,10 @@ on successful completion. See the <a href="../api/">Python API guide</a>.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>
