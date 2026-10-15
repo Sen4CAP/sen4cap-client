@@ -3,7 +3,7 @@ from contextlib import closing
 from pathlib import Path
 
 import pytest
-from gavicore.models import ProcessDescription
+from gavicore.models.core import ProcessDescription
 
 from sen4cap_client.api import Client, create_client
 

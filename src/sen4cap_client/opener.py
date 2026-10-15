@@ -4,7 +4,7 @@ import httpx
 import pystac
 import rioxarray as rio
 from cuiman.api.opener import JobResultOpenContext, JobResultOpener
-from gavicore.models import Link
+from gavicore.models.core import Link
 
 
 class Sen4CAPJobResultsOpener(JobResultOpener):

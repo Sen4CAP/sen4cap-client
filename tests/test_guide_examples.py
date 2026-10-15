@@ -6,7 +6,7 @@ from unittest.mock import Mock
 import pytest
 from cuiman.api import Client
 from cuiman.app import App
-from gavicore.models import JobInfo, ProcessRequest
+from gavicore.models.core import JobInfo, ProcessRequest
 from remotestate import ServeResult
 from typer.testing import CliRunner
 

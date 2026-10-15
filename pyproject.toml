@@ -4,7 +4,7 @@
 
 [project]
 name = "sen4cap-client"
-version = "0.2.0"
+version = "0.3.0.dev0"
 description = "Python client for the ESA Sen4CAP project"
 readme = "README.md"
 authors = [
@@ -55,8 +55,8 @@ dependencies = [
   "uri-template",
   "xarray",
   # Eozilla dependencies
-  "cuiman >=0.3.1",
-  "gavicore >=0.3.0",
+  "cuiman >=0.4.0.dev0",
+  "gavicore >=0.4.0.dev0",
 ]
 
 [project.urls]
@@ -75,6 +75,9 @@ build-backend = "hatchling.build"
 [tool.hatch.build]
 sources = ["src"]
 
+[tool.hatch.build.targets.wheel]
+packages = ["src/sen4cap_client"]
+
 [tool.hatch.build.targets.sdist]
 include = [
   "src/sen4cap_client/**/*",
@@ -83,10 +86,6 @@ include = [
   "LICENSE",
 ]
 
-[tool.hatch.build.targets.wheel]
-include = [
-  "src/sen4cap_client/**/*"
-]
 
 # ---------------------------------------------------------------------
 # Pixi project setup
@@ -146,15 +145,15 @@ sen4cap_client = { path = ".", editable = true }
 # Uncomment the following to allow using eozilla from PyPI
 # Note, using the wraptile/procodile is for testing only
 #
-cuiman = ">=0.3.1"
-gavicore = ">=0.3.0"
+#cuiman = ">=0.4.0"
+#gavicore = ">=0.4.0"
 #
 # Uncomment the following to allow using eozilla from sources
 #
-#cuiman = { path = "../eozilla/cuiman", editable = true }
-#gavicore = { path = "../eozilla/gavicore", editable = true }
-#wraptile = { path = "../eozilla/wraptile", editable = true }
-#procodile = { path = "../eozilla/procodile", editable = true }
+cuiman = { path = "../eozilla/cuiman", editable = true }
+gavicore = { path = "../eozilla/gavicore", editable = true }
+wraptile = { path = "../eozilla/wraptile", editable = true }
+procodile = { path = "../eozilla/procodile", editable = true }
 
 # ---------------------------------------------------------------------
 # Pixi tasks

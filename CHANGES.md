@@ -1,3 +1,8 @@
+## Changes in version 0.3.0 (in development)
+
+- Added new app runtime branding as of Cuiman 0.4.x.
+
+
 ## Changes in version 0.2.0 
 
 - Added client factory functions `create_client()` and `create_async_client()`
