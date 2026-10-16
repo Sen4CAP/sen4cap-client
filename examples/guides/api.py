@@ -12,7 +12,7 @@ import typer
 
 # isort: split
 # --8<-- [start:imports]
-from gavicore.models import JobStatus, ProcessRequest
+from gavicore.models.core import JobStatus, ProcessRequest
 
 from sen4cap_client.api import create_client
 

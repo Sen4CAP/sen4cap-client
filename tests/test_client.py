@@ -3,7 +3,7 @@ from contextlib import closing
 from pathlib import Path
 
 import pytest
-from gavicore.models import ProcessDescription
+from gavicore.models.core import ProcessDescription
 
 from sen4cap_client.api import Client, create_client
 
@@ -13,7 +13,7 @@ def create_test_client() -> tuple[Client | None, str]:
 
     try:
         credentials = json.loads(credentials_file.read_text())
-        return create_client(**credentials), ""
+        return create_client(auth=credentials), ""
     except Exception as error:
         return None, str(error)
 

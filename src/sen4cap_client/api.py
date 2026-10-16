@@ -7,10 +7,13 @@ from typing import Any
 
 from cuiman.api import AsyncClient, Client, ClientConfig
 from cuiman.api.auth import AuthConfig, LoginAuthConfig
+from cuiman.api.branding import AppBranding, AppImageIcon
 from pydantic import HttpUrl
 from pydantic_settings import SettingsConfigDict
 
 from .opener import Sen4CAPJobResultsOpener
+
+_BRANDING_DIR = Path(__file__).resolve().parent / "app" / "branding"
 
 
 class Sen4CAPConfig(ClientConfig):
@@ -31,7 +34,16 @@ class Sen4CAPConfig(ClientConfig):
         access_token_header="X-Auth-Token",
     )
 
+    require_config_file = False
+
     extra_job_result_openers = [Sen4CAPJobResultsOpener]
+
+    branding: AppBranding = AppBranding(
+        title="Sen4CAP Processes",
+        favicon=Path(_BRANDING_DIR / "favicon.ico"),
+        icon=AppImageIcon(path=_BRANDING_DIR / "icon.png"),
+        icon_position="before",
+    )
 
 
 def create_client(**config: Any) -> Client:
@@ -78,6 +90,7 @@ __all__ = [
     "AsyncClient",
     "Client",
     "ClientConfig",
-    "create_client",
+    "Sen4CAPConfig",
     "create_async_client",
+    "create_client",
 ]

@@ -6,7 +6,7 @@ from urllib.parse import unquote, urlsplit
 
 import pytest
 from cuiman.api import Client
-from gavicore.models import JobInfo
+from gavicore.models.core import JobInfo
 from mkdocs.commands.build import build
 from mkdocs.config import load_config
 

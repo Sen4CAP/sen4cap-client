@@ -2,7 +2,7 @@ import pytest
 import xarray as xr
 from cuiman.api.opener import JobResultOpenContext, JobResultOpenerRegistry
 from cuiman.api.opener.opener import open_job_result
-from gavicore.models import JobResults
+from gavicore.models.core import JobResults
 
 from sen4cap_client.api import Sen4CAPConfig
 from sen4cap_client.opener import Sen4CAPJobResultsOpener
