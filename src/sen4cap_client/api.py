@@ -39,9 +39,10 @@ class Sen4CAPConfig(ClientConfig):
     extra_job_result_openers = [Sen4CAPJobResultsOpener]
 
     branding: AppBranding = AppBranding(
-        title="Sen4CAP App",
+        title="Sen4CAP Processes",
         favicon=Path(_BRANDING_DIR / "favicon.ico"),
         icon=AppImageIcon(path=_BRANDING_DIR / "icon.png"),
+        icon_position="before",
     )
 
 
@@ -90,6 +91,6 @@ __all__ = [
     "Client",
     "ClientConfig",
     "Sen4CAPConfig",
-    "create_client",
     "create_async_client",
+    "create_client",
 ]
