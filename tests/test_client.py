@@ -13,7 +13,7 @@ def create_test_client() -> tuple[Client | None, str]:
 
     try:
         credentials = json.loads(credentials_file.read_text())
-        return create_client(**credentials), ""
+        return create_client(auth=credentials), ""
     except Exception as error:
         return None, str(error)
 
