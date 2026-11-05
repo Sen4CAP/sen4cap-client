@@ -38,7 +38,7 @@ class Sen4CAPConfig(ClientConfig):
 
     require_config_file = False
 
-    extra_job_result_openers: ClassVar[Iterable[JobResultOpener]] = [
+    extra_job_result_openers: ClassVar[Iterable[type[JobResultOpener]]] = [
         Sen4CAPJobResultsOpener
     ]
 
