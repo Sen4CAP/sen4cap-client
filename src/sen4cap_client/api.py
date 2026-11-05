@@ -3,7 +3,7 @@
 #  https://opensource.org/license/apache-2-0.
 
 from pathlib import Path
-from typing import Any, ClassVar
+from typing import Any, ClassVar, Iterable
 
 from cuiman.api import AsyncClient, Client, ClientConfig
 from cuiman.api.auth import AuthConfig, LoginAuthConfig
