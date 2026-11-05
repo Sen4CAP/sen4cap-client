@@ -2,8 +2,9 @@
 #  Permissions are hereby granted under the terms of the Apache 2.0 License:
 #  https://opensource.org/license/apache-2-0.
 
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, ClassVar, Iterable
+from typing import Any, ClassVar
 
 from cuiman.api import AsyncClient, Client, ClientConfig
 from cuiman.api.auth import AuthConfig, LoginAuthConfig
