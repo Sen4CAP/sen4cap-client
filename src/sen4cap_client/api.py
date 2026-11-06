@@ -2,12 +2,14 @@
 #  Permissions are hereby granted under the terms of the Apache 2.0 License:
 #  https://opensource.org/license/apache-2-0.
 
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any
+from typing import Any, ClassVar
 
 from cuiman.api import AsyncClient, Client, ClientConfig
 from cuiman.api.auth import AuthConfig, LoginAuthConfig
 from cuiman.api.branding import AppBranding, AppImageIcon
+from cuiman.api.opener import JobResultOpener
 from pydantic import HttpUrl
 from pydantic_settings import SettingsConfigDict
 
@@ -36,7 +38,9 @@ class Sen4CAPConfig(ClientConfig):
 
     require_config_file = False
 
-    extra_job_result_openers = [Sen4CAPJobResultsOpener]
+    extra_job_result_openers: ClassVar[Iterable[type[JobResultOpener]]] = [
+        Sen4CAPJobResultsOpener
+    ]
 
     branding: AppBranding = AppBranding(
         title="Sen4CAP Processes",

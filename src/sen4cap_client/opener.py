@@ -19,7 +19,7 @@ class Sen4CAPJobResultsOpener(JobResultOpener):
 
         stac_url = output_value.href
         return (
-            (stac_url.startswith("http://") or stac_url.startswith("https://"))
+            stac_url.startswith(("http://", "https://"))
             and "/collections/" in stac_url
             and "/items/" in stac_url
         )

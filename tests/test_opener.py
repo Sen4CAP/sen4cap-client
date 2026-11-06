@@ -144,11 +144,8 @@ async def test_job_results_opener_accept_job_result():
     opener = Sen4CAPJobResultsOpener()
     config = Sen4CAPConfig(auth={"auth_type": "none"})
 
-    # empty job results -> fail
-    ctx = JobResultOpenContext(
-        config, "632", JobResults(), options=dict(asset_name="SNDVI")
-    )
-    assert await opener.accept_job_result(ctx) is False
+    # We no longer test the "empty job results" case, since as of cuiman 0.4.0
+    # a JobResultOpenContext cannot be instantiated without job results.
 
     # invalid job results -> fail
     ctx = JobResultOpenContext(
