@@ -5,6 +5,9 @@
 import os
 
 import pytest
+
+from unittest.mock import patch
+
 from cuiman.api.auth import LoginAuthConfig, NoAuthConfig
 
 import sen4cap_client.api
@@ -21,6 +24,7 @@ def test_api_exports_ok():
     }.issubset(dir(sen4cap_client.api))
 
 
+@patch("cuiman.api.auth.secret_store.keyring")
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     "factory, client_type",
@@ -31,10 +35,11 @@ def test_api_exports_ok():
 )
 @pytest.mark.parametrize("override_defaults", [False, True])
 async def test_create_client(
-    factory, client_type, override_defaults, tmp_path, monkeypatch
+    keyring_mock, factory, client_type, override_defaults, tmp_path, monkeypatch
 ):
     # Keep local profiles, dotenv files, and environment settings out of this test.
     monkeypatch.chdir(tmp_path)
+    keyring_mock.get_password.return_value = None
     for name in os.environ:
         if name.upper().startswith("SEN4CAP_"):
             monkeypatch.delenv(name)
