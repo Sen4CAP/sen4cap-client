@@ -1,14 +1,15 @@
-## Changes in version 0.3.0 (in development)
+## Changes in version 0.3.0
 
-- Added new app runtime branding as of Cuiman 0.4.x.
+- Updated to use 0.4.x release of eozilla; minor modifications to ensure
+  compatibility. (#41)
+- Added new app runtime branding as of Cuiman 0.4.x. (#39)
 
-
-## Changes in version 0.2.0 
+## Changes in version 0.2.0
 
 - Added client factory functions `create_client()` and `create_async_client()`
   which are now the preferred way to create a Sen4CAP client.
 - Added a _job result opener_ so that the client's `open_job_result()` method
-  can open the datasets created by processor runs. 
+  can open the datasets created by processor runs.
 - Changed `notebooks/client-gui.ipynb` to demonstrate the new Eozilla App UI
   which is launched by `client.show_app()`.
 - Depend on eozilla 0.3.x packages.
