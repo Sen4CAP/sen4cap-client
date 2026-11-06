@@ -29,7 +29,7 @@ installed with `pip`:
 pip install sen4cap-client
 ```
 
-### Using conda/mamba 
+### Using conda/mamba
 
 The `sen4cap-client` package is available on conda-forge and can be
 installed using `mamba` or `conda`. To install into an existing,
@@ -74,8 +74,8 @@ pixi shell
 
 ### Using GitHub
 
-To install and use the `sen4cap-client` package from its sources on GitHub you'll 
-need to install both [git](https://git-scm.com/install/) and 
+To install and use the `sen4cap-client` package from its sources on GitHub you'll
+need to install both [git](https://git-scm.com/install/) and
 [pixi](https://pixi.sh/latest/installation/) first. Then:
 
 ```bash
@@ -105,8 +105,8 @@ make sure the `sen4cap-client` command-line tool is accessible: Type
 sen4cap-client --help
 ```
 
-to get an overview of the available commands and options. The first step is to 
-configure the client, which will also serve as default configuration for the client's 
+to get an overview of the available commands and options. The first step is to
+configure the client, which will also serve as default configuration for the client's
 Python API and its GUI:
 
 ```bash
@@ -149,7 +149,7 @@ See [configuration](docs/configuration.md), the [Python API](docs/api.md), and
 
 ## Development
 
-Install the `sen4cap-client` as described in [Installation / Using GitHub](#using-github) 
+Install the `sen4cap-client` as described in [Installation / Using GitHub](#using-github)
 above.
 
 ### Linting and Testing
@@ -178,13 +178,13 @@ pixi run coverage
 
 ### Implementing Enhancements
 
-The `sen4cap-client` code relies heavily on the 
-[Eozilla](https://eo-tools.github.io/eozilla/) packages 
+The `sen4cap-client` code relies heavily on the
+[Eozilla](https://eo-tools.github.io/eozilla/) packages
 
 * [cuiman](https://github.com/eo-tools/eozilla/tree/main/cuiman),
-  which provides the client implementation, and 
+  which provides the client implementation, and
 * [gavicore](https://github.com/eo-tools/eozilla/tree/main/gavicore)
-  which provides common OGC model classes and basic utilities.  
+  which provides common OGC model classes and basic utilities.
 
 For changes shared with other Eozilla clients, check out Eozilla beside this
 repository, matching the editable paths in `pyproject.toml`:
