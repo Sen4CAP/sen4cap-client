@@ -1,3 +1,5 @@
+## Changes in version 0.3.1 (under development)
+
 ## Changes in version 0.3.0
 
 - Updated to use 0.4.x release of eozilla; minor modifications to ensure
