@@ -1,0 +1,15 @@
+{
+  "branding": {
+    "title": "Sen4CAP Processes",
+    "iconPosition": "before",
+    "favicon": "./branding/favicon.ico",
+    "icon": { "url": "./branding/icon.png" }
+  },
+  "service": {
+    "apiUrl": "https://sen4x.tao.c-s.ro/process/",
+    "authType": "login",
+    "loginUrl": "https://sen4x.tao.c-s.ro/auth/login",
+    "useBearer": false,
+    "accessTokenHeader": "X-Auth-Token"
+  }
+}
